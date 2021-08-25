@@ -62,7 +62,6 @@ import re
 import pypsa
 import numpy as np
 import pandas as pd
-from six import iteritems
 
 from add_electricity import load_costs, update_transmission_costs
 
@@ -145,11 +144,12 @@ def average_every_nhours(n, offset):
 
     for c in n.iterate_components():
         pnl = getattr(m, c.list_name+"_t")
-        for k, df in iteritems(c.pnl):
+        for k, df in c.pnl.items():
             if not df.empty:
                 pnl[k] = df.resample(offset).mean()
 
     return m
+
 
 def apply_time_segmentation(n, segments):
     logger.info(f"Aggregating time series to {segments} segments.")
@@ -224,7 +224,7 @@ if __name__ == "__main__":
     opts = snakemake.wildcards.opts.split('-')
 
     n = pypsa.Network(snakemake.input[0])
-    Nyears = n.snapshot_weightings.sum() / 8760.
+    Nyears = n.snapshot_weightings.objective.sum() / 8760.
 
     set_line_s_max_pu(n)
 
