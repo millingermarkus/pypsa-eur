@@ -561,10 +561,7 @@ if __name__ == "__main__":
     configure_logging(snakemake)
 
     n = pypsa.Network(snakemake.input.base_network)
-    print(n.snapshot_weightings)
-    print(type(n.snapshot_weightings))
-    print(n.snapshot_weightings.objective)
-    
+
     Nyears = n.snapshot_weightings.objective.sum() / 8760.
 
     costs = load_costs(Nyears)
