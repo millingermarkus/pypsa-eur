@@ -111,8 +111,11 @@ renewable:
     resource:
       method: wind
       turbine: NREL_ReferenceTurbine_5MW_offshore
-    capacity_per_sqkm: 3
-    # correction_factor: 0.93
+    capacity_per_sqkm: 2
+    correction_factor: 0.8855
+    # proxy for wake losses
+    # from 10.1016/j.energy.2018.08.153
+    # until done more rigorously in #153
     corine: [44, 255]
     natura: true
     max_depth: 50
@@ -125,8 +128,11 @@ renewable:
       method: wind
       turbine: NREL_ReferenceTurbine_5MW_offshore
     # ScholzPhd Tab 4.3.1: 10MW/km^2
-    capacity_per_sqkm: 3
-    # correction_factor: 0.93
+    capacity_per_sqkm: 2
+    correction_factor: 0.8855
+    # proxy for wake losses
+    # from 10.1016/j.energy.2018.08.153
+    # until done more rigorously in #153
     corine: [44, 255]
     natura: true
     max_depth: 50
@@ -182,7 +188,6 @@ transformers:
   type: ''
 
 load:
-  url: https://data.open-power-system-data.org/time_series/2019-06-05/time_series_60min_singleindex.csv
   power_statistics: True # only for files from <2019; set false in order to get ENTSOE transparency data 
   interpolate_limit: 3 # data gaps up until this size are interpolated linearly
   time_shift_for_large_gaps: 1w # data gaps up until this size are copied by copying from 
@@ -232,8 +237,8 @@ solving:
   #   threads: 4
   #   lpmethod: 4 # barrier
   #   solutiontype: 2 # non basic solution, ie no crossover
-  #   barrier_convergetol: 1.e-5
-  #   feasopt_tolerance: 1.e-6
+  #   barrier.convergetol: 1.e-5
+  #   feasopt.tolerance: 1.e-6
 
 plotting:
   map:
