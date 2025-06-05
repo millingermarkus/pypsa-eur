@@ -784,6 +784,7 @@ sector:
       methanol: 121
       gas: 122
       oil: 125
+  nuclear_htgr: true
 
 # docs in https://pypsa-eur.readthedocs.io/en/latest/configuration.html#industry
 industry:

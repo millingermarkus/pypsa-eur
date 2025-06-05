@@ -198,6 +198,11 @@ def define_spatial(nodes, options):
     spatial.uranium.nodes = ["EU uranium"]
     spatial.uranium.locations = ["EU"]
 
+    # nuclear HTGR
+    spatial.htgr = SimpleNamespace()
+    spatial.htgr.nodes = nodes + " nuclear HTGR"
+    spatial.htgr.locations = nodes
+
     # coal
     spatial.coal = SimpleNamespace()
     spatial.coal.nodes = ["EU coal"]
@@ -6126,6 +6131,114 @@ def add_import_options(
             marginal_cost=import_options["H2"],
         )
 
+def add_nuclear_htgr(
+            n,
+            costs,
+            options,
+            spatial,
+            cf_industry,
+            pop_layout,
+            nyears,
+):
+
+    carrier = "nuclear HTGR heat"
+    n.add("Carrier", "nuclear HTGR heat")
+
+    unit = "MWh_th"
+    capital_cost = 0.1
+
+    n.add(
+        "Bus",
+        spatial.htgr.nodes,
+        location=spatial.htgr.locations,
+        carrier=carrier,
+        unit=unit
+    )
+
+    n.add(
+        "Store",
+        spatial.htgr.nodes + " Store",
+        bus=spatial.htgr.nodes,
+        e_nom_extendable=True,
+        e_cyclic=True,
+        carrier=carrier,
+        capital_cost=capital_cost,
+    )
+    #Add uranium nodes and buses
+    n.add(
+        "Bus",
+        spatial.uranium.nodes,
+        location=spatial.uranium.nodes,
+        carrier="uranium",
+        unit=unit
+    )
+
+    n.add(
+        "Bus",
+        spatial.nodes + " uranium",
+        location=spatial.nodes,
+        carrier="uranium",
+        unit=unit
+    )
+
+    n.add(
+        "Link",
+        spatial.nodes,
+        suffix=" uranium",
+        bus0=["EU uranium"],
+        bus1=spatial.nodes + " uranium",
+        carrier="uranium",
+        efficiency=1.0,
+        p_nom_extendable=True,
+    )
+
+    #Add HTGR
+    print('Add HTGR to heat')
+    print(spatial.uranium.nodes)
+    n.add(
+        "Link",
+        spatial.htgr.nodes,
+        bus0=spatial.uranium.nodes,
+        bus1=spatial.htgr.nodes,
+        carrier=carrier,
+        lifetime=costs.at["nuclear", "lifetime"],
+        efficiency=1.,
+        p_nom_extendable=True,
+        capital_cost=costs.at["nuclear", "capital_cost"],
+        marginal_cost=costs.loc["nuclear", "VOM"],
+    )
+
+    #Add SOFC linking from heat bus to H2
+    print('Add HTGR SOFC')
+    n.add(
+        "Link",
+        spatial.h2.nodes,# + " H2 SOFC Electrolysis",
+        bus0=spatial.htgr.nodes,
+        bus1=spatial.h2.nodes,
+        p_nom_extendable=True,
+        carrier="H2 SOFC Electrolysis",
+        efficiency=0.82,#costs.at["electrolysis", "efficiency"],
+        capital_cost=1.2*costs.at["electrolysis", "capital_cost"],
+        lifetime=costs.at["electrolysis", "lifetime"],
+    )
+
+    #ADD L-DAC linking from heat bus to co_store
+    #ADD el link linking from heat bus to el
+    print('Add HTGR electricity')
+    n.add(
+        "Link",
+        spatial.nodes,
+        bus0=spatial.htgr.nodes,
+        bus1=spatial.nodes,
+        carrier="nuclear HTGR electricity",
+        lifetime=costs.at["nuclear", "lifetime"],
+        efficiency=0.4,
+        p_nom_extendable=True,
+        capital_cost=0,#costs.at["nuclear", "capital_cost"],
+        marginal_cost=0,#costs.loc["nuclear", "VOM"],
+    )
+
+
 
 if __name__ == "__main__":
     if "snakemake" not in globals():
@@ -6376,6 +6489,17 @@ if __name__ == "__main__":
 
     if options["allam_cycle_gas"]:
         add_allam_gas(n, costs, pop_layout=pop_layout, spatial=spatial)
+
+    if options["nuclear_htgr"]:
+        add_nuclear_htgr(
+            n=n,
+            costs=costs,
+            options=options,
+            spatial=spatial,
+            cf_industry=cf_industry,
+            pop_layout=pop_layout,
+            nyears=nyears,
+        )
 
     n = set_temporal_aggregation(
         n, snakemake.params.time_resolution, snakemake.input.snapshot_weightings
