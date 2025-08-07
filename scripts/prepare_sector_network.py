@@ -6229,6 +6229,31 @@ def add_nuclear_htgr(
         lifetime=costs.at["electrolysis", "lifetime"],
     )
 
+    # ADD L-DAC linking from heat bus to co_store
+    electricity_input = 1.#(
+       #costs.at["direct air capture", "electricity-input"]
+       #+ costs.at["direct air capture", "compression-electricity-input"]
+    #)  # MWh_el / tCO2
+    heat_input = 1.#(
+    #   costs.at["direct air capture", "heat-input"]
+    #)  # MWh_th / tCO2
+
+    n.add(
+       "Link",
+       spatial.nodes + " L-DAC",
+       bus0=spatial.nodes,
+       bus1=spatial.htgr.nodes,
+       bus2="co2 atmosphere",
+       bus3=spatial.co2.nodes,
+       carrier="L-DAC",
+       capital_cost=0*costs.at["direct air capture", "capital_cost"] / electricity_input,
+       efficiency=-heat_input / electricity_input,
+       efficiency2=-1 / electricity_input,
+       efficiency3=1 / electricity_input,
+       p_nom_extendable=True,
+       lifetime=costs.at["direct air capture", "lifetime"],
+    )
+
 
 if __name__ == "__main__":
     if "snakemake" not in globals():
