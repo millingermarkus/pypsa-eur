@@ -6215,6 +6215,20 @@ def add_nuclear_htgr(
         marginal_cost=costs.loc["nuclear", "VOM"],
     )
 
+    #Add SOFC linking from heat bus to H2
+    print('Add HTGR SOFC')
+    n.add(
+        "Link",
+        spatial.h2.nodes,
+        bus0=spatial.htgr.nodes,
+        bus1=spatial.h2.nodes,
+        p_nom_extendable=True,
+        carrier="H2 SOFC Electrolysis",
+        efficiency=0.82,#costs.at["electrolysis", "efficiency"],
+        capital_cost=0.01*costs.at["electrolysis", "capital_cost"],
+        lifetime=costs.at["electrolysis", "lifetime"],
+    )
+
 
 if __name__ == "__main__":
     if "snakemake" not in globals():
