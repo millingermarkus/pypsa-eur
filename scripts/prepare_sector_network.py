@@ -6140,104 +6140,43 @@ def add_nuclear_htgr(
             pop_layout,
             nyears,
 ):
-
-    carrier = "nuclear HTGR heat"
-    n.add("Carrier", "nuclear HTGR heat")
-
     unit = "MWh_th"
-    capital_cost = 0.1
+
+    #Add uranium generators, buses, carriers
+    if "uranium" not in n.carriers.index:
+        n.add("Carrier", name="uranium")
+    if "uranium" not in n.buses.index:
+        n.add(
+            "Bus",
+            spatial.nodes + " uranium",
+            location=spatial.nodes,
+            carrier="uranium",
+            unit=unit)
 
     n.add(
-        "Bus",
-        spatial.htgr.nodes,
-        location=spatial.htgr.locations,
-        carrier=carrier,
-        unit=unit
-    )
-
-    n.add(
-        "Store",
-        spatial.htgr.nodes + " Store",
-        bus=spatial.htgr.nodes,
-        e_nom_extendable=True,
-        e_cyclic=True,
-        carrier=carrier,
-        capital_cost=capital_cost,
-    )
-    #Add uranium nodes and buses
-    n.add(
-        "Bus",
-        spatial.uranium.nodes,
-        location=spatial.uranium.nodes,
-        carrier="uranium",
-        unit=unit
-    )
-
-    n.add(
-        "Bus",
-        spatial.nodes + " uranium",
-        location=spatial.nodes,
-        carrier="uranium",
-        unit=unit
-    )
-
-    n.add(
-        "Link",
+        "Generator",
         spatial.nodes,
         suffix=" uranium",
-        bus0=["EU uranium"],
-        bus1=spatial.nodes + " uranium",
+        bus=spatial.nodes + " uranium",
         carrier="uranium",
-        efficiency=1.0,
         p_nom_extendable=True,
+        marginal_cost=0
     )
 
-    #Add HTGR
-    print('Add HTGR to heat')
-    print(spatial.uranium.nodes)
     n.add(
         "Link",
         spatial.htgr.nodes,
-        bus0=spatial.uranium.nodes,
-        bus1=spatial.htgr.nodes,
-        carrier=carrier,
+        bus0=spatial.nodes + " uranium",
+        bus1=spatial.nodes,
+        carrier="HTGR",
         lifetime=costs.at["nuclear", "lifetime"],
-        efficiency=1.,
+        efficiency=.4,
         p_nom_extendable=True,
-        capital_cost=costs.at["nuclear", "capital_cost"],
+        #p_nom_min=1e6,
+        #p_min_pu=-0.8,
+        capital_cost=0.01*costs.at["nuclear", "capital_cost"],
         marginal_cost=costs.loc["nuclear", "VOM"],
     )
-
-    #Add SOFC linking from heat bus to H2
-    print('Add HTGR SOFC')
-    n.add(
-        "Link",
-        spatial.h2.nodes,# + " H2 SOFC Electrolysis",
-        bus0=spatial.htgr.nodes,
-        bus1=spatial.h2.nodes,
-        p_nom_extendable=True,
-        carrier="H2 SOFC Electrolysis",
-        efficiency=0.82,#costs.at["electrolysis", "efficiency"],
-        capital_cost=1.2*costs.at["electrolysis", "capital_cost"],
-        lifetime=costs.at["electrolysis", "lifetime"],
-    )
-
-    #ADD L-DAC linking from heat bus to co_store
-    #ADD el link linking from heat bus to el
-    print('Add HTGR electricity')
-    n.add(
-        "Link",
-        spatial.nodes,
-        bus0=spatial.htgr.nodes,
-        bus1=spatial.nodes,
-        carrier="nuclear HTGR electricity",
-        lifetime=costs.at["nuclear", "lifetime"],
-        efficiency=0.4,
-        p_nom_extendable=True,
-        capital_cost=0,#costs.at["nuclear", "capital_cost"],
-        marginal_cost=0,#costs.loc["nuclear", "VOM"],
-    )
-
 
 
 if __name__ == "__main__":
