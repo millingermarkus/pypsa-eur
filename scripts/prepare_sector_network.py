@@ -6163,10 +6163,47 @@ def add_nuclear_htgr(
         marginal_cost=0
     )
 
+    #Add HTGR heat carrier, bus and store
+    n.add("Carrier", "HTGR heat")
+
+    n.add(
+        "Bus",
+        spatial.htgr.nodes,
+        location=spatial.htgr.locations,
+        carrier="HTGR heat",
+        unit=unit
+    )
+
+    n.add(
+        "Store",
+        spatial.htgr.nodes + " Store",
+        bus=spatial.htgr.nodes,
+        e_nom_extendable=True,
+        e_cyclic=True,
+        carrier="HTGR heat",
+        capital_cost=0,
+    )
+
+    #Add HTGR reactor to convert uranium to heat
     n.add(
         "Link",
         spatial.htgr.nodes,
         bus0=spatial.nodes + " uranium",
+        bus1=spatial.htgr.nodes,
+        carrier="HTGR heat",
+        lifetime=costs.at["nuclear", "lifetime"],
+        efficiency=1.,
+        p_nom_extendable=True,
+        capital_cost=0*costs.at["nuclear", "capital_cost"],
+        marginal_cost=0,#costs.loc["nuclear", "VOM"],
+    )
+
+
+    n.add(
+        "Link",
+        spatial.htgr.nodes,
+        suffix=" electricity",
+        bus0=spatial.htgr.nodes,
         bus1=spatial.nodes,
         carrier="HTGR",
         lifetime=costs.at["nuclear", "lifetime"],
