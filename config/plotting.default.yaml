@@ -53,6 +53,7 @@ plotting:
       - residential rural heat
       - services urban decentral heat
       - services rural heat
+      #- nuclear HTGR heat
   heatmap_timeseries:
     marginal_price:
     - AC
@@ -97,6 +98,7 @@ plotting:
     - methanol
     - oil
     - urban central water tanks
+    #- nuclear HTGR heat
   balance_map:
     bus_carriers:
     - AC
@@ -106,6 +108,7 @@ plotting:
     - methanol
     - co2 stored
     - urban central heat
+    #- nuclear HTGR heat
     AC:
       unit: TWh
       unit_conversion: 1_000_000
@@ -579,6 +582,10 @@ plotting:
     import NH3: '#e2ed74'
     import oil: '#93eda2'
     import methanol: '#87d0e6'
+    nuclear HTGR: 'red'
+    HTGR: 'red'
+    HTGR heat: 'red'
     nuclear HTGR heat: 'red'
     nuclear HTGR electricity: 'purple'
     H2 SOFC Electrolysis: 'orange'
+    L-DAC: 'magenta'
