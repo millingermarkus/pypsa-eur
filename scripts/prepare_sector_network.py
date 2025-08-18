@@ -65,7 +65,7 @@ def define_spatial(nodes, options):
     spatial.biomass = SimpleNamespace()
     spatial.msw = SimpleNamespace()
 
-    if options.get("biomass_spatial", options["biomass_transport"]):
+    if options.get("biomass_spatial"):#, options["biomass_transport"]):
         spatial.biomass.nodes = nodes + " solid biomass"
         spatial.biomass.nodes_unsustainable = nodes + " unsustainable solid biomass"
         spatial.biomass.bioliquids = nodes + " unsustainable bioliquids"
@@ -4222,7 +4222,7 @@ def add_biomass(
         )
         n.add(
             "Link",
-            spatial.biomass.nodes,
+            spatial.biomass.locations,
             suffix=" biomass to liquid",
             bus0=spatial.biomass.nodes,
             bus1=spatial.oil.nodes,
@@ -4240,11 +4240,11 @@ def add_biomass(
 
     # Solid biomass to liquid fuel with carbon capture
     if options["biomass_to_liquid_cc"]:
-        # Assuming that acid gas removal (incl. CO2) from syngas i performed with Rectisol
+        # Assuming that acid gas removal (incl. CO2) from syngas is performed with Rectisol
         # process (Methanol) and that electricity demand for this is included in the base process
         n.add(
             "Link",
-            spatial.biomass.nodes,
+            spatial.biomass.locations,
             suffix=" biomass to liquid CC",
             bus0=spatial.biomass.nodes,
             bus1=spatial.oil.nodes,
@@ -4283,7 +4283,7 @@ def add_biomass(
         )
         n.add(
             "Link",
-            name,
+            spatial.biomass.locations,
             suffix=" electrobiofuels",
             bus0=spatial.biomass.nodes,
             bus1=spatial.oil.nodes,
@@ -4312,7 +4312,7 @@ def add_biomass(
     if options["biosng"]:
         n.add(
             "Link",
-            spatial.biomass.nodes,
+            spatial.biomass.locations,
             suffix=" solid biomass to gas",
             bus0=spatial.biomass.nodes,
             bus1=spatial.gas.nodes,
@@ -4334,7 +4334,7 @@ def add_biomass(
         # process (Methanol) and that electricity demand for this is included in the base process
         n.add(
             "Link",
-            spatial.biomass.nodes,
+            spatial.biomass.locations,
             suffix=" solid biomass to gas CC",
             bus0=spatial.biomass.nodes,
             bus1=spatial.gas.nodes,
@@ -5096,6 +5096,8 @@ def add_industry(
 
         add_high_t_industry(n, nodes, industrial_demand, costs, must_run)
     else:
+        print('Adding exogenous industry heat')
+        input('')
         add_exogen_t_industry(n, nodes, industrial_demand, costs)
 
     n.add(
@@ -5916,6 +5918,63 @@ def add_waste_heat(
             n.links.loc[urban_central + " H2 Fuel Cell", "efficiency2"] = (
                 0.95 - n.links.loc[urban_central + " H2 Fuel Cell", "efficiency"]
             ) * options["use_fuel_cell_waste_heat"]
+
+        # Biomass to liquid waste heat
+        if (
+            options["use_biofuel_waste_heat"]
+            and "biomass to liquid" in link_carriers
+        ):
+            n.links.loc[urban_central + " biomass to liquid", "bus3"] = (
+                urban_central + " urban central heat"
+            )
+            n.links.loc[urban_central + " biomass to liquid", "efficiency3"] = (
+                0.95 - n.links.loc[urban_central + " biomass to liquid", "efficiency"]
+            ) * options["use_biofuel_waste_heat"]
+
+        if (
+            options["use_biofuel_waste_heat"]
+            and "biomass to liquid CC" in link_carriers
+        ):
+            n.links.loc[urban_central + " biomass to liquid CC", "bus4"] = (
+                urban_central + " urban central heat"
+            )
+            n.links.loc[urban_central + " biomass to liquid CC", "efficiency4"] = (
+                0.95 - n.links.loc[urban_central + " biomass to liquid CC", "efficiency"]
+            ) * options["use_biofuel_waste_heat"]
+
+        if (
+            options["use_biofuel_waste_heat"]
+            and "electrobiofuels" in link_carriers
+        ):
+            n.links.loc[urban_central + " electrobiofuels", "bus5"] = (
+                urban_central + " urban central heat"
+            )
+            n.links.loc[urban_central + " electrobiofuels", "efficiency5"] = (
+                0.95 - costs.at['electrobiofuels', "efficiency-tot"]
+            ) * options["use_biofuel_waste_heat"]
+
+        # BioSNG waste heat
+        if (
+            options["use_biosng_waste_heat"]
+            and "BioSNG" in link_carriers
+        ):
+            n.links.loc[urban_central + " solid biomass to gas", "bus3"] = (
+                urban_central + " urban central heat"
+            )
+            n.links.loc[urban_central + " solid biomass to gas", "efficiency3"] = (
+                0.95 - n.links.loc[urban_central + " solid biomass to gas", "efficiency"]
+            ) * options["use_biosng_waste_heat"]
+
+        if (
+            options["use_biosng_waste_heat"]
+            and "BioSNG CC" in link_carriers
+        ):
+            n.links.loc[urban_central + " solid biomass to gas CC", "bus3"] = (
+                urban_central + " urban central heat"
+            )
+            n.links.loc[urban_central + " solid biomass to gas CC", "efficiency3"] = (
+                0.95 - n.links.loc[urban_central + " solid biomass to gas CC", "efficiency"]
+            ) * options["use_biosng_waste_heat"]
 
 
 def add_agriculture(
