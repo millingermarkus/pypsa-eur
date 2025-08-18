@@ -772,6 +772,31 @@ sector:
   conventional_generation:
     OCGT: gas
     CCGT: gas
+  industry_t: # heat supply industry
+    endogen: false  # if heat supply for industry should be enodgenously optimised
+    must_run: 0.6 # NB: industrial heat demand is in reality supplied at site by discrete plants
+    # which follow the local demand and therefore cannot be dispatched too much.
+    # Thus, p_min_pu is set to must run to avoid too much dispatch behaviour. Improvements welcome!
+    # share of medium and high temperature for process heat based on EU27 Fig. 5 https://www.agora-industry.org/publications/direct-electrification-of-industrial-process-heat
+    # TODO: should be improved and split up by country and sector
+    share_medium: 0.42
+    share_high: 0.58
+    # Options in case of endogenous industry heat supply
+    low_T:
+      biomass: true
+      heat_pumps: false
+      electric_boiler: true
+      methane: true
+      methanol: true
+    medium_T:
+      biomass: true
+      methane: true
+      hydrogen: true
+      methanol: true
+      electric_boiler: false
+    high_T:
+      hydrogen: true
+      methane: true
   biomass_to_liquid: true
   biomass_to_liquid_cc: false
   electrobiofuels: true

@@ -4386,6 +4386,616 @@ def add_biomass(
         )
 
 
+def add_low_t_industry(n, nodes, industrial_demand, costs, must_run):
+    """
+    Add low temperature heat for industry.
+    """
+
+    logger.info("Add low temperature industry.")
+
+    n.add(
+        "Bus",
+        nodes + " lowT industry",
+        location=nodes,
+        carrier="lowT industry",
+        unit="MWh_LHV",
+    )
+
+    n.add(
+        "Load",
+        nodes,
+        suffix=" lowT industry",
+        bus=nodes + " lowT industry",
+        carrier="lowT industry",
+        p_set=industrial_demand.loc[nodes, "solid biomass"] / 8760.0,
+    )
+
+    if (
+            options["industry_t"]["low_T"]["biomass"]
+            or not options["industry_t"]["endogen"]
+    ):
+        marginal_cost = costs.at["solid biomass boiler steam", "VOM"]
+        if options.get("solid_biomass_transport_cost", False):
+            marginal_cost += options["solid_biomass_transport_cost"]
+        n.add(
+            "Link",
+            nodes,
+            suffix=" solid biomass for lowT industry",
+            bus0=spatial.biomass.nodes,
+            bus1=nodes + " lowT industry",
+            carrier="lowT industry solid biomass",
+            p_nom_extendable=True,
+            p_min_pu=must_run,
+            efficiency=costs.at["solid biomass boiler steam", "efficiency"],
+            capital_cost=costs.at["solid biomass boiler steam", "capital_cost"]
+                         * costs.at["solid biomass boiler steam", "efficiency"],
+            marginal_cost=marginal_cost,
+            lifetime=costs.at["solid biomass boiler steam", "lifetime"],
+        )
+
+        marginal_cost = costs.at["solid biomass boiler steam", "VOM"]
+        if options.get("solid_biomass_transport_cost", False):
+            marginal_cost += options["solid_biomass_transport_cost"]
+
+        n.add(
+            "Link",
+            nodes,
+            suffix=" solid biomass for lowT industry CC",
+            bus0=spatial.biomass.nodes,
+            bus1=nodes + " lowT industry",
+            bus2="co2 atmosphere",
+            bus3=spatial.co2.nodes,
+            carrier="lowT industry solid biomass CC",
+            p_nom_extendable=True,
+            p_min_pu=must_run,
+            efficiency=costs.at["solid biomass boiler steam CC", "efficiency"],
+            capital_cost=costs.at["solid biomass boiler steam CC", "capital_cost"]
+                         * costs.at["solid biomass boiler steam CC", "efficiency"]
+                         + costs.at["biomass CHP capture", "capital_cost"]
+                         * costs.at["solid biomass", "CO2 intensity"],
+            marginal_cost=marginal_cost,
+            efficiency2=-costs.at["solid biomass", "CO2 intensity"]
+                        * costs.at["biomass CHP capture", "capture_rate"],
+            efficiency3=costs.at["solid biomass", "CO2 intensity"]
+                        * costs.at["biomass CHP capture", "capture_rate"],
+            lifetime=costs.at["solid biomass boiler steam CC", "lifetime"],
+        )
+
+    if options["industry_t"]["low_T"]["methane"]:
+        n.add(
+            "Link",
+            nodes,
+            suffix=" gas for lowT industry",
+            bus0=spatial.gas.nodes,
+            bus1=nodes + " lowT industry",
+            bus2="co2 atmosphere",
+            carrier="lowT industry methane",
+            p_nom_extendable=True,
+            p_min_pu=must_run,
+            efficiency=costs.at["gas boiler steam", "efficiency"],
+            capital_cost=costs.at["gas boiler steam", "capital_cost"]
+                         * costs.at["gas boiler steam", "efficiency"],
+            marginal_cost=costs.at["gas boiler steam", "VOM"],
+            efficiency2=costs.at["gas", "CO2 intensity"],
+            lifetime=costs.at["gas boiler steam", "lifetime"],
+        )
+
+        eta = (
+                costs.at["gas boiler steam", "efficiency"]
+                - costs.at["gas", "CO2 intensity"]
+                * costs.at["biomass CHP capture", "heat-input"]
+        )
+        n.add(
+            "Link",
+            nodes,
+            suffix=" gas for lowT industry CC",
+            bus0=spatial.gas.nodes,
+            bus1=nodes + " lowT industry",
+            bus2=spatial.co2.nodes,
+            bus3="co2 atmosphere",
+            carrier="lowT industry methane CC",
+            p_nom_extendable=True,
+            p_min_pu=must_run,
+            efficiency=eta,
+            capital_cost=costs.at["gas boiler steam", "capital_cost"]
+                         * costs.at["gas boiler steam", "efficiency"]
+                         + costs.at["biomass CHP capture", "capital_cost"]
+                         * costs.at["gas", "CO2 intensity"],
+            marginal_cost=costs.at["gas boiler steam", "VOM"],
+            efficiency3=costs.at["gas", "CO2 intensity"]
+                        * (1 - costs.at["biomass CHP capture", "capture_rate"]),
+            efficiency2=costs.at["gas", "CO2 intensity"]
+                        * costs.at["biomass CHP capture", "capture_rate"],
+            lifetime=costs.at["gas boiler steam", "lifetime"],
+        )
+
+    if options["industry_t"]["low_T"]["heat_pumps"]:
+        # high temperature industrial heat pump can heat up to 150°C
+        eta = costs.at["industrial heat pump high temperature", "efficiency"]
+        n.add(
+            "Link",
+            nodes,
+            suffix=" industrial heat pump steam for lowT industry",
+            bus0=nodes,
+            bus1=nodes + " lowT industry",
+            carrier="lowT industry heat pump",
+            p_nom_extendable=True,
+            p_min_pu=must_run,
+            efficiency=eta,
+            capital_cost=costs.at["industrial heat pump high temperature", "capital_cost"]
+                         * eta,
+            marginal_cost=costs.at["industrial heat pump high temperature", "VOM"],
+            lifetime=costs.at["industrial heat pump high temperature", "lifetime"],
+        )
+
+    if options["industry_t"]["low_T"]["electric_boiler"]:
+        n.add(
+            "Link",
+            nodes,
+            suffix=" electricity for lowT industry",
+            bus0=nodes + " low voltage",
+            bus1=nodes + " lowT industry",
+            carrier="lowT industry electricity",
+            p_nom_extendable=True,
+            p_min_pu=must_run,
+            efficiency=costs.at["electric boiler steam", "efficiency"],
+            capital_cost=costs.at["electric boiler steam", "capital_cost"]
+            * costs.at["electric boiler steam", "efficiency"],
+            marginal_cost=costs.at["electric boiler steam", "VOM"],
+            lifetime=costs.at["electric boiler steam", "lifetime"],
+        )
+
+    if options["industry_t"]["low_T"]["methanol"]:
+        n.add(
+            "Link",
+            nodes,
+            suffix=" methanol for lowT industry",
+            bus0=spatial.methanol.nodes,
+            bus1=nodes + " lowT industry",
+            bus2="co2 atmosphere",
+            carrier="lowT industry methanol",
+            p_nom_extendable=True,
+            efficiency=1.0,
+            efficiency2=costs.at["methanol", "CO2 intensity"],
+            capital_cost=costs.at["gas boiler steam", "capital_cost"],
+
+        )
+
+        n.add(
+            "Link",
+            nodes,
+            suffix=" methanol for lowT industry CC",
+            bus0=spatial.methanol.nodes,
+            bus1=nodes + " lowT industry",
+            bus2="co2 atmosphere",
+            bus3=spatial.co2.nodes,
+            carrier="lowT industry CC methanol",
+            p_nom_extendable=True,
+            capital_cost=costs.at["cement capture", "capital_cost"]
+            * costs.at["methanol", "CO2 intensity"]
+            + costs.at["gas boiler steam", "capital_cost"],
+            efficiency=0.9,
+            efficiency2=costs.at["methanol", "CO2 intensity"]
+            * (1 - costs.at["cement capture", "capture_rate"]),
+            efficiency3=costs.at["methanol", "CO2 intensity"]
+            * costs.at["cement capture", "capture_rate"],
+            lifetime=costs.at["cement capture", "lifetime"],
+
+        )
+
+
+def add_medium_t_industry(n, nodes, industrial_demand, costs, must_run):
+    """
+    Add medium temperature heat for industry.
+
+    Medium and high temperature heat demands are taken from today's
+    industry methane demand and split according to config setting.
+    """
+
+    logger.info("Add medium temperature industry.")
+
+    n.add(
+        "Bus",
+        nodes + " mediumT industry",
+        location=nodes,
+        carrier="mediumT industry",
+        unit="MWh_LHV",
+    )
+
+    share_m = options["industry_t"]["share_medium"]
+    n.add(
+        "Load",
+        nodes,
+        suffix=" mediumT industry",
+        bus=nodes + " mediumT industry",
+        carrier="mediumT industry",
+        p_set=share_m * industrial_demand.loc[nodes, "methane"] / 8760.0,
+    )
+
+    if options["industry_t"]["medium_T"]["biomass"]:
+        marginal_cost = (costs.at["direct firing solid fuels", "VOM"]
+                         + costs.at["biomass boiler", "pelletizing cost"])
+        if options.get("solid_biomass_transport_cost", False):
+            marginal_cost += options["solid_biomass_transport_cost"]
+        n.add(
+            "Link",
+            nodes,
+            suffix=" solid biomass for mediumT industry",
+            bus0=spatial.biomass.nodes,
+            bus1=nodes + " mediumT industry",
+            carrier="solid biomass for mediumT industry",
+            p_nom_extendable=True,
+            p_min_pu=must_run,
+            efficiency=costs.at["direct firing solid fuels", "efficiency"],
+            capital_cost=costs.at["direct firing solid fuels", "capital_cost"]
+                         * costs.at["direct firing solid fuels", "efficiency"],
+            marginal_cost=marginal_cost,
+            lifetime=costs.at["direct firing solid fuels", "lifetime"],
+        )
+
+        marginal_cost = (costs.at["direct firing solid fuels", "VOM"]
+                         + costs.at["biomass boiler", "pelletizing cost"])
+        if options.get("solid_biomass_transport_cost", False):
+            marginal_cost += options["solid_biomass_transport_cost"]
+        n.add(
+            "Link",
+            nodes,
+            suffix=" solid biomass for mediumT industry CC",
+            bus0=spatial.biomass.nodes,
+            bus1=nodes + " mediumT industry",
+            bus2=spatial.co2.nodes,
+            bus3="co2 atmosphere",
+            carrier="solid biomass for mediumT industry CC",
+            p_nom_extendable=True,
+            p_min_pu=must_run,
+            efficiency=costs.at["direct firing solid fuels CC", "efficiency"],
+            capital_cost=costs.at["direct firing solid fuels CC", "capital_cost"]
+                         * costs.at["direct firing solid fuels CC", "efficiency"]
+                         + costs.at["biomass CHP capture", "capital_cost"]
+                         * costs.at["solid biomass", "CO2 intensity"],
+            marginal_cost=marginal_cost,
+            efficiency2=costs.at["solid biomass", "CO2 intensity"]
+                        * costs.at["biomass CHP capture", "capture_rate"],
+            efficiency3=-costs.at["solid biomass", "CO2 intensity"]
+                        * costs.at["biomass CHP capture", "capture_rate"],
+            lifetime=costs.at["direct firing solid fuels CC", "lifetime"],
+        )
+
+    if options["industry_t"]["medium_T"]["methane"]:
+        # TODO: add electricity input from DEA and adapt VOM to exclude electricity cost!
+        n.add(
+            "Link",
+            nodes,
+            suffix=" gas for mediumT industry",
+            bus0=spatial.gas.nodes,
+            bus1=nodes + " mediumT industry",
+            bus2="co2 atmosphere",
+            carrier="gas for mediumT industry",
+            p_nom_extendable=True,
+            p_min_pu=must_run,
+            efficiency=costs.at["direct firing gas", "efficiency"],
+            efficiency2=costs.at["gas", "CO2 intensity"],
+            capital_cost=costs.at["direct firing gas", "capital_cost"]
+                         * costs.at["direct firing gas", "efficiency"],
+            marginal_cost=costs.at["direct firing gas", "VOM"],
+            lifetime=costs.at["direct firing gas", "lifetime"],
+        )
+
+        eta = (
+                costs.at["direct firing gas", "efficiency"]
+                - costs.at["gas", "CO2 intensity"]
+                * costs.at["biomass CHP capture", "heat-input"]
+        )
+        n.add(
+            "Link",
+            nodes,
+            suffix=" gas for mediumT industry CC",
+            bus0=spatial.gas.nodes,
+            bus1=nodes + " mediumT industry",
+            bus2=spatial.co2.nodes,
+            bus3="co2 atmosphere",
+            carrier="gas for mediumT industry CC",
+            p_nom_extendable=True,
+            p_min_pu=must_run,
+            efficiency=eta,
+            efficiency2=costs.at["gas", "CO2 intensity"]
+                        * costs.at["biomass CHP capture", "capture_rate"],
+            efficiency3=costs.at["gas", "CO2 intensity"]
+                        * (1 - costs.at["biomass CHP capture", "capture_rate"]),
+            capital_cost=costs.at["direct firing gas CC", "capital_cost"]
+                         * costs.at["direct firing gas CC", "efficiency"]
+                         + costs.at["biomass CHP capture", "capital_cost"]
+                         * costs.at["gas", "CO2 intensity"],
+            marginal_cost=costs.at["direct firing gas CC", "VOM"],
+            lifetime=costs.at["direct firing gas", "lifetime"],
+        )
+
+    if options["industry_t"]["medium_T"]["electric_boiler"]:
+        n.add(
+            "Link",
+            nodes,
+            suffix=" electricity for mediumT industry",
+            bus0=nodes + " low voltage",
+            bus1=nodes + " mediumT industry",
+            carrier="electricity for mediumT industry",
+            p_nom_extendable=True,
+            p_min_pu=must_run,
+            efficiency=costs.at["electric boiler steam", "efficiency"],
+            capital_cost=costs.at["electric boiler steam", "capital_cost"]
+            * costs.at["electric boiler steam", "efficiency"],
+            marginal_cost=costs.at["electric boiler steam", "VOM"],
+            lifetime=costs.at["electric boiler steam", "lifetime"],
+        )
+    if options["industry_t"]["medium_T"]["methanol"]:
+        n.add(
+            "Link",
+            nodes,
+            suffix=" methanol for mediumT industry",
+            bus0=spatial.methanol.nodes,
+            bus1=nodes + " mediumT industry",
+            bus2="co2 atmosphere",
+            carrier="methanol for mediumT industry",
+            p_nom_extendable=True,
+            efficiency=1.0,
+            efficiency2=costs.at["methanol", "CO2 intensity"],
+            capital_cost=costs.at["gas boiler steam", "capital_cost"],
+
+        )
+
+        n.add(
+            "Link",
+            nodes,
+            suffix=" methanol for mediumT industry CC",
+            bus0=spatial.methanol.nodes,
+            bus1=nodes + " mediumT industry",
+            bus2="co2 atmosphere",
+            bus3=spatial.co2.nodes,
+            carrier="methanol for mediumT industry CC",
+            p_nom_extendable=True,
+            capital_cost=costs.at["cement capture", "capital_cost"]
+            * costs.at["methanol", "CO2 intensity"]
+            + costs.at["gas boiler steam", "capital_cost"],
+            efficiency=0.9,
+            efficiency2=costs.at["methanol", "CO2 intensity"]
+            * (1 - costs.at["cement capture", "capture_rate"]),
+            efficiency3=costs.at["methanol", "CO2 intensity"]
+            * costs.at["cement capture", "capture_rate"],
+            lifetime=costs.at["cement capture", "lifetime"],
+        )
+
+    if options["industry_t"]["medium_T"]["hydrogen"]:
+        # TODO: research cost of industrial H2 combustion, here set to 10x methane combustion
+        n.add(
+            "Link",
+            nodes,
+            suffix=" hydrogen for mediumT industry",
+            bus0=nodes + " H2",
+            bus1=nodes + " mediumT industry",
+            carrier="hydrogen for mediumT industry",
+            capital_cost=10
+                         * costs.at["direct firing gas", "capital_cost"]
+                         * costs.at["direct firing gas", "efficiency"],
+            marginal_cost=10 * costs.at["direct firing gas", "VOM"],
+            p_nom_extendable=True,
+            p_min_pu=must_run,
+            efficiency=costs.at["direct firing gas", "efficiency"],
+        )
+
+
+def add_high_t_industry(n, nodes, industrial_demand, costs, must_run):
+    """
+    Add high temperature heat for industry.
+
+    Medium and high temperature heat demands are taken from today's
+    industry methane demand and split according to config setting.
+    """
+
+    logger.info("Add high temperature industry.")
+
+    n.add("Bus", nodes + " highT industry", location=nodes, carrier="highT industry")
+
+    share_h = options["industry_t"]["share_high"]
+
+    n.add(
+        "Load",
+        nodes,
+        suffix=" highT industry",
+        bus=nodes + " highT industry",
+        carrier="highT industry",
+        p_set=share_h * industrial_demand.loc[nodes, "methane"] / 8760.0,
+    )
+
+    if options["industry_t"]["high_T"]["methane"]:
+        n.add(
+            "Link",
+            nodes,
+            suffix=" gas for highT industry",
+            bus0=spatial.gas.nodes,
+            bus1=nodes + " highT industry",
+            bus2="co2 atmosphere",
+            carrier="gas for highT industry",
+            p_nom_extendable=True,
+            p_min_pu=must_run,
+            efficiency=costs.at["direct firing gas", "efficiency"],
+            efficiency2=costs.at["gas", "CO2 intensity"],
+            capital_cost=costs.at["direct firing gas", "capital_cost"]
+                         * costs.at["direct firing gas", "efficiency"],
+            marginal_cost=costs.at["direct firing gas", "VOM"],
+            lifetime=costs.at["direct firing gas", "lifetime"],
+        )
+
+        eta = (
+                costs.at["direct firing gas", "efficiency"]
+                - costs.at["gas", "CO2 intensity"]
+                * costs.at["biomass CHP capture", "heat-input"]
+        )
+        n.add(
+            "Link",
+            nodes,
+            suffix=" gas for highT industry CC",
+            bus0=spatial.gas.nodes,
+            bus1=nodes + " highT industry",
+            bus2=spatial.co2.nodes,
+            bus3="co2 atmosphere",
+            carrier="gas for highT industry CC",
+            p_nom_extendable=True,
+            p_min_pu=must_run,
+            efficiency=eta,
+            efficiency2=costs.at["gas", "CO2 intensity"]
+                        * costs.at["biomass CHP capture", "capture_rate"],
+            efficiency3=costs.at["gas", "CO2 intensity"]
+                        * (1 - costs.at["biomass CHP capture", "capture_rate"]),
+            capital_cost=costs.at["direct firing gas CC", "capital_cost"]
+                         * costs.at["direct firing gas CC", "efficiency"]
+                         + costs.at["biomass CHP capture", "capital_cost"]
+                         * costs.at["gas", "CO2 intensity"],
+            marginal_cost=costs.at["direct firing gas CC", "VOM"],
+            lifetime=costs.at["direct firing gas", "lifetime"],
+        )
+
+    if options["industry_t"]["high_T"]["hydrogen"]:
+        # TODO: research cost of industrial H2 combustion, here set to 10x methane combustion
+        n.add(
+            "Link",
+            nodes,
+            suffix=" hydrogen for highT industry",
+            bus0=nodes + " H2",
+            bus1=nodes + " highT industry",
+            carrier="hydrogen for highT industry",
+            capital_cost=10
+                         * costs.at["direct firing gas", "capital_cost"]
+                         * costs.at["direct firing gas", "efficiency"],
+            marginal_cost=10 * costs.at["direct firing gas", "VOM"],
+            p_nom_extendable=True,
+            p_min_pu=must_run,
+            efficiency=costs.at["direct firing gas", "efficiency"],
+            lifetime=costs.at["direct firing gas", "lifetime"],
+        )
+
+
+def add_exogen_t_industry(n, nodes, industrial_demand, costs):
+    """
+    Add heat demand for industry with exogenous supply.
+
+    low temperature is supplied by biomass medium and high temperature
+    is supplied by gas
+    """
+
+    n.add(
+        "Bus",
+        spatial.biomass.industry,
+        location=spatial.biomass.locations,
+        carrier="solid biomass for industry",
+        unit="MWh_LHV",
+    )
+
+    if options.get("biomass_spatial", options["biomass_transport"]):
+        p_set = (
+                industrial_demand.loc[spatial.biomass.locations, "solid biomass"].rename(
+                    index=lambda x: x + " solid biomass for industry"
+                )
+                / nhours
+        )
+    else:
+        p_set = industrial_demand["solid biomass"].sum() / nhours
+
+    n.add(
+        "Load",
+        spatial.biomass.industry,
+        bus=spatial.biomass.industry,
+        carrier="solid biomass for industry",
+        p_set=p_set,
+    )
+
+    n.add(
+        "Link",
+        spatial.biomass.industry,
+        bus0=spatial.biomass.nodes,
+        bus1=spatial.biomass.industry,
+        carrier="solid biomass for industry",
+        p_nom_extendable=True,
+        efficiency=1.0,
+    )
+
+    if len(spatial.biomass.industry_cc) <= 1 and len(spatial.co2.nodes) > 1:
+        link_names = nodes + " " + spatial.biomass.industry_cc
+    else:
+        link_names = spatial.biomass.industry_cc
+
+    n.add(
+        "Link",
+        link_names,
+        bus0=spatial.biomass.nodes,
+        bus1=spatial.biomass.industry,
+        bus2="co2 atmosphere",
+        bus3=spatial.co2.nodes,
+        carrier="solid biomass for industry CC",
+        p_nom_extendable=True,
+        capital_cost=costs.at["cement capture", "capital_cost"]
+                     * costs.at["solid biomass", "CO2 intensity"],
+        efficiency=0.9,  # TODO: make config option
+        efficiency2=-costs.at["solid biomass", "CO2 intensity"]
+                    * costs.at["cement capture", "capture_rate"],
+        efficiency3=costs.at["solid biomass", "CO2 intensity"]
+                    * costs.at["cement capture", "capture_rate"],
+        lifetime=costs.at["cement capture", "lifetime"],
+    )
+
+    n.add(
+        "Bus",
+        spatial.gas.industry,
+        location=spatial.gas.locations,
+        carrier="gas for industry",
+        unit="MWh_LHV",
+    )
+
+    gas_demand = industrial_demand.loc[nodes, "methane"] / nhours
+
+    if options["gas_network"]:
+        spatial_gas_demand = gas_demand.rename(index=lambda x: x + " gas for industry")
+    else:
+        spatial_gas_demand = gas_demand.sum()
+
+    n.add(
+        "Load",
+        spatial.gas.industry,
+        bus=spatial.gas.industry,
+        carrier="gas for industry",
+        p_set=spatial_gas_demand,
+    )
+
+    n.add(
+        "Link",
+        spatial.gas.industry,
+        bus0=spatial.gas.nodes,
+        bus1=spatial.gas.industry,
+        bus2="co2 atmosphere",
+        carrier="gas for industry",
+        p_nom_extendable=True,
+        efficiency=1.0,
+        efficiency2=costs.at["gas", "CO2 intensity"],
+    )
+
+    n.add(
+        "Link",
+        spatial.gas.industry_cc,
+        bus0=spatial.gas.nodes,
+        bus1=spatial.gas.industry,
+        bus2="co2 atmosphere",
+        bus3=spatial.co2.nodes,
+        carrier="gas for industry CC",
+        p_nom_extendable=True,
+        capital_cost=costs.at["cement capture", "capital_cost"]
+                     * costs.at["gas", "CO2 intensity"],
+        efficiency=0.9,
+        efficiency2=costs.at["gas", "CO2 intensity"]
+                    * (1 - costs.at["cement capture", "capture_rate"]),
+        efficiency3=costs.at["gas", "CO2 intensity"]
+                    * costs.at["cement capture", "capture_rate"],
+        lifetime=costs.at["cement capture", "lifetime"],
+    )
+
+
 def add_industry(
     n: pypsa.Network,
     costs: pd.DataFrame,
@@ -4472,119 +5082,21 @@ def add_industry(
     # 1e6 to convert TWh to MWh
     industrial_demand = pd.read_csv(industrial_demand_file, index_col=0) * 1e6 * nyears
 
-    n.add(
-        "Bus",
-        spatial.biomass.industry,
-        location=spatial.biomass.locations,
-        carrier="solid biomass for industry",
-        unit="MWh_LHV",
-    )
 
-    if options.get("biomass_spatial", options["biomass_transport"]):
-        p_set = (
-            industrial_demand.loc[spatial.biomass.locations, "solid biomass"].rename(
-                index=lambda x: x + " solid biomass for industry"
-            )
-            / nhours
+    # endogenous heat supply for industry
+    if options["industry_t"]["endogen"]:
+        must_run = options["industry_t"]["must_run"]
+        logger.info(
+            f"Endogenise heat supply of industry with must run condition {must_run}"
         )
+
+        add_low_t_industry(n, nodes, industrial_demand, costs, must_run)
+
+        add_medium_t_industry(n, nodes, industrial_demand, costs, must_run)
+
+        add_high_t_industry(n, nodes, industrial_demand, costs, must_run)
     else:
-        p_set = industrial_demand["solid biomass"].sum() / nhours
-
-    n.add(
-        "Load",
-        spatial.biomass.industry,
-        bus=spatial.biomass.industry,
-        carrier="solid biomass for industry",
-        p_set=p_set,
-    )
-
-    n.add(
-        "Link",
-        spatial.biomass.industry,
-        bus0=spatial.biomass.nodes,
-        bus1=spatial.biomass.industry,
-        carrier="solid biomass for industry",
-        p_nom_extendable=True,
-        efficiency=1.0,
-    )
-
-    if len(spatial.biomass.industry_cc) <= 1 and len(spatial.co2.nodes) > 1:
-        link_names = nodes + " " + spatial.biomass.industry_cc
-    else:
-        link_names = spatial.biomass.industry_cc
-
-    n.add(
-        "Link",
-        link_names,
-        bus0=spatial.biomass.nodes,
-        bus1=spatial.biomass.industry,
-        bus2="co2 atmosphere",
-        bus3=spatial.co2.nodes,
-        carrier="solid biomass for industry CC",
-        p_nom_extendable=True,
-        capital_cost=costs.at["cement capture", "capital_cost"]
-        * costs.at["solid biomass", "CO2 intensity"],
-        efficiency=0.9,  # TODO: make config option
-        efficiency2=-costs.at["solid biomass", "CO2 intensity"]
-        * costs.at["cement capture", "capture_rate"],
-        efficiency3=costs.at["solid biomass", "CO2 intensity"]
-        * costs.at["cement capture", "capture_rate"],
-        lifetime=costs.at["cement capture", "lifetime"],
-    )
-
-    n.add(
-        "Bus",
-        spatial.gas.industry,
-        location=spatial.gas.locations,
-        carrier="gas for industry",
-        unit="MWh_LHV",
-    )
-
-    gas_demand = industrial_demand.loc[nodes, "methane"] / nhours
-
-    if options["gas_network"]:
-        spatial_gas_demand = gas_demand.rename(index=lambda x: x + " gas for industry")
-    else:
-        spatial_gas_demand = gas_demand.sum()
-
-    n.add(
-        "Load",
-        spatial.gas.industry,
-        bus=spatial.gas.industry,
-        carrier="gas for industry",
-        p_set=spatial_gas_demand,
-    )
-
-    n.add(
-        "Link",
-        spatial.gas.industry,
-        bus0=spatial.gas.nodes,
-        bus1=spatial.gas.industry,
-        bus2="co2 atmosphere",
-        carrier="gas for industry",
-        p_nom_extendable=True,
-        efficiency=1.0,
-        efficiency2=costs.at["gas", "CO2 intensity"],
-    )
-
-    n.add(
-        "Link",
-        spatial.gas.industry_cc,
-        bus0=spatial.gas.nodes,
-        bus1=spatial.gas.industry,
-        bus2="co2 atmosphere",
-        bus3=spatial.co2.nodes,
-        carrier="gas for industry CC",
-        p_nom_extendable=True,
-        capital_cost=costs.at["cement capture", "capital_cost"]
-        * costs.at["gas", "CO2 intensity"],
-        efficiency=0.9,
-        efficiency2=costs.at["gas", "CO2 intensity"]
-        * (1 - costs.at["cement capture", "capture_rate"]),
-        efficiency3=costs.at["gas", "CO2 intensity"]
-        * costs.at["cement capture", "capture_rate"],
-        lifetime=costs.at["cement capture", "lifetime"],
-    )
+        add_exogen_t_industry(n, nodes, industrial_demand, costs)
 
     n.add(
         "Load",

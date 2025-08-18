@@ -478,6 +478,29 @@ plotting:
     urban central resistive heater: '#8cdf85'
     retrofitting: '#8487e8'
     building retrofitting: '#8487e8'
+    # industry heat
+    highT industry: "#ff6f61"
+    mediumT industry: "#6b5b95"
+    lowT industry: "#88b04b"
+    gas for mediumT industry: "#ffa500"
+    gas for highT industry: "#ffcc00"
+    solid biomass for mediumT industry CC: "#92a8d1"
+    lowT industry methane: "#f7cac9"
+    lowT industry electricity: "#034f84"
+    gas for highT industry CC: "#ffb347"
+    hydrogen for mediumT industry: "#45b8ac"
+    hydrogen for highT industry: "#b565a7"
+    lowT industry heat pump: "#ff6b6b"
+    gas for mediumT industry CC: "#f0e68c"
+    solid biomass for mediumT industry: "#d0e17d"  # updated
+    lowT industry solid biomass CC: "#c94c4c"
+    lowT industry solid biomass: "#a8e6cf"
+    lowT industry methane CC: "#ff9ff3"
+    lowT industry methanol: "#d97db3"
+    lowT industry CC methanol: "#c768a6"
+    methanol for mediumT industry: "#e38ebf"
+    methanol for mediumT industry CC: "#c06d9f"
+    electricity for mediumT industry: "#82b1ff"
     # hydrogen
     H2 for industry: "#f073da"
     H2 for shipping: "#ebaee0"
