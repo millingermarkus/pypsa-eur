@@ -61,6 +61,7 @@ import xarray as xr
 from pypsa.clustering.spatial import DEFAULT_ONE_PORT_STRATEGIES, normed_or_uniform
 
 from scripts._helpers import (
+    PYPSA_V1,
     configure_logging,
     get_snapshots,
     rename_techs,
@@ -251,7 +252,15 @@ def load_costs(
     costs = costs.fillna(config["fill_values"])
 
     # Process overwrites for various attributes
-    for attr in ("investment", "lifetime", "FOM", "VOM", "efficiency", "fuel"):
+    for attr in (
+        "investment",
+        "lifetime",
+        "FOM",
+        "VOM",
+        "efficiency",
+        "fuel",
+        "standing losses",
+    ):
         overwrites = config["overwrites"].get(attr)
         if overwrites is not None:
             overwrites = pd.Series(overwrites)
@@ -273,6 +282,8 @@ def load_costs(
     costs.at["solar", "capital_cost"] = costs.at["solar-utility", "capital_cost"]
     costs = costs.rename({"solar-utility single-axis tracking": "solar-hsat"})
 
+    costs = costs.rename(columns={"standing losses": "standing_losses"})
+
     # Calculate storage costs if max_hours is provided
     if max_hours is not None:
 
@@ -285,6 +296,7 @@ def load_costs(
                     "capital_cost": capital_cost,
                     "marginal_cost": 0.0,
                     "CO2 intensity": 0.0,
+                    "standing_losses": 0.0,
                 }
             )
 
@@ -438,7 +450,9 @@ def attach_load(
     )
 
     # apply clustering busmap
-    busmap = pd.read_csv(busmap_fn, dtype=str).set_index("Bus").squeeze()
+    busmap = pd.read_csv(busmap_fn, dtype=str)
+    index_col = "name" if PYPSA_V1 else "Bus"
+    busmap = busmap.set_index(index_col).squeeze()
     load = load.groupby(busmap).sum().T
 
     logger.info(f"Load data scaled by factor {scaling}.")

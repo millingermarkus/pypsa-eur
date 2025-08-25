@@ -818,7 +818,13 @@ def add_co2_tracking(n, costs, options, sequestration_potential_file=None):
             options["regional_co2_sequestration_potential"]["max_size"] * 1e3
         )  # Mt
         annualiser = options["regional_co2_sequestration_potential"]["years_of_storage"]
-        e_nom_max = pd.read_csv(sequestration_potential_file, index_col=0).squeeze()
+        df = pd.read_csv(sequestration_potential_file, index_col=0)
+        if df.shape == (1, 1):
+            # if only one value, manually convert to a Series
+            e_nom_max = pd.Series(df.iloc[0, 0], index=df.index)
+        else:
+            e_nom_max = df.squeeze()
+
         e_nom_max = (
             e_nom_max.reindex(spatial.co2.locations)
             .fillna(0.0)
@@ -1594,23 +1600,24 @@ def insert_electricity_distribution_grid(
     n.generators.loc[solar, "capital_cost"] = costs.at["solar-utility", "capital_cost"]
 
     fn = solar_rooftop_potentials_fn
-    potential = pd.read_csv(fn, index_col=["bus", "bin"]).squeeze()
-    potential.index = potential.index.map(flatten) + " solar"
+    if len(fn) > 0:
+        potential = pd.read_csv(fn, index_col=["bus", "bin"]).squeeze()
+        potential.index = potential.index.map(flatten) + " solar"
 
-    n.add(
-        "Generator",
-        solar,
-        suffix=" rooftop",
-        bus=n.generators.loc[solar, "bus"] + " low voltage",
-        carrier="solar rooftop",
-        p_nom_extendable=True,
-        p_nom_max=potential.loc[solar],
-        marginal_cost=n.generators.loc[solar, "marginal_cost"],
-        capital_cost=costs.at["solar-rooftop", "capital_cost"],
-        efficiency=n.generators.loc[solar, "efficiency"],
-        p_max_pu=n.generators_t.p_max_pu[solar],
-        lifetime=costs.at["solar-rooftop", "lifetime"],
-    )
+        n.add(
+            "Generator",
+            solar,
+            suffix=" rooftop",
+            bus=n.generators.loc[solar, "bus"] + " low voltage",
+            carrier="solar rooftop",
+            p_nom_extendable=True,
+            p_nom_max=potential.loc[solar],
+            marginal_cost=n.generators.loc[solar, "marginal_cost"],
+            capital_cost=costs.at["solar-rooftop", "capital_cost"],
+            efficiency=n.generators.loc[solar, "efficiency"],
+            p_max_pu=n.generators_t.p_max_pu[solar],
+            lifetime=costs.at["solar-rooftop", "lifetime"],
+        )
 
     n.add("Carrier", "home battery")
 
@@ -1982,35 +1989,40 @@ def add_storage_and_grids(
 
         # find all complement edges
         complement_edges = pd.DataFrame(complement(G).edges, columns=["bus0", "bus1"])
-        complement_edges["length"] = complement_edges.apply(
-            haversine, axis=1, args=(n,)
-        )
 
-        # apply k_edge_augmentation weighted by length of complement edges
-        k_edge = options["gas_network_connectivity_upgrade"]
-        if augmentation := list(
-            k_edge_augmentation(G, k_edge, avail=complement_edges.values)
-        ):
-            new_gas_pipes = pd.DataFrame(augmentation, columns=["bus0", "bus1"])
-            new_gas_pipes["length"] = new_gas_pipes.apply(haversine, axis=1, args=(n,))
-
-            new_gas_pipes.index = new_gas_pipes.apply(
-                lambda x: f"gas pipeline new {x.bus0} <-> {x.bus1}", axis=1
+        # check if network is already fully connected and only add new pipelines if not
+        if len(complement_edges) > 0:
+            complement_edges["length"] = complement_edges.apply(
+                haversine, axis=1, args=(n,)
             )
 
-            n.add(
-                "Link",
-                new_gas_pipes.index,
-                bus0=new_gas_pipes.bus0 + " gas",
-                bus1=new_gas_pipes.bus1 + " gas",
-                p_min_pu=-1,  # new gas pipes are bidirectional
-                p_nom_extendable=True,
-                length=new_gas_pipes.length,
-                capital_cost=new_gas_pipes.length
-                * costs.at["CH4 (g) pipeline", "capital_cost"],
-                carrier="gas pipeline new",
-                lifetime=costs.at["CH4 (g) pipeline", "lifetime"],
-            )
+            # apply k_edge_augmentation weighted by length of complement edges
+            k_edge = options["gas_network_connectivity_upgrade"]
+            if augmentation := list(
+                k_edge_augmentation(G, k_edge, avail=complement_edges.values)
+            ):
+                new_gas_pipes = pd.DataFrame(augmentation, columns=["bus0", "bus1"])
+                new_gas_pipes["length"] = new_gas_pipes.apply(
+                    haversine, axis=1, args=(n,)
+                )
+
+                new_gas_pipes.index = new_gas_pipes.apply(
+                    lambda x: f"gas pipeline new {x.bus0} <-> {x.bus1}", axis=1
+                )
+
+                n.add(
+                    "Link",
+                    new_gas_pipes.index,
+                    bus0=new_gas_pipes.bus0 + " gas",
+                    bus1=new_gas_pipes.bus1 + " gas",
+                    p_min_pu=-1,  # new gas pipes are bidirectional
+                    p_nom_extendable=True,
+                    length=new_gas_pipes.length,
+                    capital_cost=new_gas_pipes.length
+                    * costs.at["CH4 (g) pipeline", "capital_cost"],
+                    carrier="gas pipeline new",
+                    lifetime=costs.at["CH4 (g) pipeline", "lifetime"],
+                )
 
     if options["H2_retrofit"]:
         logger.info("Add retrofitting options of existing CH4 pipes to H2 pipes.")
@@ -2041,6 +2053,8 @@ def add_storage_and_grids(
         h2_pipes = create_network_topology(
             n, "H2 pipeline ", carriers=["DC", "gas pipeline"]
         )
+        h2_buses_loc = n.buses.query("carrier == 'H2'").location  # noqa: F841
+        h2_pipes = h2_pipes.query("bus0 in @h2_buses_loc and bus1 in @h2_buses_loc")
 
         # TODO Add efficiency losses
         n.add(
@@ -3000,10 +3014,6 @@ def add_heat(
                 nodes + f" {heat_system} water tanks charger", "energy to power ratio"
             ] = energy_to_power_ratio_water_tanks
 
-            tes_time_constant_days = options["tes_tau"][
-                heat_system.central_or_decentral
-            ]
-
             n.add(
                 "Store",
                 nodes,
@@ -3012,7 +3022,11 @@ def add_heat(
                 e_cyclic=True,
                 e_nom_extendable=True,
                 carrier=f"{heat_system} water tanks",
-                standing_loss=1 - np.exp(-1 / 24 / tes_time_constant_days),
+                standing_loss=costs.at[
+                    heat_system.central_or_decentral + " water tank storage",
+                    "standing_losses",
+                ]
+                / 100,  # convert %/hour into unit/hour
                 capital_cost=costs.at[
                     heat_system.central_or_decentral + " water tank storage",
                     "capital_cost",
@@ -3107,7 +3121,10 @@ def add_heat(
                     e_nom_extendable=True,
                     e_max_pu=e_max_pu,
                     carrier=f"{heat_system} water pits",
-                    standing_loss=1 - np.exp(-1 / 24 / tes_time_constant_days),
+                    standing_loss=costs.at[
+                        "central water pit storage", "standing_losses"
+                    ]
+                    / 100,  # convert %/hour into unit/hour
                     capital_cost=costs.at["central water pit storage", "capital_cost"],
                     lifetime=costs.at["central water pit storage", "lifetime"],
                 )
@@ -3195,6 +3212,7 @@ def add_heat(
                 n.add(
                     "Bus",
                     nodes,
+                    location=nodes,
                     suffix=f" {heat_carrier}",
                     carrier=heat_carrier,
                 )
@@ -3956,21 +3974,22 @@ def add_biomass(
             marginal_cost=costs.at["BtL", "VOM"],
         )
 
-    n.add(
-        "Link",
-        spatial.gas.biogas_to_gas,
-        bus0=spatial.gas.biogas,
-        bus1=spatial.gas.nodes,
-        bus2="co2 atmosphere",
-        carrier="biogas to gas",
-        capital_cost=costs.at["biogas", "capital_cost"]
-        + costs.at["biogas upgrading", "capital_cost"],
-        marginal_cost=costs.at["biogas upgrading", "VOM"],
-        efficiency=costs.at["biogas", "efficiency"],
-        efficiency2=-costs.at["gas", "CO2 intensity"],
-        p_nom_extendable=True,
-        lifetime=costs.at["biogas", "lifetime"],
-    )
+    if options["biogas_upgrading"]:
+        n.add(
+            "Link",
+            spatial.gas.biogas_to_gas,
+            bus0=spatial.gas.biogas,
+            bus1=spatial.gas.nodes,
+            bus2="co2 atmosphere",
+            carrier="biogas to gas",
+            capital_cost=costs.at["biogas", "capital_cost"]
+            + costs.at["biogas upgrading", "capital_cost"],
+            marginal_cost=costs.at["biogas upgrading", "VOM"],
+            efficiency=costs.at["biogas", "efficiency"],
+            efficiency2=-costs.at["gas", "CO2 intensity"],
+            p_nom_extendable=True,
+            lifetime=costs.at["biogas", "lifetime"],
+        )
 
     if options["biogas_upgrading_cc"]:
         # Assuming for costs that the CO2 from upgrading is pure, such as in amine scrubbing. I.e., with and without CC is
@@ -5708,7 +5727,7 @@ def set_temporal_aggregation(n, resolution, snapshot_weightings):
             .map(lambda i: snapshot_weightings.index[i])
         )
 
-        m = n.copy(with_time=False)
+        m = n.copy(snapshots=[])
         m.set_snapshots(snapshot_weightings.index)
         m.snapshot_weightings = snapshot_weightings
 
