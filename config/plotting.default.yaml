@@ -587,5 +587,5 @@ plotting:
     HTGR heat: 'red'
     nuclear HTGR heat: 'red'
     nuclear HTGR electricity: 'purple'
-    H2 SOFC Electrolysis: 'orange'
+    H2 SOEC Electrolysis: 'orange'
     L-DAC: 'magenta'
