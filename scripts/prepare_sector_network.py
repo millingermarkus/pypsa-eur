@@ -6162,6 +6162,7 @@ def add_nuclear_htgr(
     unit = "MWh_th"
 
     #Add uranium generators, buses, carriers
+    print('Add uranium')
     if "uranium" not in n.carriers.index:
         n.add("Carrier", name="uranium")
     if "uranium" not in n.buses.index:
@@ -6179,10 +6180,13 @@ def add_nuclear_htgr(
         bus=spatial.nodes + " uranium",
         carrier="uranium",
         p_nom_extendable=True,
-        marginal_cost=0
+        marginal_cost=costs.at["uranium", "fuel"]
     )
 
+    annuity_factor = calculate_annuity(costs["lifetime"], costs["discount rate"])
+
     #Add HTGR heat carrier, bus and store
+    print('Add HTGR heat carrier')
     n.add("Carrier", "HTGR heat")
 
     n.add(
@@ -6200,10 +6204,11 @@ def add_nuclear_htgr(
         e_nom_extendable=True,
         e_cyclic=True,
         carrier="HTGR heat",
-        capital_cost=0,
+        #marginal_cost=costs.at["",""],
     )
 
     #Add HTGR reactor to convert uranium to heat
+    print('Add HTGR reactor')
     n.add(
         "Link",
         spatial.htgr.nodes,
@@ -6213,11 +6218,12 @@ def add_nuclear_htgr(
         lifetime=costs.at["nuclear", "lifetime"],
         efficiency=1.,
         p_nom_extendable=True,
-        capital_cost=0*costs.at["nuclear", "capital_cost"],
-        marginal_cost=0,#costs.loc["nuclear", "VOM"],
+        capital_cost=0.4*costs.at["nuclear", "capital_cost"] - costs.at["decentral CHP", "capital_cost"],
+        marginal_cost=costs.loc["nuclear", "VOM"],
     )
 
 
+    print('Add HTGR elec')
     n.add(
         "Link",
         spatial.htgr.nodes,
@@ -6225,37 +6231,38 @@ def add_nuclear_htgr(
         bus0=spatial.htgr.nodes,
         bus1=spatial.nodes,
         carrier="HTGR",
-        lifetime=costs.at["nuclear", "lifetime"],
-        efficiency=.4,
+        lifetime=costs.at["decentral CHP", "lifetime"],
+        efficiency=1.,
         p_nom_extendable=True,
         #p_nom_min=1e6,
         #p_min_pu=-0.8,
-        capital_cost=0.01*costs.at["nuclear", "capital_cost"],
-        marginal_cost=costs.loc["nuclear", "VOM"],
+        capital_cost=costs.at["decentral CHP", "capital_cost"],
+        marginal_cost=costs.loc["decentral CHP", "VOM"],
     )
 
     #Add SOFC linking from heat bus to H2
-    print('Add HTGR SOFC')
+    print('Add HTGR SOEC')
     n.add(
         "Link",
         spatial.h2.nodes,
         bus0=spatial.htgr.nodes,
         bus1=spatial.h2.nodes,
         p_nom_extendable=True,
-        carrier="H2 SOFC Electrolysis",
-        efficiency=0.82,#costs.at["electrolysis", "efficiency"],
-        capital_cost=0.01*costs.at["electrolysis", "capital_cost"],
-        lifetime=costs.at["electrolysis", "lifetime"],
+        carrier="H2 SOEC Electrolysis",
+        efficiency=1/costs.at["SOEC", "electricity-input"],
+        capital_cost=costs.at["SOEC", "capital_cost"],
+        lifetime=costs.at["SOEC", "lifetime"],
     )
 
     # ADD L-DAC linking from heat bus to co_store
-    electricity_input = 1.#(
-       #costs.at["direct air capture", "electricity-input"]
-       #+ costs.at["direct air capture", "compression-electricity-input"]
-    #)  # MWh_el / tCO2
-    heat_input = 1.#(
-    #   costs.at["direct air capture", "heat-input"]
-    #)  # MWh_th / tCO2
+    print('Add HTGR L-DAC')
+    electricity_input = (
+       costs.at["direct air capture", "electricity-input"]
+       + costs.at["direct air capture", "compression-electricity-input"]
+    )  # MWh_el / tCO2
+    heat_input = (
+       costs.at["direct air capture", "heat-input"]
+    )  # MWh_th / tCO2
 
     n.add(
        "Link",
@@ -6265,7 +6272,7 @@ def add_nuclear_htgr(
        bus2="co2 atmosphere",
        bus3=spatial.co2.nodes,
        carrier="L-DAC",
-       capital_cost=0*costs.at["direct air capture", "capital_cost"] / electricity_input,
+       capital_cost=costs.at["direct air capture", "capital_cost"] / electricity_input,
        efficiency=-heat_input / electricity_input,
        efficiency2=-1 / electricity_input,
        efficiency3=1 / electricity_input,
