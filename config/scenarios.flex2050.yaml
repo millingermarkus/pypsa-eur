@@ -1,0 +1,81 @@
+# -*- coding: utf-8 -*-
+# SPDX-FileCopyrightText: Contributors to PyPSA-Eur <https://github.com/pypsa/pypsa-eur>
+#
+# SPDX-License-Identifier: MIT
+
+# This file is used to define the scenarios that are run by snakemake. Each entry on the first level is a scenario. Each scenario can contain configuration overrides with respect to the config/config.yaml settings.
+#
+# Example
+#
+# custom-scenario: # name of the scenario
+#   electricity:
+#       renewable_carriers: [wind, solar] # override the list of renewable carriers
+base:
+  sector:
+    transport: true
+
+electrolysis_flex:
+  sector:
+    min_part_load_electrolysis: 0.2
+
+bev_dsm:
+  sector:
+    bev_dsm: true
+    bev_dsm_availability: 0.5
+    #bev_energy: 0.05
+    #bev_charge_efficiency: 0.9
+    #bev_charge_rate: 0.011
+    bev_avail_max: 0.95
+    bev_avail_mean: 0.8
+
+bev_dsm_v2g:
+  sector:
+    bev_dsm: true
+    bev_dsm_availability: 0.5
+    bev_avail_max: 0.95
+    bev_avail_mean: 0.8
+    v2g: true
+
+full_land_electrification:
+  sector:
+    land_transport_electric_share:
+      2050: 1
+    land_transport_ice_share:
+      2050: 0
+
+renovation:
+  sector:
+    reduce_space_heat_exogenously_factor:
+      2050: 0.2
+
+#building_dsm:
+#  sector:
+#    residential_heat:
+#      dsm:
+#        enable: true
+
+recycling:
+  industry:
+    HVC_primary_fraction:
+      2050: 0.4
+    HVC_mechanical_recycling_fraction:
+      2050: 0.3
+    HVC_chemical_recycling_fraction:
+      2050: 0.2
+
+industry_progress:
+  industry:
+    sector_ratios_fraction_future:
+      2050: 1.0
+
+low_liquids_demand:
+  sector:
+    aviation_demand_factor: 1.2
+    HVC_demand_factor: 1.0
+    #add land transport and shipping, or separate?
+
+thermal_storage:
+  sector:
+    tes: true
+    #ptes:
+    #  dynamic_capacity: true
