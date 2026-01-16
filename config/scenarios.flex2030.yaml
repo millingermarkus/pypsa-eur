@@ -13,6 +13,7 @@
 base:
   sector:
     transport: true
+    min_part_load_electrolysis: 0.8
 
 electrolysis_flex:
   sector:
@@ -51,11 +52,11 @@ renovation:
       2030: 0.12
       2050: 0.2
 
-#building_dsm:
-#  sector:
-#    residential_heat:
-#      dsm:
-#        enable: true
+building_dsm:
+  sector:
+    residential_heat:
+      dsm:
+        enable: true
 
 recycling:
   industry:
@@ -86,3 +87,47 @@ thermal_storage:
     tes: true
     #ptes:
     #  dynamic_capacity: true
+
+all:
+  sector:
+    min_part_load_electrolysis: 0.2
+    bev_dsm: true
+    bev_dsm_availability: 0.5
+    #bev_energy: 0.05
+    #bev_charge_efficiency: 0.9
+    #bev_charge_rate: 0.011
+    bev_avail_max: 0.95
+    bev_avail_mean: 0.8
+    v2g: true
+    land_transport_electric_share:
+      2030: 0.15
+      2050: 1
+    land_transport_ice_share:
+      2030: 0.85
+      2050: 0
+    reduce_space_heat_exogenously_factor:
+      2030: 0.12
+      2050: 0.2
+    residential_heat:
+      dsm:
+        enable: true
+    aviation_demand_factor: 0.9
+    HVC_demand_factor: 0.9
+    #add land transport and shipping, or separate?
+    tes: true
+    #ptes:
+    #  dynamic_capacity: true
+
+  industry:
+    HVC_primary_fraction:
+      2030: 0.8
+      2050: 0.4
+    HVC_mechanical_recycling_fraction:
+      2030: 0.2
+      2050: 0.3
+    HVC_chemical_recycling_fraction:
+      2030: 0.0
+      2050: 0.2
+    sector_ratios_fraction_future:
+      2030: 0.2
+      2050: 1.0
