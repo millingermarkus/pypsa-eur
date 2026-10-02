@@ -938,6 +938,9 @@ rule build_biomass_potentials:
         biomass_potentials=resources(
             "biomass_potentials_s_{clusters}_{planning_horizons}.csv"
         ),
+        unsustainable_bioliquids_mix=resources(
+            "unsustainable_bioliquids_mix_s_{clusters}_{planning_horizons}.csv"
+        ),
     log:
         logs("build_biomass_potentials_s_{clusters}_{planning_horizons}.log"),
     benchmark:
@@ -1645,6 +1648,15 @@ rule prepare_sector_network:
         co2=rules.retrieve_ghg_emissions.output["csv"],
         biomass_potentials=resources(
             "biomass_potentials_s_{clusters}_{planning_horizons}.csv"
+        ),
+        unsustainable_bioliquids_mix=lambda w: (
+            resources(
+                "unsustainable_bioliquids_mix_s_{clusters}_{planning_horizons}.csv"
+            )
+            if config_provider(
+                "sector", "unsustainable_bioliquids_upstream_emissions"
+            )(w)
+            else []
         ),
         costs=lambda w: (
             resources(f"costs_{config_provider('costs', 'year')(w)}_processed.csv")

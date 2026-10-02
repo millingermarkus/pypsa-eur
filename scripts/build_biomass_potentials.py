@@ -264,6 +264,11 @@ def add_unsustainable_potentials(df, input_eurostat):
     -------
     pd.DataFrame
         The dataframe with added unsustainable biomass potentials.
+    pd.DataFrame
+        Per node, the shares of biogasoline ("bioethanol crops") and of
+        biodiesels, bio jet kerosene and other liquid biofuels ("biodiesel
+        crops") in the unsustainable bioliquids, from the country's Eurostat
+        primary production.
     """
     if "GB" in snakemake.config["countries"]:
         latest_year = 2019
@@ -296,6 +301,19 @@ def add_unsustainable_potentials(df, input_eurostat):
     ]
 
     df_unsustainable = df_unsustainable[bio_carriers]
+
+    bioliquids = df_unsustainable.filter(regex="R5210|R5220|R5230|R5290")
+    share_bioethanol = (
+        bioliquids.filter(regex="R5210").sum(axis=1) / bioliquids.sum(axis=1)
+    ).fillna(0)
+    country = df.index.str[:2]
+    bioliquids_mix = pd.DataFrame(
+        {
+            "bioethanol crops": share_bioethanol.reindex(country).fillna(0).values,
+            "biodiesel crops": (1 - share_bioethanol).reindex(country).fillna(0).values,
+        },
+        index=df.index,
+    )
 
     # Phase out unsustainable biomass potentials linearly from 2020 to 2035 while phasing in sustainable potentials
     share_unsus = params.get("share_unsustainable_use_retained").get(investment_year)
@@ -335,7 +353,7 @@ def add_unsustainable_potentials(df, input_eurostat):
         .infer_objects(copy=False)
     )
 
-    return df
+    return df, bioliquids_mix
 
 
 if __name__ == "__main__":
@@ -396,9 +414,10 @@ if __name__ == "__main__":
     df = df.T.groupby(grouper).sum().T
 
     input_eurostat = snakemake.input.eurostat
-    df = add_unsustainable_potentials(df, input_eurostat)
+    df, bioliquids_mix = add_unsustainable_potentials(df, input_eurostat)
 
     df *= 1e6  # TWh/a to MWh/a
     df.index.name = "MWh/a"
 
     df.to_csv(snakemake.output.biomass_potentials)
+    bioliquids_mix.to_csv(snakemake.output.unsustainable_bioliquids_mix)

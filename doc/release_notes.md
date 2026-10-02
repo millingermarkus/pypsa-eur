@@ -6,6 +6,14 @@
 <!-- Upcoming Release -->
 <!-- ================= -->
 
+## Upcoming Release
+
+* Added the option `sector: unsustainable_bioliquids_upstream_emissions` to account for the upstream
+  (feedstock cultivation) emissions of the unsustainable bioliquids. The technology-data
+  `upstream CO2 intensity` of `bioethanol crops` and `biodiesel crops` is weighted by each country's
+  Eurostat production mix of biogasoline vs. biodiesels and added to the CO2 balance of the
+  `unsustainable bioliquids` link. Requires technology-data with these entries.
+
 ## PyPSA-Eur v2026.08.0 (19th August 2026)
 
 **Features**

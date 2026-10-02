@@ -882,6 +882,10 @@ class SectorConfig(BaseModel):
     biomass_transport: bool = Field(
         False, description="Add option for transporting solid biomass between nodes."
     )
+    unsustainable_bioliquids_upstream_emissions: bool = Field(
+        False,
+        description="Add the upstream (feedstock cultivation) emissions of the unsustainable bioliquids, using the technology-data `upstream CO2 intensity` of `bioethanol crops` and `biodiesel crops` weighted by each country's Eurostat biofuel production mix.",
+    )
     biogas_upgrading: bool = Field(True, description="Biogas upgrading.")
     biogas_upgrading_cc: bool = Field(
         False, description="Add option to capture CO2 from biomass upgrading."
