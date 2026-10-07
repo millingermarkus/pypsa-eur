@@ -937,6 +937,16 @@ rule build_biomass_potentials:
         scripts("build_biomass_potentials.py")
 
 
+rule build_biomass_potentials_override:
+    input:
+        biomip="resources/biomip_scenarios.ods",
+        biomass_potentials=resources("biomass_potentials_{horizon}.csv"),
+    output:
+        resources("biomass_potentials_custom_{horizon}.csv"),
+    script:
+        scripts("build_biomass_potentials_override.py")
+
+
 rule build_biomass_transport_costs:
     input:
         sc1="data/biomass_transport_costs_supplychain1.csv",
