@@ -4344,7 +4344,7 @@ def add_biomass(
                 ),
                 carrier="unsustainable solid biomass",
                 p_nom=10000,
-                marginal_cost=costs.at["fuelwood", "fuel"]
+                marginal_cost=solid_biomass_price
                 + bus_transport_costs.rename(
                     dict(
                         zip(spatial.biomass.nodes, spatial.biomass.nodes_unsustainable)
