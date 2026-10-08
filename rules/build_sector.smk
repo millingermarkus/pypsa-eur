@@ -931,6 +931,11 @@ rule build_biomass_potentials:
         swiss_cantons=ancient("data/ch_cantons.csv"),
         swiss_population=rules.retrieve_bfs_gdp_and_population.output["xlsx"],
         country_shapes=resources("country_shapes.geojson"),
+        unsustainable_biomass_upstream_data=lambda w: (
+            rules.retrieve_unsustainable_biomass_upstream.output["csv"]
+            if config_provider("sector", "unsustainable_biomass_upstream_emissions")(w)
+            else []
+        ),
     output:
         biomass_potentials_all=resources(
             "biomass_potentials_all_{clusters}_{planning_horizons}.csv"
@@ -938,8 +943,8 @@ rule build_biomass_potentials:
         biomass_potentials=resources(
             "biomass_potentials_s_{clusters}_{planning_horizons}.csv"
         ),
-        unsustainable_bioliquids_mix=resources(
-            "unsustainable_bioliquids_mix_s_{clusters}_{planning_horizons}.csv"
+        unsustainable_biomass_upstream=resources(
+            "unsustainable_biomass_upstream_s_{clusters}_{planning_horizons}.csv"
         ),
     log:
         logs("build_biomass_potentials_s_{clusters}_{planning_horizons}.log"),
@@ -1649,13 +1654,11 @@ rule prepare_sector_network:
         biomass_potentials=resources(
             "biomass_potentials_s_{clusters}_{planning_horizons}.csv"
         ),
-        unsustainable_bioliquids_mix=lambda w: (
+        unsustainable_biomass_upstream=lambda w: (
             resources(
-                "unsustainable_bioliquids_mix_s_{clusters}_{planning_horizons}.csv"
+                "unsustainable_biomass_upstream_s_{clusters}_{planning_horizons}.csv"
             )
-            if config_provider(
-                "sector", "unsustainable_bioliquids_upstream_emissions"
-            )(w)
+            if config_provider("sector", "unsustainable_biomass_upstream_emissions")(w)
             else []
         ),
         costs=lambda w: (
