@@ -3890,10 +3890,11 @@ def add_biomass(
     nyears : float
         Number of years for which to scale the biomass potentials.
     unsustainable_biomass_upstream_file : str, optional
-        Path to CSV file with, per node, the shares of "bioethanol crops" and
-        "biodiesel crops" in the unsustainable bioliquids and the cultivation
-        emissions of starchy crops, rapeseed and willow (kgCO2eq/GJ feedstock).
-        Required if unsustainable_biomass_upstream_emissions is True.
+        Path to CSV file with, per node, the shares of bioethanol and biodiesel
+        in the unsustainable bioliquids ("bioethanol share", "biodiesel share"),
+        the upstream emission factors of "bioethanol", "biodiesel" and "solid
+        biomass" (tCO2eq/MWh) and the "solid biomass price" (EUR/MWh). Required
+        if unsustainable_biomass_upstream_emissions is True.
 
     Returns
     -------
@@ -3956,8 +3957,8 @@ def add_biomass(
         ].sum()
 
     # upstream (feedstock cultivation) emissions of unsustainable biomass per
-    # node (tCO2eq/MWh): bioliquids weighted by the node's biofuel mix, with the
-    # crop feedstock per unit of fuel; solid biomass from willow
+    # node (tCO2eq/MWh): bioliquids weighted by the node's biofuel mix; solid
+    # biomass as willow, also priced at the willow price
     upstream = options["unsustainable_biomass_upstream_emissions"]
     if upstream:
         upstream_data = pd.read_csv(unsustainable_biomass_upstream_file, index_col=0)

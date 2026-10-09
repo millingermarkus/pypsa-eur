@@ -287,9 +287,9 @@ def add_unsustainable_potentials(df, input_eurostat):
     pd.DataFrame
         The dataframe with added unsustainable biomass potentials.
     pd.DataFrame
-        Per node, the shares of biogasoline ("bioethanol crops") and of
+        Per node, the shares of biogasoline ("bioethanol share") and of
         biodiesels, bio jet kerosene and other liquid biofuels ("biodiesel
-        crops") in the unsustainable bioliquids, from the country's Eurostat
+        share") in the unsustainable bioliquids, from the country's Eurostat
         primary production.
     """
     if "GB" in snakemake.config["countries"]:
