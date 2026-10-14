@@ -95,4 +95,3 @@ df.loc[de, "solid biomass"] = (
 )
 
 df.to_csv(snakemake.output[0])
-
