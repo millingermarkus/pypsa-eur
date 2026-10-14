@@ -71,6 +71,13 @@ def get_compose_inputs(w):
             heat_dsm_profile=resources("residential_heat_dsm_profile.csv"),
             co2_totals_name=resources("co2_totals.csv"),
             biomass_potentials=resources("biomass_potentials_custom_{horizon}.csv"),
+            unsustainable_biomass_upstream=lambda w: (
+            resources(
+                "unsustainable_biomass_upstream_{horizon}.csv"
+            )
+            if config_provider("sector", "unsustainable_biomass_upstream_emissions")(w)
+            else []
+            )
             h2_cavern=resources("salt_cavern_potentials.csv"),
             clustered_pop_layout=resources("pop_layout.csv"),
             industrial_demand=resources("industrial_energy_demand_{horizon}.csv"),
