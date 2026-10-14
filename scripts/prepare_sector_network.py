@@ -6796,9 +6796,7 @@ def main(
             biomass_potentials_file=inputs.biomass_potentials,
             biomass_transport_costs_file=inputs.biomass_transport_costs,
             nyears=nyears,
-            unsustainable_biomass_upstream_file=snakemake.input.get(
-                "unsustainable_biomass_upstream"
-            ),
+            unsustainable_biomass_upstream_file=inputs.unsustainable_biomass_upstream,
         )
 
     if options["ammonia"]:
