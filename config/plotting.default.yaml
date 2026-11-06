@@ -459,103 +459,93 @@ plotting:
     agriculture machinery oil: "#949494"
     agriculture machinery electric: "#444578"
     shipping oil: "#808080"
-    land transport oil: "#afafaf"
-    Nuclear: "#ff8c00"
-    Nuclear marginal: "#ff8c00"
-    nuclear: "#ff8c00"
-    uranium: "#ff8c00"
-    Coal: "#545454"
-    coal: "#545454"
-    Coal marginal: "#545454"
-    coal for industry: "#343434"
-    solid: "#545454"
-    Lignite: "#826837"
-    lignite: "#826837"
-    Lignite marginal: "#826837"
-    biogas: "#e3d37d"
-    biomass: "#baa741"
-    solid biomass: "#baa741"
-    municipal solid waste: "#91ba41"
-    solid biomass import: "#d5ca8d"
-    solid biomass transport: "#baa741"
-    solid biomass for industry: "#7a6d26"
-    solid biomass for industry CC: "#47411c"
-    solid biomass for industry co2 from atmosphere: "#736412"
-    solid biomass for industry co2 to stored: "#47411c"
-    urban central solid biomass CHP: "#9d9042"
-    urban central solid biomass CHP CC: "#6c5d28"
-    biomass boiler: "#8A9A5B"
-    residential rural biomass boiler: "#a1a066"
-    residential urban decentral biomass boiler: "#b0b87b"
-    services rural biomass boiler: "#c6cf98"
-    services urban decentral biomass boiler: "#dde5b5"
-    biomass to liquid: "#32CD32"
-    unsustainable solid biomass: "#998622"
-    unsustainable bioliquids: "#32CD32"
-    electrobiofuels: "#ff0000"
-    BioSNG: "#123456"
-    BioSNG CC: "#45233b"
-    solid biomass to hydrogen: "#654321"
-    lines: "#6c9459"
-    transmission lines: "#6c9459"
-    electricity distribution grid: "#97ad8c"
-    low voltage: "#97ad8c"
-    Electric load: "#110d63"
-    electric demand: "#110d63"
-    electricity: "#110d63"
-    industry electricity: "#2d2a66"
-    industry new electricity: "#2d2a66"
-    agriculture electricity: "#494778"
-    battery: "#ace37f"
-    battery storage: "#ace37f"
-    battery charger: "#88a75b"
-    battery discharger: "#5d4e29"
-    home battery: "#80c944"
-    home battery storage: "#80c944"
-    home battery charger: "#5e8032"
-    home battery discharger: "#3c5221"
-    BEV charger: "#baf238"
-    V2G: "#e5ffa8"
-    land transport EV: "#baf238"
-    land transport demand: "#38baf2"
-    EV battery: "#baf238"
-    "li-ion": "#ace37f"
-    "li-ion charger": "#ace37f"
-    "li-ion discharger": "#ace37f"
-    lfp: "#ace37f"
-    lfp charger: "#ace37f"
-    lfp discharger: "#ace37f"
-    vanadium: "#9B111E"
-    vanadium charger: "#9B111E"
-    vanadium discharger: "#9B111E"
-    lair: "#87CEEB"
-    lair charger: "#87CEEB"
-    lair discharger: "#87CEEB"
-    pair: "#003366"
-    pair charger: "#003366"
-    pair discharger: "#003366"
-    "iron-air": "#edba1c"
-    "iron-air charger": "#edba1c"
-    "iron-air discharger": "#edba1c"
-    water tanks: "#e69487"
-    residential rural water tanks: "#f7b7a3"
-    services rural water tanks: "#f3afa3"
-    residential urban decentral water tanks: "#f2b2a3"
-    services urban decentral water tanks: "#f1b4a4"
-    urban central water tanks: "#e9977d"
-    hot water storage: "#e69487"
-    hot water charging: "#e8998b"
-    urban central water tanks charger: "#b57a67"
-    residential rural water tanks charger: "#b4887c"
-    residential urban decentral water tanks charger: "#b39995"
-    services rural water tanks charger: "#b3abb0"
-    services urban decentral water tanks charger: "#b3becc"
-    hot water discharging: "#e99c8e"
-    urban central water tanks discharger: "#b9816e"
-    residential rural water tanks discharger: "#ba9685"
-    residential urban decentral water tanks discharger: "#baac9e"
-    services rural water tanks discharger: "#bbc2b8"
-    services urban decentral water tanks discharger: "#bdd8d3"
+    land transport oil: '#afafaf'
+    # nuclear
+    Nuclear: '#ff8c00'
+    Nuclear marginal: '#ff8c00'
+    nuclear: '#ff8c00'
+    uranium: '#ff8c00'
+    # coal
+    Coal: '#545454'
+    coal: '#545454'
+    Coal marginal: '#545454'
+    coal for industry: '#343434'
+    solid: '#545454'
+    Lignite: '#826837'
+    lignite: '#826837'
+    Lignite marginal: '#826837'
+    # biomass
+    biogas: '#e3d37d'
+    biomass: '#baa741'
+    solid biomass: '#baa741'
+    municipal solid waste: '#91ba41'
+    solid biomass import: '#d5ca8d'
+    solid biomass transport: '#baa741'
+    solid biomass for industry: '#7a6d26'
+    solid biomass for industry CC: '#47411c'
+    solid biomass for industry co2 from atmosphere: '#736412'
+    solid biomass for industry co2 to stored: '#47411c'
+    urban central solid biomass CHP: '#9d9042'
+    urban central solid biomass CHP CC: '#6c5d28'
+    biomass boiler: '#8A9A5B'
+    residential rural biomass boiler: '#a1a066'
+    residential urban decentral biomass boiler: '#b0b87b'
+    services rural biomass boiler: '#c6cf98'
+    services urban decentral biomass boiler: '#dde5b5'
+    biomass to liquid: '#32CD32'
+    biomass to liquid CC: '#32AB11'
+    unsustainable solid biomass: '#998622'
+    unsustainable bioliquids: '#32CD32'
+    electrobiofuels: 'red'
+    BioSNG: '#123456'
+    BioSNG CC: '#45233b'
+    solid biomass to hydrogen: '#654321'
+    # power transmission
+    lines: '#6c9459'
+    transmission lines: '#6c9459'
+    electricity distribution grid: '#97ad8c'
+    low voltage: '#97ad8c'
+    # electricity demand
+    Electric load: '#110d63'
+    electric demand: '#110d63'
+    electricity: '#110d63'
+    industry electricity: '#2d2a66'
+    industry new electricity: '#2d2a66'
+    agriculture electricity: '#494778'
+    # battery + EVs
+    battery: '#ace37f'
+    battery storage: '#ace37f'
+    battery charger: '#88a75b'
+    battery discharger: '#5d4e29'
+    home battery: '#80c944'
+    home battery storage: '#80c944'
+    home battery charger: '#5e8032'
+    home battery discharger: '#3c5221'
+    BEV charger: '#baf238'
+    V2G: '#e5ffa8'
+    land transport EV: '#baf238'
+    land transport demand: '#38baf2'
+    EV battery: '#baf238'
+    # hot water storage
+    water tanks: '#e69487'
+    residential rural water tanks: '#f7b7a3'
+    services rural water tanks: '#f3afa3'
+    residential urban decentral water tanks: '#f2b2a3'
+    services urban decentral water tanks: '#f1b4a4'
+    urban central water tanks: '#e9977d'
+    hot water storage: '#e69487'
+    hot water charging: '#e8998b'
+    urban central water tanks charger: '#b57a67'
+    residential rural water tanks charger: '#b4887c'
+    residential urban decentral water tanks charger: '#b39995'
+    services rural water tanks charger: '#b3abb0'
+    services urban decentral water tanks charger: '#b3becc'
+    hot water discharging: '#e99c8e'
+    urban central water tanks discharger: '#b9816e'
+    residential rural water tanks discharger: '#ba9685'
+    residential urban decentral water tanks discharger: '#baac9e'
+    services rural water tanks discharger: '#bbc2b8'
+    services urban decentral water tanks discharger: '#bdd8d3'
     water pits: "#cc826a"
     water pits charger: "#b36a5e"
     water pits discharger: "#b37468"
