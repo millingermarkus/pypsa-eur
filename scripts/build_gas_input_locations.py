@@ -2,17 +2,27 @@
 #
 # SPDX-License-Identifier: MIT
 """
-Build import locations for fossil gas from entry-points, LNG terminals and
-production sites with data from SciGRID_gas and Global Energy Monitor.
+Build locations and capacities of fossil gas supply into the modelled gas network.
+
+Four kinds of gas input are collected: LNG import terminals and gas production
+fields from the Global Energy Monitor Europe Gas Tracker, and pipeline entry
+points and storage sites from SciGRID_gas. Pipeline entries are kept only where
+they cross the model boundary, excluding those from Russia and Belarus; regions
+of eastern countries are buffered so that entry points just beyond the border
+are still matched. Production capacity is taken from reported production,
+falling back to design capacity or 3% of reserves per year. Capacities are
+converted to MW (storage volumes to GWh) and assigned to model regions by
+location, which sets the gas supply and storage options of the sector-coupled
+network.
 """
 
-import json
 import logging
 
 import geopandas as gpd
 import pandas as pd
 
 from scripts._helpers import configure_logging, set_scenario_config
+from scripts.build_gas_network import unnest_struct
 from scripts.cluster_gas_network import load_bus_regions
 
 logger = logging.getLogger(__name__)
@@ -20,7 +30,7 @@ logger = logging.getLogger(__name__)
 
 def read_scigrid_gas(fn):
     df = gpd.read_file(fn)
-    expanded_param = df.param.apply(json.loads).apply(pd.Series)
+    expanded_param = unnest_struct(df.param)
     df = pd.concat([df, expanded_param], axis=1)
     df.drop(["param", "uncertainty", "method"], axis=1, inplace=True)
     df = df.loc[:, ~df.columns.duplicated()]  # duplicated country_code column
@@ -146,16 +156,13 @@ if __name__ == "__main__":
     if "snakemake" not in globals():
         from scripts._helpers import mock_snakemake
 
-        snakemake = mock_snakemake(
-            "build_gas_input_locations",
-            clusters="10",
-        )
+        snakemake = mock_snakemake("build_gas_input_locations")
 
     configure_logging(snakemake)
     set_scenario_config(snakemake)
 
     regions = load_bus_regions(
-        snakemake.input.regions_onshore, snakemake.input.regions_offshore
+        snakemake.input.onshore_regions, snakemake.input.offshore_regions
     )
 
     # add a buffer to eastern countries because some

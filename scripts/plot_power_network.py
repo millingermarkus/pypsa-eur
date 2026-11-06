@@ -2,8 +2,15 @@
 #
 # SPDX-License-Identifier: MIT
 """
-Creates plots for optimised power network topologies and regional generation,
-storage and conversion capacities built.
+Plots the optimised power network with regional technology costs and grid expansion.
+
+Reads the solved network and aggregates the annualised capital cost of
+generators, storage and conversion technologies per electricity bus, grouped
+into coarse technology classes and drawn as pie charts. HVAC lines and HVDC
+links are drawn with widths proportional to the capacity added by the
+optimisation. Small technologies and branches are hidden to keep the map
+readable. The map projection helper defined here is shared by the other map
+scripts.
 """
 
 import logging
@@ -121,7 +128,8 @@ def plot_map(
         costs.drop(to_drop, level=0, inplace=True, axis=0, errors="ignore")
 
     # make sure they are removed from index
-    costs.index = pd.MultiIndex.from_tuples(costs.index.values)
+    if len(costs) > 0:
+        costs.index = pd.MultiIndex.from_tuples(costs.index.values)
 
     threshold = 100e6  # 100 mEUR/a
     carriers = costs.groupby(level=1).sum()
@@ -139,38 +147,38 @@ def plot_map(
 
     if snakemake.params.transmission_limit == "lv1.0":
         # should be zero
-        line_widths = n.lines.s_nom_opt - n.lines.s_nom
-        link_widths = n.links.p_nom_opt - n.links.p_nom
+        line_width = n.lines.s_nom_opt - n.lines.s_nom
+        link_width = n.links.p_nom_opt - n.links.p_nom
         if transmission:
-            line_widths = n.lines.s_nom_opt
-            link_widths = n.links.p_nom_opt
+            line_width = n.lines.s_nom_opt
+            link_width = n.links.p_nom_opt
             linewidth_factor = 2e3
             line_lower_threshold = 0.0
             title = "current grid"
     else:
-        line_widths = n.lines.s_nom_opt - n.lines.s_nom_min
-        link_widths = n.links.p_nom_opt - n.links.p_nom_min
+        line_width = n.lines.s_nom_opt - n.lines.s_nom_min
+        link_width = n.links.p_nom_opt - n.links.p_nom_min
         if transmission:
-            line_widths = n.lines.s_nom_opt
-            link_widths = n.links.p_nom_opt
+            line_width = n.lines.s_nom_opt
+            link_width = n.links.p_nom_opt
             title = "total grid"
 
-    line_widths = line_widths.clip(line_lower_threshold, line_upper_threshold)
-    link_widths = link_widths.clip(line_lower_threshold, line_upper_threshold)
+    line_width = line_width.clip(line_lower_threshold, line_upper_threshold)
+    link_width = link_width.clip(line_lower_threshold, line_upper_threshold)
 
-    line_widths = line_widths.replace(line_lower_threshold, 0)
-    link_widths = link_widths.replace(line_lower_threshold, 0)
+    line_width = line_width.replace(line_lower_threshold, 0)
+    link_width = link_width.replace(line_lower_threshold, 0)
 
     fig, ax = plt.subplots(subplot_kw={"projection": proj})
     fig.set_size_inches(7, 6)
 
     n.plot(
-        bus_sizes=costs / bus_size_factor,
-        bus_colors=tech_colors,
-        line_colors=ac_color,
-        link_colors=dc_color,
-        line_widths=line_widths / linewidth_factor,
-        link_widths=link_widths / linewidth_factor,
+        bus_size=costs / bus_size_factor,
+        bus_color=tech_colors,
+        line_color=ac_color,
+        link_color=dc_color,
+        line_width=line_width / linewidth_factor,
+        link_width=link_width / linewidth_factor,
         ax=ax,
         **map_opts,
     )
@@ -241,9 +249,6 @@ if __name__ == "__main__":
 
         snakemake = mock_snakemake(
             "plot_power_network",
-            opts="",
-            clusters="37",
-            sector_opts="4380H-T-H-B-I-A-dist1",
         )
 
     configure_logging(snakemake)

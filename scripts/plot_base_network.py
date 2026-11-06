@@ -2,7 +2,13 @@
 #
 # SPDX-License-Identifier: MIT
 """
-Plot base transmission network.
+Plots the base transmission network topology on a map.
+
+Reads the base network and the onshore regions, draws region outlines and
+scales HVAC line widths by their thermal rating and HVDC link widths by
+their power rating. Legends with reference capacities are added for lines
+and links where present. The figure serves as a visual check of the
+imported grid before clustering.
 """
 
 import geopandas as gpd
@@ -23,7 +29,7 @@ if __name__ == "__main__":
 
     lw_factor = 1e3 if n.lines.empty else 2e3
 
-    regions = gpd.read_file(snakemake.input.regions_onshore).set_index("name")
+    regions = gpd.read_file(snakemake.input.onshore_regions).set_index("name")
 
     proj = load_projection(snakemake.params.plotting)
 
@@ -34,8 +40,8 @@ if __name__ == "__main__":
     n.plot(
         ax=ax,
         margin=0.06,
-        line_widths=n.lines.s_nom / lw_factor,
-        link_widths=n.links.p_nom / lw_factor,
+        line_width=n.lines.s_nom / lw_factor,
+        link_width=n.links.p_nom / lw_factor,
     )
 
     if not n.lines.empty:

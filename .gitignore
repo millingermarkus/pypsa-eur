@@ -25,9 +25,11 @@ gurobi.log
 /logs
 /notebooks
 /data/*
-/cutouts
 /tmp
 doc/_build
+_build
+benchmark/
+/site
 
 /scripts/old
 /scripts/create_scenarios.py
@@ -62,6 +64,8 @@ d1gam3xoknrgr2.cloudfront.net/
 
 *~
 
+*.egg-info
+
 *.pyc
 
 *.xlsx
@@ -84,6 +88,14 @@ CLAUDE.md
 .claude/
 .github/copilot-instructions.md
 CLAUDE.local.md
+.envrc
+AGENTS.md
+
+# generated DAGs for docs
+doc/img/dag_*.svg
+doc/img/workflow.svg
+doc/img/intro-workflow.svg
+
 # pixi environments
 .pixi/*
 !.pixi/config.toml

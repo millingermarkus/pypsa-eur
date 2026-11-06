@@ -2,55 +2,19 @@
 #
 # SPDX-License-Identifier: MIT
 """
-Build industrial energy demand per country.
+Build today's industrial final energy demand per country, subsector and carrier in TWh/a.
 
-Description
--------
+For EU27 countries, the JRC-IDEES energy balances for the configured `industry: reference_year` give the final energy consumption per subsector, which is grouped into the carriers electricity, gas, liquid, solid, heat, biomass, waste and other, plus hydrogen (zero today). Mining, construction and non-specified industry are merged into "Other industrial sectors", and non-energy feedstock is added to basic chemicals. Basic chemicals are then split into ammonia, chlorine, methanol and high-value chemicals (HVC) using the production volumes from [build_industrial_production_per_country][] and fixed specific consumptions; HVC receives the remainder, clipped at zero. If `industry: ammonia` is enabled, ammonia demand is kept as its own carrier instead of being expressed as hydrogen and electricity.
 
-This rule uses the industrial_production_per_country.csv file and the JRC-IDEES data to derive an energy demand per country and sector. If the country is not in the EU28, an average energy demand depending on the production volume is derived.
-For each country and each subcategory of
+Countries outside the EU27 receive the EU27-average energy demand per tonne of production multiplied by their own production. Finally, 75% of the energy consumed in coke ovens, taken from the Eurostat transformation output, is attributed to integrated steelworks ([doi:10.1016/j.erss.2022.102565](https://doi.org/10.1016/j.erss.2022.102565)).
 
-- Alumina production
-- Aluminium - primary production
-- Aluminium - secondary production
-- Ammonia
-- Cement
-- Ceramics & other NMM
-- Chlorine
-- Electric arc
-- Food, beverages and tobacco
-- Glass production
-- HVC
-- Integrated steelworks
-- Machinery equipment
-- Methanol
-- Other industrial sectors
-- Other chemicals
-- Other non-ferrous metals
-- Paper production
-- Pharmaceutical products etc.
-- Printing and media reproduction
-- Pulp production
-- Textiles and leather
-- Transport equipment
-- Wood and wood products
-
-the output file contains the energy demand in TWh/a for the following carriers
-
-- biomass
-- electricity
-- gas
-- heat
-- hydrogen
-- liquid
-- other
-- solid
-- waste
+The output has one row per carrier and one column per country and subsector.
 """
 
 import logging
 import multiprocessing as mp
 from functools import partial
+from pathlib import Path
 
 import country_converter as coco
 import pandas as pd
@@ -108,6 +72,21 @@ fuels = {
     "Electricity": "electricity",
 }
 
+fuels_eurostat = {
+    "TOTAL": "all",  # Total
+    "C0000X0350-0370": "solid",  # Solid fossil fuels
+    "P1000": "solid",  # Peat and peat products
+    "S2000": "solid",  # Oil shale and oil sands
+    "O4000XBIO": "liquid",  # Oil and petroleum products
+    "C0350-0370": "gas",  # Manufactured gases
+    "G3000": "gas",  # Natural gas
+    "N900H": "heat",  # Nuclear heat
+    "H8000": "heat",  # Heat
+    "RA000": "biomass",  # Renewables and biofuels
+    "W6100_6220": "waste",  # Non-renewable waste
+    "E7000": "electricity",  # Electricity
+}
+
 eu27 = cc.EU27as("ISO2").ISO2.tolist()
 
 jrc_names = {"GR": "EL", "GB": "UK"}
@@ -115,7 +94,13 @@ jrc_names = {"GR": "EL", "GB": "UK"}
 
 def industrial_energy_demand_per_country(country, year, jrc_dir, endogenous_ammonia):
     jrc_country = jrc_names.get(country, country)
-    fn = f"{jrc_dir}/{jrc_country}/JRC-IDEES-2021_EnergyBalance_{jrc_country}.xlsx"
+
+    root = Path(jrc_dir, jrc_country)
+    fn = next(
+        p
+        for y in ("2023", "2021")
+        if (p := root / f"JRC-IDEES-{y}_EnergyBalance_{jrc_country}.xlsx").exists()
+    )
 
     sheets = list(sector_sheets.values())
     df_dict = pd.read_excel(fn, sheet_name=sheets, index_col=0)
@@ -263,8 +248,13 @@ def add_coke_ovens(demand, fn, year, factor=0.75):
     """
 
     df = pd.read_csv(fn, index_col=[0, 1]).xs(year, level=1)
-    df = df.rename(columns={"Total all products": "Total"})[fuels.keys()]
-    df = df.rename(columns=fuels).T.groupby(level=0).sum().T
+    df = (
+        df[fuels_eurostat.keys()]
+        .rename(columns=fuels_eurostat)
+        .T.groupby(level=0)
+        .sum()
+        .T
+    )
     df["other"] = df["all"] - df.loc[:, df.columns != "all"].sum(axis=1)
     df = df.T.reindex_like(demand.xs("Integrated steelworks", axis=1, level=1)).fillna(
         0
