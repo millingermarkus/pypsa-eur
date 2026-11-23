@@ -572,6 +572,7 @@ biomass:
     enable: false
     cost_year:
     cost_scenario:
+    uniform_cost: false
     groups: {}
   share_unsustainable_use_retained:
     2020: 1
@@ -1081,6 +1082,7 @@ sector:
   gas_distribution_grid: true
   gas_distribution_grid_cost_factor: 1.0
   biomass_spatial: true
+  biomass_spatial_trade: true
   biomass_transport: false
   unsustainable_biomass_upstream_emissions: false
   biogas_upgrading: true
@@ -1163,6 +1165,8 @@ sector:
     - shipping methanol
     - agriculture machinery oil
     - land transport oil
+    conversion_carriers:
+    - "methanol-to-kerosene"
   solid_biomass_limit:
     enable: false
     limit: 0.0

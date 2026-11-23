@@ -1227,7 +1227,8 @@ def add_renewable_liquid_fuel_share_constraint(
     Requires the renewable fuel tracking of
     `prepare_sector_network.add_renewable_fuel_tracking`. The left-hand side is
     the renewable fuel delivered directly to fuel demand, i.e. the output of
-    the fuel supply links (carrier in `demand_carriers`) that start at a
+    the fuel supply and conversion links (carrier in `demand_carriers` or
+    `conversion_carriers`, e.g. methanol-to-kerosene) that start at a
     renewable fuel bus. Renewable fuel blended into the pooled oil and methanol
     buses, which also supply naphtha, HVC and industry methanol, does not count.
     The right-hand side is `share` times the demand of all loads whose carrier
@@ -1236,9 +1237,11 @@ def add_renewable_liquid_fuel_share_constraint(
     weightings = n.snapshot_weightings.loc[sns, "generators"]
 
     renewable_buses = n.buses.index[n.buses.index.str.endswith(" renewable")]
+    delivery_carriers = config["demand_carriers"] + config.get(
+        "conversion_carriers", []
+    )
     deliveries = n.links.index[
-        n.links.carrier.isin(config["demand_carriers"])
-        & n.links.bus0.isin(renewable_buses)
+        n.links.carrier.isin(delivery_carriers) & n.links.bus0.isin(renewable_buses)
     ]
     if deliveries.empty:
         logger.warning(

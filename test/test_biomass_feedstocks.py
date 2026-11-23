@@ -8,7 +8,7 @@ import pandas as pd
 import pypsa
 import pytest
 
-from scripts.build_biomass_potentials import build_feedstocks
+from scripts.build_biomass_potentials import build_feedstocks, uniform_feedstock_costs
 from scripts.prepare_sector_network import (
     add_biomass_feedstock_generators,
     biomass_import_supply_curve,
@@ -78,6 +78,17 @@ def test_build_feedstocks_splits_class_potentials(commodities, classes, costs):
     # missing country costs are filled with the European average
     assert df.at[("FR0 0", "forest residues"), "cost"] == pytest.approx(10.0)
     assert df.at[("FR0 0", "industry wood residues"), "cost"] == pytest.approx(30.0)
+
+
+def test_uniform_feedstock_costs(commodities, classes, costs):
+    df = uniform_feedstock_costs(
+        build_feedstocks(commodities, classes, costs, CLASSES, GROUPS)
+    ).set_index(["region", "feedstock"])
+
+    # forest residues: 1.5e6 MWh at 10 EUR/MWh (DE) and 0.5e6 MWh at 10 (FR, filled)
+    assert df.xs("forest residues", level="feedstock").cost.tolist() == [10.0, 10.0]
+    # manure: 1e6 MWh at 5 EUR/MWh (DE) and 1e6 MWh at 7 EUR/MWh (FR)
+    assert df.xs("manure", level="feedstock").cost.tolist() == pytest.approx([6, 6])
 
 
 def test_build_feedstocks_requires_full_coverage(commodities, classes, costs):

@@ -81,6 +81,10 @@ class _BiomassFeedstocksConfig(ConfigModel):
             description="ENSPRESO scenario of the feedstock costs. Defaults to `biomass.scenario`.",
         )
     )
+    uniform_cost: bool = Field(
+        False,
+        description="Use the potential-weighted European average cost of each feedstock in all regions instead of country-specific costs.",
+    )
     groups: dict[str, list[str]] = Field(
         default_factory=dict,
         description="Feedstock name mapped to the ENSPRESO commodities it consists of. Together, the feedstocks must cover exactly the commodities of the `solid biomass` and `biogas` classes in `biomass.classes`, and each feedstock must lie within one class.",

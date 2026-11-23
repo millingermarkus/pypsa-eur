@@ -67,6 +67,8 @@ biomass:
     - Municipal waste
   feedstocks:
     enable: true
+    # one cost per feedstock: potential-weighted average of country costs
+    uniform_cost: true
     groups:
       forest residues:
       - Fuelwood residues
@@ -131,7 +133,9 @@ sector:
   use_electrolysis_waste_heat: 0.5
   use_methanation_waste_heat: 0.5
   # biomass supply and conversion
-  biomass_spatial: false
+  # solid biomass resolved at the 37 nodes without trade between regions
+  biomass_spatial: true
+  biomass_spatial_trade: false
   biomass_transport: false
   biomass_boiler: true
   biogas_upgrading_cc: true
@@ -142,6 +146,8 @@ sector:
   biosng_cc: true
   bioH2: true
   municipal_solid_waste: true
+  methanol:
+    methanol_to_kerosene: true
   # industrial process heat; industrial_steam_heat_pumps: false
   industry_heat:
     enable: true
@@ -166,8 +172,8 @@ sector:
       enable: true
   # "B0p8" in B0p8Im: liquid fuels and methanol from biomass and hydrogen
   # (BtL, Fischer-Tropsch, electrobiofuels, methanolisation, biomass-to-methanol)
-  # >= 80% of aviation, shipping (oil and methanol), agriculture and land
-  # transport oil demand
+  # delivered as fuel (directly or via methanol-to-kerosene) >= 80% of aviation,
+  # shipping (oil and methanol), agriculture and land transport oil demand
   renewable_liquid_fuel_share:
     enable: true
     share: 0.8

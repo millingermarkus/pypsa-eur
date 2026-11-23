@@ -436,6 +436,10 @@ class _RenewableLiquidFuelShareConfig(BaseModel):
         ],
         description="Carriers of the fuel demand loads and of the links supplying them, e.g. 'kerosene for aviation'. Renewable fuel delivered through these links counts towards the share.",
     )
+    conversion_carriers: list[str] = Field(
+        default_factory=lambda: ["methanol-to-kerosene"],
+        description="Carriers of links converting a renewable fuel into fuel for the demand of `demand_carriers`, e.g. renewable methanol into kerosene. Their output counts towards the share.",
+    )
 
 
 class _SolidBiomassLimitConfig(BaseModel):
@@ -1184,6 +1188,10 @@ class SectorConfig(BaseModel):
 
     biomass_spatial: bool = Field(
         True, description="Add option for resolving biomass demand regionally."
+    )
+    biomass_spatial_trade: bool = Field(
+        True,
+        description="With `biomass_spatial` and without `biomass_transport`, allow each region to draw on the European solid biomass potential at a distance-based transport cost. If false, each region can only use its own solid biomass potential and imports.",
     )
     biomass_transport: bool = Field(
         False, description="Add option for transporting solid biomass between nodes."

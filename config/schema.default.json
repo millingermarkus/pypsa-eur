@@ -492,6 +492,11 @@
               "default": null,
               "description": "ENSPRESO scenario of the feedstock costs. Defaults to `biomass.scenario`."
             },
+            "uniform_cost": {
+              "default": false,
+              "description": "Use the potential-weighted European average cost of each feedstock in all regions instead of country-specific costs.",
+              "type": "boolean"
+            },
             "groups": {
               "additionalProperties": {
                 "items": {
@@ -6103,6 +6108,11 @@
           "description": "Add option for resolving biomass demand regionally.",
           "type": "boolean"
         },
+        "biomass_spatial_trade": {
+          "default": true,
+          "description": "With `biomass_spatial` and without `biomass_transport`, allow each region to draw on the European solid biomass potential at a distance-based transport cost. If false, each region can only use its own solid biomass potential and imports.",
+          "type": "boolean"
+        },
         "biomass_transport": {
           "default": false,
           "description": "Add option for transporting solid biomass between nodes.",
@@ -6383,6 +6393,13 @@
             },
             "demand_carriers": {
               "description": "Carriers of the fuel demand loads and of the links supplying them, e.g. 'kerosene for aviation'. Renewable fuel delivered through these links counts towards the share.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "conversion_carriers": {
+              "description": "Carriers of links converting a renewable fuel into fuel for the demand of `demand_carriers`, e.g. renewable methanol into kerosene. Their output counts towards the share.",
               "items": {
                 "type": "string"
               },
@@ -7765,6 +7782,11 @@
           ],
           "default": null,
           "description": "ENSPRESO scenario of the feedstock costs. Defaults to `biomass.scenario`."
+        },
+        "uniform_cost": {
+          "default": false,
+          "description": "Use the potential-weighted European average cost of each feedstock in all regions instead of country-specific costs.",
+          "type": "boolean"
         },
         "groups": {
           "additionalProperties": {
@@ -9772,6 +9794,13 @@
         },
         "demand_carriers": {
           "description": "Carriers of the fuel demand loads and of the links supplying them, e.g. 'kerosene for aviation'. Renewable fuel delivered through these links counts towards the share.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "conversion_carriers": {
+          "description": "Carriers of links converting a renewable fuel into fuel for the demand of `demand_carriers`, e.g. renewable methanol into kerosene. Their output counts towards the share.",
           "items": {
             "type": "string"
           },
@@ -13192,6 +13221,11 @@
               "default": null,
               "description": "ENSPRESO scenario of the feedstock costs. Defaults to `biomass.scenario`."
             },
+            "uniform_cost": {
+              "default": false,
+              "description": "Use the potential-weighted European average cost of each feedstock in all regions instead of country-specific costs.",
+              "type": "boolean"
+            },
             "groups": {
               "additionalProperties": {
                 "items": {
@@ -14466,6 +14500,11 @@
           "description": "Add option for resolving biomass demand regionally.",
           "type": "boolean"
         },
+        "biomass_spatial_trade": {
+          "default": true,
+          "description": "With `biomass_spatial` and without `biomass_transport`, allow each region to draw on the European solid biomass potential at a distance-based transport cost. If false, each region can only use its own solid biomass potential and imports.",
+          "type": "boolean"
+        },
         "biomass_transport": {
           "default": false,
           "description": "Add option for transporting solid biomass between nodes.",
@@ -14746,6 +14785,13 @@
             },
             "demand_carriers": {
               "description": "Carriers of the fuel demand loads and of the links supplying them, e.g. 'kerosene for aviation'. Renewable fuel delivered through these links counts towards the share.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "conversion_carriers": {
+              "description": "Carriers of links converting a renewable fuel into fuel for the demand of `demand_carriers`, e.g. renewable methanol into kerosene. Their output counts towards the share.",
               "items": {
                 "type": "string"
               },

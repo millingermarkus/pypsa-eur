@@ -9,15 +9,32 @@ run set, CO2 limit, sequestration potential and solid biomass limit, and one
 ``config/biovalue/config.biovalue_<set>.yaml`` per run set that selects its
 scenarios via ``run.name``.
 
-Mapping from pypsa-eur-sec:
+The technology scenarios follow Tables 2 and 3 of the biovalue paper:
 
-- ``lv2`` / ``lv1``: ``electricity.transmission_limit``
+=================================  ========  ===========  ======  =====
+Technology scenario                run set   electricity  fuels   CCS
+=================================  ========  ===========  ======  =====
+Optimistic                         base      optimistic   FT0/H20 CC3/CS0
+Restricted VRE, costly nuclear     PE        restricted   FT0/H20 CC3/CS0
+Costly fuel technologies           efuel     optimistic   FT2/H22 CC3/CS0
+Costly CCS                         ccs       optimistic   FT0/H20 CC0/CS2
+Pessimistic                        all       restricted   FT2/H22 CC0/CS2
+=================================  ========  ===========  ======  =====
+
+Mapping to the configuration:
+
+- grid extension (x2 / none): ``electricity.transmission_limit`` v2.0 / v1.0
+- onshore wind and utility PV capacity per km2 (10 / 5 and 15 / 7 MW/km2):
+  ``adjustments.sector.factor`` on ``p_nom_max``, relative to the
+  ``capacity_per_sqkm`` in ``config/config.default.yaml``
+- nuclear investment (4315 / 6932 EUR/kW): ``data/biovalue/costs_NUC0.csv`` /
+  ``costs_NUC2.csv``
+- electrolysis, Fischer-Tropsch and DAC (``FT0/FT2``, ``H20/H22``,
+  ``CC3/CC0``): cost files in ``data/biovalue/``
+- CO2 sequestration cost (``CS0/CS2``): ``sector.co2_sequestration_cost``
 - ``Co2Lx``: ``co2_budget.upper[2050]``
 - ``seqN``: ``sector.co2_sequestration_potential[2050]``
 - ``solidN``: ``sector.solid_biomass_limit.limit`` (TWh)
-- ``solar+p3-onwind+p3-nuclear+c0.58``: ``adjustments.sector.factor``
-- ``FT0/FT2``, ``H20/H22``, ``CC0/CC3``: cost files in ``data/biovalue/``
-- ``CS0/CS2``: ``sector.co2_sequestration_cost``
 
 Usage (from the repository root)::
 
@@ -29,14 +46,21 @@ from pathlib import Path
 import yaml
 
 HERE = Path(__file__).parent
+DEFAULT_CONFIG = HERE.parent / "config.default.yaml"
 
-# run sets of the server configs config/biovalue/config.biovalue_<set>.yaml
+# Table 3, electricity provision
+ELECTRICITY = {
+    "optimistic": dict(lv=2.0, onwind=10, solar=15, nuclear="NUC0"),
+    "restricted": dict(lv=1.0, onwind=5, solar=7, nuclear="NUC2"),
+}
+
+# Table 2; run set names of the server configs config/biovalue/config.biovalue_<set>.yaml
 RUN_SETS = {
-    "base": dict(lv=2.0, adjust=True, ft="FT0", h2="H20", cc="CC3", cs="CS0"),
-    "all": dict(lv=1.0, adjust=False, ft="FT2", h2="H22", cc="CC0", cs="CS2"),
-    "ccs": dict(lv=2.0, adjust=True, ft="FT0", h2="H20", cc="CC0", cs="CS2"),
-    "efuel": dict(lv=2.0, adjust=True, ft="FT2", h2="H22", cc="CC3", cs="CS0"),
-    "PE": dict(lv=1.0, adjust=False, ft="FT0", h2="H20", cc="CC3", cs="CS0"),
+    "base": dict(elec="optimistic", ft="FT0", h2="H20", cc="CC3", cs="CS0"),
+    "PE": dict(elec="restricted", ft="FT0", h2="H20", cc="CC3", cs="CS0"),
+    "efuel": dict(elec="optimistic", ft="FT2", h2="H22", cc="CC3", cs="CS0"),
+    "ccs": dict(elec="optimistic", ft="FT0", h2="H20", cc="CC0", cs="CS2"),
+    "all": dict(elec="restricted", ft="FT2", h2="H22", cc="CC0", cs="CS2"),
 }
 
 # (Co2L relative to 1990, sequestration potential in Mt/a)
@@ -47,19 +71,27 @@ SOLID = [0, 50, 100, 150, 200, 250] + list(range(500, 3501, 250))
 
 SEQUESTRATION_COST = {"CS0": 10, "CS2": 50}
 
-# solar+p3-onwind+p3-nuclear+c0.58
-ADJUSTMENTS = {
-    "sector": {
-        "factor": {
-            "Generator": {
-                "solar": {"p_nom_max": 3},
-                "solar-hsat": {"p_nom_max": 3},
-                "onwind": {"p_nom_max": 3},
-            },
-            "Link": {"nuclear": {"capital_cost": 0.58}},
+
+def capacity_adjustments(onwind: float, solar: float) -> dict:
+    """
+    Factors on p_nom_max that turn the default capacity densities into the
+    given ones (MW/km2). Utility PV covers both fixed-tilt and single-axis
+    tracking, which keep their default ratio.
+    """
+    renewable = yaml.safe_load(DEFAULT_CONFIG.read_text())["renewable"]
+    onwind_factor = onwind / renewable["onwind"]["capacity_per_sqkm"]
+    solar_factor = solar / renewable["solar"]["capacity_per_sqkm"]
+    return {
+        "sector": {
+            "factor": {
+                "Generator": {
+                    "onwind": {"p_nom_max": round(onwind_factor, 4)},
+                    "solar": {"p_nom_max": round(solar_factor, 4)},
+                    "solar-hsat": {"p_nom_max": round(solar_factor, 4)},
+                }
+            }
         }
     }
-}
 
 
 def co2_tag(value: float) -> str:
@@ -67,22 +99,22 @@ def co2_tag(value: float) -> str:
 
 
 def scenario(settings: dict, co2: float, seq: int, solid: int) -> dict:
-    s = {
-        "electricity": {"transmission_limit": f"v{settings['lv']:.1f}"},
+    elec = ELECTRICITY[settings["elec"]]
+    cost_files = [elec["nuclear"]] + [settings[k] for k in ("ft", "h2", "cc")]
+    return {
+        "electricity": {"transmission_limit": f"v{elec['lv']:.1f}"},
         "co2_budget": {"upper": {2050: co2}},
         "costs": {
             "custom_cost_fn": ["data/custom_costs.csv"]
-            + [f"data/biovalue/costs_{settings[k]}.csv" for k in ("ft", "h2", "cc")]
+            + [f"data/biovalue/costs_{f}.csv" for f in cost_files]
         },
         "sector": {
             "co2_sequestration_potential": {2050: seq},
             "co2_sequestration_cost": SEQUESTRATION_COST[settings["cs"]],
             "solid_biomass_limit": {"limit": solid},
         },
+        "adjustments": capacity_adjustments(elec["onwind"], elec["solar"]),
     }
-    if settings["adjust"]:
-        s["adjustments"] = ADJUSTMENTS
-    return s
 
 
 class NoAliasDumper(yaml.SafeDumper):

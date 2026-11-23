@@ -342,6 +342,20 @@ def build_feedstocks(
     return pd.concat(rows, ignore_index=True)
 
 
+def uniform_feedstock_costs(feedstocks: pd.DataFrame) -> pd.DataFrame:
+    """
+    Replace the regional cost of each feedstock with its potential-weighted
+    European average (the plain average if the feedstock has no potential).
+    """
+    weighted = (feedstocks.cost * feedstocks.potential).groupby(
+        feedstocks.feedstock
+    ).sum() / feedstocks.potential.groupby(feedstocks.feedstock).sum()
+    average = weighted.fillna(feedstocks.groupby("feedstock").cost.mean())
+    for feedstock, cost in average.items():
+        logger.info(f"Uniform cost of feedstock '{feedstock}': {cost:.2f} EUR/MWh.")
+    return feedstocks.assign(cost=feedstocks.feedstock.map(average))
+
+
 def disaggregate_nuts0(bio: pd.DataFrame, pop: pd.DataFrame) -> pd.DataFrame:
     """
     Some commodities are only given on NUTS0 level. These are disaggregated
@@ -667,6 +681,8 @@ if __name__ == "__main__":
             params["classes"],
             feedstocks_config["groups"],
         )
+        if feedstocks_config.get("uniform_cost", False):
+            feedstocks = uniform_feedstock_costs(feedstocks)
     else:
         feedstocks = pd.DataFrame(
             columns=["region", "feedstock", "class", "potential", "cost"]

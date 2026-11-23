@@ -185,6 +185,45 @@ def test_renewable_fuel_for_chemicals_does_not_count(n):
         solve(n, add_renewable_liquid_fuel_share_constraint, FUEL_SHARE)
 
 
+@pytest.mark.parametrize("count_conversion", [True, False])
+def test_methanol_to_kerosene_counts(n, count_conversion):
+    """
+    Renewable oil cannot reach fuel demand, so 70% of the 15 MW fuel demand
+    (10.5 MW) needs renewable methanol for shipping (5 MW) plus renewable
+    methanol converted to kerosene (up to 6 MW).
+    """
+    n.add(
+        "Link",
+        "EU methanol-to-kerosene",
+        bus0="EU methanol",
+        bus1="kerosene for aviation",
+        carrier="methanol-to-kerosene",
+        efficiency=0.9,
+        p_nom_extendable=True,
+    )
+    conversion = ["methanol-to-kerosene"] if count_conversion else []
+    config = FUEL_SHARE | {"share": 0.7, "conversion_carriers": conversion}
+    add_renewable_fuel_tracking(
+        n, config["producers"], config["demand_carriers"] + conversion
+    )
+    oil_copies = n.links.index[n.links.bus0 == "EU oil renewable"].drop(
+        "EU oil renewable blending"
+    )
+    n.links.loc[oil_copies, "p_nom_extendable"] = False
+    n.links.loc[oil_copies, "p_nom"] = 0
+
+    if not count_conversion:
+        with pytest.raises(AssertionError):
+            solve(n, add_renewable_liquid_fuel_share_constraint, config)
+        return
+
+    solve(n, add_renewable_liquid_fuel_share_constraint, config)
+    w = n.snapshot_weightings.generators
+    kerosene = n.links_t.p0["EU methanol-to-kerosene renewable"].mul(0.9).mul(w).sum()
+    methanol = n.links_t.p0["EU shipping methanol renewable"].mul(w).sum()
+    assert kerosene + methanol == pytest.approx(0.7 * 15 * w.sum())
+
+
 def test_solid_biomass_limit_counts_imports(n):
     n.add("Load", "biomass demand", bus="solid biomass", p_set=0)
     n.links.loc["BtL", "p_min_pu"] = 0.1  # forces 100 MW of biomass input

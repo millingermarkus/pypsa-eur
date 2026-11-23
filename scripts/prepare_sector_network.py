@@ -4505,7 +4505,7 @@ def add_biomass(
     if options["biomass_transport"]:
         add_biomass_transport(n, transport_corridors, biomass_transport_costs_file)
 
-    elif options["biomass_spatial"]:
+    elif options["biomass_spatial"] and options.get("biomass_spatial_trade", True):
         # add artificial biomass generators at nodes which include transport costs
         transport_costs = pd.read_csv(biomass_transport_costs_file, index_col=0)
         transport_costs = transport_costs.squeeze()
@@ -6891,9 +6891,10 @@ def add_renewable_fuel_tracking(
     The output of links with a carrier in `producers` is moved from its bus
     (e.g. 'EU oil') to a new bus with suffix ' renewable' ('EU oil renewable').
     From there it reaches either the fuel demand directly, through a copy of
-    each fuel supply link (carrier in `fuel_carriers`, e.g. 'kerosene for
-    aviation') that starts at the renewable bus, or the pooled bus through a
-    blending link, from where it can serve any use including chemicals.
+    each fuel supply or conversion link (carrier in `fuel_carriers`, e.g.
+    'kerosene for aviation' or 'methanol-to-kerosene') that starts at the
+    renewable bus, or the pooled bus through a blending link, from where it
+    can serve any use including chemicals.
     Only the direct deliveries count towards the renewable liquid fuel share
     in `solve_network.add_renewable_liquid_fuel_share_constraint`.
 
@@ -6904,7 +6905,7 @@ def add_renewable_fuel_tracking(
     producers : list[str]
         Carriers of links producing renewable oil or methanol at `bus1`.
     fuel_carriers : list[str]
-        Carriers of the links (and loads) supplying fuel demand.
+        Carriers of the links supplying or converting into fuel demand.
     """
     producer_i = n.links.index[n.links.carrier.isin(producers)]
     if producer_i.empty:
@@ -7286,7 +7287,8 @@ def main(
         add_renewable_fuel_tracking(
             n,
             producers=options["renewable_liquid_fuel_share"]["producers"],
-            fuel_carriers=options["renewable_liquid_fuel_share"]["demand_carriers"],
+            fuel_carriers=options["renewable_liquid_fuel_share"]["demand_carriers"]
+            + options["renewable_liquid_fuel_share"]["conversion_carriers"],
         )
 
     logger.info("Completed sector components")
