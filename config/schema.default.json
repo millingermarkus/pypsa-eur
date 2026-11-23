@@ -440,6 +440,70 @@
             }
           }
         },
+        "class_scenarios": {
+          "additionalProperties": {
+            "enum": [
+              "ENS_Low",
+              "ENS_Med",
+              "ENS_High"
+            ],
+            "type": "string"
+          },
+          "description": "Use a different ENSPRESO potential scenario for the commodities of the given classes, e.g. `{biogas: ENS_Med}` while `biomass.scenario` is `ENS_High`.",
+          "type": "object"
+        },
+        "feedstocks": {
+          "description": "Configuration for `biomass.feedstocks` settings.",
+          "properties": {
+            "enable": {
+              "default": false,
+              "description": "Split the `solid biomass` and `biogas` supply into one generator per feedstock, each with its own potential and its own cost from the JRC ENSPRESO cost sheet ('COST - NUTS0 EnergyCom'). Generators keep the carrier of their class and are named after the feedstock.",
+              "type": "boolean"
+            },
+            "cost_year": {
+              "anyOf": [
+                {
+                  "maximum": 2050,
+                  "minimum": 2010,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "description": "Year of the ENSPRESO feedstock costs. Defaults to `biomass.year` (overnight) or the planning horizon (myopic/perfect)."
+            },
+            "cost_scenario": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "ENS_BaU_GFTM",
+                    "ENS_Low",
+                    "ENS_Med",
+                    "ENS_High"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "description": "ENSPRESO scenario of the feedstock costs. Defaults to `biomass.scenario`."
+            },
+            "groups": {
+              "additionalProperties": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "description": "Feedstock name mapped to the ENSPRESO commodities it consists of. Together, the feedstocks must cover exactly the commodities of the `solid biomass` and `biogas` classes in `biomass.classes`, and each feedstock must lie within one class.",
+              "type": "object"
+            }
+          }
+        },
         "share_unsustainable_use_retained": {
           "additionalProperties": {
             "type": "number"
@@ -6219,6 +6283,110 @@
               "default": 0.1,
               "description": "Upstream emissions of solid biomass imports.",
               "type": "number"
+            },
+            "supply_curve": {
+              "description": "Configuration for `sector.solid_biomass_import.supply_curve` settings.",
+              "properties": {
+                "enable": {
+                  "default": false,
+                  "description": "Replace the single import tier with a stepped supply curve.",
+                  "type": "boolean"
+                },
+                "total_supply_threshold": {
+                  "default": 5556,
+                  "description": "Total biomass supply (TWh/a) up to which the first tier is available at `price`. The first tier is this threshold minus the sustainable domestic potentials (solid biomass, biogas and municipal solid waste); if the domestic potentials exceed the threshold, the excess is deducted from the following tiers. 5556 TWh corresponds to 20 EJ.",
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "step_size": {
+                  "default": 277.8,
+                  "description": "Amount of each following tier (TWh/a). 277.8 TWh corresponds to 1 EJ.",
+                  "exclusiveMinimum": 0,
+                  "type": "number"
+                },
+                "n_steps": {
+                  "default": 18,
+                  "description": "Number of tiers following the first tier.",
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "price_increment": {
+                  "default": 0.9,
+                  "description": "Price increase per tier (currency/MWh). 0.9 EUR/MWh corresponds to 0.25 EUR/GJ.",
+                  "minimum": 0,
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "renewable_liquid_fuel_share": {
+          "description": "Configuration for `sector.renewable_liquid_fuel_share` settings.",
+          "properties": {
+            "enable": {
+              "default": false,
+              "description": "Constrain the annual liquid fuel output of the `producers` relative to the annual oil demand of the `demand_carriers`.",
+              "type": "boolean"
+            },
+            "share": {
+              "default": 0.0,
+              "description": "Share of the oil demand of `demand_carriers`.",
+              "minimum": 0,
+              "type": "number"
+            },
+            "sense": {
+              "default": ">=",
+              "description": "Sense of the constraint.",
+              "enum": [
+                ">=",
+                "==",
+                "<="
+              ],
+              "type": "string"
+            },
+            "producers": {
+              "description": "Link carriers whose output at `bus1` counts towards the share.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "demand_carriers": {
+              "description": "Load carriers whose demand defines the reference.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          }
+        },
+        "solid_biomass_limit": {
+          "description": "Configuration for `sector.solid_biomass_limit` settings.",
+          "properties": {
+            "enable": {
+              "default": false,
+              "description": "Limit the annual solid biomass supply, including imports.",
+              "type": "boolean"
+            },
+            "limit": {
+              "default": 0.0,
+              "description": "Maximum annual solid biomass supply (TWh/a).",
+              "minimum": 0,
+              "type": "number"
+            },
+            "generator_carriers": {
+              "description": "Generator carriers counted as solid biomass supply.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "link_carriers": {
+              "description": "Link carriers whose output at `bus1` is counted as solid biomass supply.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
             }
           }
         },
@@ -7525,6 +7693,58 @@
             "type": "string"
           },
           "type": "array"
+        }
+      }
+    },
+    "_BiomassFeedstocksConfig": {
+      "description": "Configuration for `biomass.feedstocks` settings.",
+      "properties": {
+        "enable": {
+          "default": false,
+          "description": "Split the `solid biomass` and `biogas` supply into one generator per feedstock, each with its own potential and its own cost from the JRC ENSPRESO cost sheet ('COST - NUTS0 EnergyCom'). Generators keep the carrier of their class and are named after the feedstock.",
+          "type": "boolean"
+        },
+        "cost_year": {
+          "anyOf": [
+            {
+              "maximum": 2050,
+              "minimum": 2010,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Year of the ENSPRESO feedstock costs. Defaults to `biomass.year` (overnight) or the planning horizon (myopic/perfect)."
+        },
+        "cost_scenario": {
+          "anyOf": [
+            {
+              "enum": [
+                "ENS_BaU_GFTM",
+                "ENS_Low",
+                "ENS_Med",
+                "ENS_High"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "ENSPRESO scenario of the feedstock costs. Defaults to `biomass.scenario`."
+        },
+        "groups": {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "description": "Feedstock name mapped to the ENSPRESO commodities it consists of. Together, the feedstocks must cover exactly the commodities of the `solid biomass` and `biogas` classes in `biomass.classes`, and each feedstock must lie within one class.",
+          "type": "object"
         }
       }
     },
@@ -9489,6 +9709,46 @@
         }
       }
     },
+    "_RenewableLiquidFuelShareConfig": {
+      "description": "Configuration for `sector.renewable_liquid_fuel_share` settings.",
+      "properties": {
+        "enable": {
+          "default": false,
+          "description": "Constrain the annual liquid fuel output of the `producers` relative to the annual oil demand of the `demand_carriers`.",
+          "type": "boolean"
+        },
+        "share": {
+          "default": 0.0,
+          "description": "Share of the oil demand of `demand_carriers`.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "sense": {
+          "default": ">=",
+          "description": "Sense of the constraint.",
+          "enum": [
+            ">=",
+            "==",
+            "<="
+          ],
+          "type": "string"
+        },
+        "producers": {
+          "description": "Link carriers whose output at `bus1` counts towards the share.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "demand_carriers": {
+          "description": "Load carriers whose demand defines the reference.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      }
+    },
     "_ResidentialHeatConfig": {
       "description": "Configuration for `sector.residential_heat` settings.",
       "properties": {
@@ -9896,6 +10156,104 @@
           "default": 0.1,
           "description": "Upstream emissions of solid biomass imports.",
           "type": "number"
+        },
+        "supply_curve": {
+          "description": "Configuration for `sector.solid_biomass_import.supply_curve` settings.",
+          "properties": {
+            "enable": {
+              "default": false,
+              "description": "Replace the single import tier with a stepped supply curve.",
+              "type": "boolean"
+            },
+            "total_supply_threshold": {
+              "default": 5556,
+              "description": "Total biomass supply (TWh/a) up to which the first tier is available at `price`. The first tier is this threshold minus the sustainable domestic potentials (solid biomass, biogas and municipal solid waste); if the domestic potentials exceed the threshold, the excess is deducted from the following tiers. 5556 TWh corresponds to 20 EJ.",
+              "minimum": 0,
+              "type": "number"
+            },
+            "step_size": {
+              "default": 277.8,
+              "description": "Amount of each following tier (TWh/a). 277.8 TWh corresponds to 1 EJ.",
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "n_steps": {
+              "default": 18,
+              "description": "Number of tiers following the first tier.",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "price_increment": {
+              "default": 0.9,
+              "description": "Price increase per tier (currency/MWh). 0.9 EUR/MWh corresponds to 0.25 EUR/GJ.",
+              "minimum": 0,
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "_SolidBiomassImportSupplyCurveConfig": {
+      "description": "Configuration for `sector.solid_biomass_import.supply_curve` settings.",
+      "properties": {
+        "enable": {
+          "default": false,
+          "description": "Replace the single import tier with a stepped supply curve.",
+          "type": "boolean"
+        },
+        "total_supply_threshold": {
+          "default": 5556,
+          "description": "Total biomass supply (TWh/a) up to which the first tier is available at `price`. The first tier is this threshold minus the sustainable domestic potentials (solid biomass, biogas and municipal solid waste); if the domestic potentials exceed the threshold, the excess is deducted from the following tiers. 5556 TWh corresponds to 20 EJ.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "step_size": {
+          "default": 277.8,
+          "description": "Amount of each following tier (TWh/a). 277.8 TWh corresponds to 1 EJ.",
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "n_steps": {
+          "default": 18,
+          "description": "Number of tiers following the first tier.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "price_increment": {
+          "default": 0.9,
+          "description": "Price increase per tier (currency/MWh). 0.9 EUR/MWh corresponds to 0.25 EUR/GJ.",
+          "minimum": 0,
+          "type": "number"
+        }
+      }
+    },
+    "_SolidBiomassLimitConfig": {
+      "description": "Configuration for `sector.solid_biomass_limit` settings.",
+      "properties": {
+        "enable": {
+          "default": false,
+          "description": "Limit the annual solid biomass supply, including imports.",
+          "type": "boolean"
+        },
+        "limit": {
+          "default": 0.0,
+          "description": "Maximum annual solid biomass supply (TWh/a).",
+          "minimum": 0,
+          "type": "number"
+        },
+        "generator_carriers": {
+          "description": "Generator carriers counted as solid biomass supply.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "link_carriers": {
+          "description": "Link carriers whose output at `bus1` is counted as solid biomass supply.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       }
     },
@@ -12752,6 +13110,70 @@
             }
           }
         },
+        "class_scenarios": {
+          "additionalProperties": {
+            "enum": [
+              "ENS_Low",
+              "ENS_Med",
+              "ENS_High"
+            ],
+            "type": "string"
+          },
+          "description": "Use a different ENSPRESO potential scenario for the commodities of the given classes, e.g. `{biogas: ENS_Med}` while `biomass.scenario` is `ENS_High`.",
+          "type": "object"
+        },
+        "feedstocks": {
+          "description": "Configuration for `biomass.feedstocks` settings.",
+          "properties": {
+            "enable": {
+              "default": false,
+              "description": "Split the `solid biomass` and `biogas` supply into one generator per feedstock, each with its own potential and its own cost from the JRC ENSPRESO cost sheet ('COST - NUTS0 EnergyCom'). Generators keep the carrier of their class and are named after the feedstock.",
+              "type": "boolean"
+            },
+            "cost_year": {
+              "anyOf": [
+                {
+                  "maximum": 2050,
+                  "minimum": 2010,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "description": "Year of the ENSPRESO feedstock costs. Defaults to `biomass.year` (overnight) or the planning horizon (myopic/perfect)."
+            },
+            "cost_scenario": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "ENS_BaU_GFTM",
+                    "ENS_Low",
+                    "ENS_Med",
+                    "ENS_High"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "description": "ENSPRESO scenario of the feedstock costs. Defaults to `biomass.scenario`."
+            },
+            "groups": {
+              "additionalProperties": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "description": "Feedstock name mapped to the ENSPRESO commodities it consists of. Together, the feedstocks must cover exactly the commodities of the `solid biomass` and `biogas` classes in `biomass.classes`, and each feedstock must lie within one class.",
+              "type": "object"
+            }
+          }
+        },
         "share_unsustainable_use_retained": {
           "additionalProperties": {
             "type": "number"
@@ -14194,6 +14616,110 @@
               "default": 0.1,
               "description": "Upstream emissions of solid biomass imports.",
               "type": "number"
+            },
+            "supply_curve": {
+              "description": "Configuration for `sector.solid_biomass_import.supply_curve` settings.",
+              "properties": {
+                "enable": {
+                  "default": false,
+                  "description": "Replace the single import tier with a stepped supply curve.",
+                  "type": "boolean"
+                },
+                "total_supply_threshold": {
+                  "default": 5556,
+                  "description": "Total biomass supply (TWh/a) up to which the first tier is available at `price`. The first tier is this threshold minus the sustainable domestic potentials (solid biomass, biogas and municipal solid waste); if the domestic potentials exceed the threshold, the excess is deducted from the following tiers. 5556 TWh corresponds to 20 EJ.",
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "step_size": {
+                  "default": 277.8,
+                  "description": "Amount of each following tier (TWh/a). 277.8 TWh corresponds to 1 EJ.",
+                  "exclusiveMinimum": 0,
+                  "type": "number"
+                },
+                "n_steps": {
+                  "default": 18,
+                  "description": "Number of tiers following the first tier.",
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "price_increment": {
+                  "default": 0.9,
+                  "description": "Price increase per tier (currency/MWh). 0.9 EUR/MWh corresponds to 0.25 EUR/GJ.",
+                  "minimum": 0,
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "renewable_liquid_fuel_share": {
+          "description": "Configuration for `sector.renewable_liquid_fuel_share` settings.",
+          "properties": {
+            "enable": {
+              "default": false,
+              "description": "Constrain the annual liquid fuel output of the `producers` relative to the annual oil demand of the `demand_carriers`.",
+              "type": "boolean"
+            },
+            "share": {
+              "default": 0.0,
+              "description": "Share of the oil demand of `demand_carriers`.",
+              "minimum": 0,
+              "type": "number"
+            },
+            "sense": {
+              "default": ">=",
+              "description": "Sense of the constraint.",
+              "enum": [
+                ">=",
+                "==",
+                "<="
+              ],
+              "type": "string"
+            },
+            "producers": {
+              "description": "Link carriers whose output at `bus1` counts towards the share.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "demand_carriers": {
+              "description": "Load carriers whose demand defines the reference.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          }
+        },
+        "solid_biomass_limit": {
+          "description": "Configuration for `sector.solid_biomass_limit` settings.",
+          "properties": {
+            "enable": {
+              "default": false,
+              "description": "Limit the annual solid biomass supply, including imports.",
+              "type": "boolean"
+            },
+            "limit": {
+              "default": 0.0,
+              "description": "Maximum annual solid biomass supply (TWh/a).",
+              "minimum": 0,
+              "type": "number"
+            },
+            "generator_carriers": {
+              "description": "Generator carriers counted as solid biomass supply.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "link_carriers": {
+              "description": "Link carriers whose output at `bus1` is counted as solid biomass supply.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
             }
           }
         },

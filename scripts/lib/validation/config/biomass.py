@@ -62,6 +62,31 @@ class _BiomassClassesConfig(ConfigModel):
     model_config = ConfigDict(populate_by_name=True)
 
 
+class _BiomassFeedstocksConfig(ConfigModel):
+    """Configuration for `biomass.feedstocks` settings."""
+
+    enable: bool = Field(
+        False,
+        description="Split the `solid biomass` and `biogas` supply into one generator per feedstock, each with its own potential and its own cost from the JRC ENSPRESO cost sheet ('COST - NUTS0 EnergyCom'). Generators keep the carrier of their class and are named after the feedstock.",
+    )
+    cost_year: int | None = Field(
+        None,
+        ge=2010,
+        le=2050,
+        description="Year of the ENSPRESO feedstock costs. Defaults to `biomass.year` (overnight) or the planning horizon (myopic/perfect).",
+    )
+    cost_scenario: Literal["ENS_BaU_GFTM", "ENS_Low", "ENS_Med", "ENS_High"] | None = (
+        Field(
+            None,
+            description="ENSPRESO scenario of the feedstock costs. Defaults to `biomass.scenario`.",
+        )
+    )
+    groups: dict[str, list[str]] = Field(
+        default_factory=dict,
+        description="Feedstock name mapped to the ENSPRESO commodities it consists of. Together, the feedstocks must cover exactly the commodities of the `solid biomass` and `biogas` classes in `biomass.classes`, and each feedstock must lie within one class.",
+    )
+
+
 class BiomassConfig(BaseModel):
     """Configuration for `biomass` settings."""
 
@@ -78,6 +103,14 @@ class BiomassConfig(BaseModel):
     classes: _BiomassClassesConfig = Field(
         default_factory=_BiomassClassesConfig,
         description="Classification of biomass commodities.",
+    )
+    class_scenarios: dict[str, Literal["ENS_Low", "ENS_Med", "ENS_High"]] = Field(
+        default_factory=dict,
+        description="Use a different ENSPRESO potential scenario for the commodities of the given classes, e.g. `{biogas: ENS_Med}` while `biomass.scenario` is `ENS_High`.",
+    )
+    feedstocks: _BiomassFeedstocksConfig = Field(
+        default_factory=_BiomassFeedstocksConfig,
+        description="Feedstock-specific biomass supply with separate costs.",
     )
     share_unsustainable_use_retained: dict[int, float] = Field(
         default_factory=lambda: {

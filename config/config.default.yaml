@@ -567,6 +567,12 @@ biomass:
     - Sludge
     municipal solid waste:
     - Municipal waste
+  class_scenarios: {}
+  feedstocks:
+    enable: false
+    cost_year:
+    cost_scenario:
+    groups: {}
   share_unsustainable_use_retained:
     2020: 1
     2025: 1
@@ -1131,6 +1137,34 @@ sector:
     price: 54
     max_amount: 1390
     upstream_emissions_factor: 0.1
+    supply_curve:
+      enable: false
+      total_supply_threshold: 5556
+      step_size: 277.8
+      n_steps: 18
+      price_increment: 0.9
+  renewable_liquid_fuel_share:
+    enable: false
+    share: 0.0
+    sense: ">="
+    producers:
+    - biomass to liquid
+    - biomass to liquid CC
+    - electrobiofuels
+    - "Fischer-Tropsch"
+    demand_carriers:
+    - kerosene for aviation
+    - shipping oil
+    - agriculture machinery oil
+    - land transport oil
+  solid_biomass_limit:
+    enable: false
+    limit: 0.0
+    generator_carriers:
+    - solid biomass
+    - unsustainable solid biomass
+    link_carriers:
+    - solid biomass import
   imports:
     enable: false
     limit: .inf

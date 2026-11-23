@@ -353,6 +353,33 @@ class _EnhancedGeothermalConfig(BaseModel):
     )
 
 
+class _SolidBiomassImportSupplyCurveConfig(BaseModel):
+    """Configuration for `sector.solid_biomass_import.supply_curve` settings."""
+
+    enable: bool = Field(
+        False,
+        description="Replace the single import tier with a stepped supply curve.",
+    )
+    total_supply_threshold: float = Field(
+        5556,
+        ge=0,
+        description="Total biomass supply (TWh/a) up to which the first tier is available at `price`. The first tier is this threshold minus the sustainable domestic potentials (solid biomass, biogas and municipal solid waste); if the domestic potentials exceed the threshold, the excess is deducted from the following tiers. 5556 TWh corresponds to 20 EJ.",
+    )
+    step_size: float = Field(
+        277.8,
+        gt=0,
+        description="Amount of each following tier (TWh/a). 277.8 TWh corresponds to 1 EJ.",
+    )
+    n_steps: int = Field(
+        18, ge=0, description="Number of tiers following the first tier."
+    )
+    price_increment: float = Field(
+        0.9,
+        ge=0,
+        description="Price increase per tier (currency/MWh). 0.9 EUR/MWh corresponds to 0.25 EUR/GJ.",
+    )
+
+
 class _SolidBiomassImportConfig(BaseModel):
     """Configuration for `sector.solid_biomass_import` settings."""
 
@@ -367,6 +394,63 @@ class _SolidBiomassImportConfig(BaseModel):
     )
     upstream_emissions_factor: float = Field(
         0.1, description="Upstream emissions of solid biomass imports."
+    )
+    supply_curve: _SolidBiomassImportSupplyCurveConfig = Field(
+        default_factory=_SolidBiomassImportSupplyCurveConfig,
+        description="Stepped import supply curve. If enabled, it replaces the single import tier defined by `price` and `max_amount`; `price` is the price of the first tier.",
+    )
+
+
+class _RenewableLiquidFuelShareConfig(BaseModel):
+    """Configuration for `sector.renewable_liquid_fuel_share` settings."""
+
+    enable: bool = Field(
+        False,
+        description="Constrain the annual liquid fuel output of the `producers` relative to the annual oil demand of the `demand_carriers`.",
+    )
+    share: float = Field(
+        0.0, ge=0, description="Share of the oil demand of `demand_carriers`."
+    )
+    sense: Literal[">=", "==", "<="] = Field(
+        ">=", description="Sense of the constraint."
+    )
+    producers: list[str] = Field(
+        default_factory=lambda: [
+            "biomass to liquid",
+            "biomass to liquid CC",
+            "electrobiofuels",
+            "Fischer-Tropsch",
+        ],
+        description="Link carriers whose output at `bus1` counts towards the share.",
+    )
+    demand_carriers: list[str] = Field(
+        default_factory=lambda: [
+            "kerosene for aviation",
+            "shipping oil",
+            "agriculture machinery oil",
+            "land transport oil",
+        ],
+        description="Load carriers whose demand defines the reference.",
+    )
+
+
+class _SolidBiomassLimitConfig(BaseModel):
+    """Configuration for `sector.solid_biomass_limit` settings."""
+
+    enable: bool = Field(
+        False,
+        description="Limit the annual solid biomass supply, including imports.",
+    )
+    limit: float = Field(
+        0.0, ge=0, description="Maximum annual solid biomass supply (TWh/a)."
+    )
+    generator_carriers: list[str] = Field(
+        default_factory=lambda: ["solid biomass", "unsustainable solid biomass"],
+        description="Generator carriers counted as solid biomass supply.",
+    )
+    link_carriers: list[str] = Field(
+        default_factory=lambda: ["solid biomass import"],
+        description="Link carriers whose output at `bus1` is counted as solid biomass supply.",
     )
 
 
@@ -1152,6 +1236,14 @@ class SectorConfig(BaseModel):
     solid_biomass_import: _SolidBiomassImportConfig = Field(
         default_factory=_SolidBiomassImportConfig,
         description="Solid biomass import configuration.",
+    )
+    renewable_liquid_fuel_share: _RenewableLiquidFuelShareConfig = Field(
+        default_factory=_RenewableLiquidFuelShareConfig,
+        description="Constraint on the share of renewable liquid fuels in transport and agriculture oil demand.",
+    )
+    solid_biomass_limit: _SolidBiomassLimitConfig = Field(
+        default_factory=_SolidBiomassLimitConfig,
+        description="Constraint on the annual solid biomass supply.",
     )
     imports: _ImportsConfig = Field(
         default_factory=_ImportsConfig, description="Imports configuration."

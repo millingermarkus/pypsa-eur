@@ -176,6 +176,172 @@ def enspreso_biomass_potentials(
     return bio
 
 
+def interpolate_years(load, year: int) -> pd.DataFrame:
+    """
+    Call ``load(year)`` for an ENSPRESO year, interpolating linearly between
+    the available years and using 2050 for later years.
+    """
+    if year > max(AVAILABLE_BIOMASS_YEARS):
+        logger.info("No ENSPRESO data for years after 2050, using 2050.")
+        return load(max(AVAILABLE_BIOMASS_YEARS))
+    if year in AVAILABLE_BIOMASS_YEARS:
+        return load(year)
+
+    before = int(np.floor(year / 10) * 10)
+    after = int(np.ceil(year / 10) * 10)
+    logger.info(
+        f"No ENSPRESO data for {year}, interpolating linearly between {before} and {after}."
+    )
+    df_before = load(before)
+    df_after = load(after)
+    fraction = (year - before) / (after - before)
+    return df_before + fraction * (df_after - df_before)
+
+
+def enspreso_biomass_costs(
+    enspreso_biomass: str, year: int, scenario: str
+) -> pd.DataFrame:
+    """
+    Loads the JRC ENSPRESO biomass costs per country and commodity.
+
+    Parameters
+    ----------
+    enspreso_biomass : str
+        Path to the JRC ENSPRESO biomass Excel file.
+    year : int
+        The year for which costs are to be taken.
+        Can be {2010, 2020, 2030, 2040, 2050}.
+    scenario : str
+        The scenario. Can be {"ENS_BaU_GFTM", "ENS_Low", "ENS_Med", "ENS_High"}.
+
+    Returns
+    -------
+    pd.DataFrame
+        Costs in EUR2010/MWh by two-letter country code (rows) and commodity
+        description (columns). Missing or zero costs are NaN.
+    """
+    glossary = pd.read_excel(
+        str(enspreso_biomass),
+        sheet_name="Glossary",
+        usecols="B:D",
+        skiprows=1,
+        index_col=0,
+    )
+
+    df = pd.read_excel(str(enspreso_biomass), sheet_name="COST - NUTS0 EnergyCom")
+    df.columns = df.columns.str.strip()
+    df = df.query("Year == @year and Scenario == @scenario").copy()
+
+    df["commodity"] = df["Energy Commodity"].map(glossary.description)
+    df["country"] = df["NUTS0"].replace({"EL": "GR", "UK": "GB", "KS": "XK"})
+    df["NUTS0 Energy Commodity Cost"] = pd.to_numeric(
+        df["NUTS0 Energy Commodity Cost"], errors="coerce"
+    )
+
+    # convert EUR/GJ to EUR/MWh
+    costs = df.pivot_table(
+        index="country",
+        columns="commodity",
+        values="NUTS0 Energy Commodity Cost",
+        aggfunc="mean",
+    )
+    return costs.mul(3.6).where(lambda x: x > 0)
+
+
+def build_feedstocks(
+    commodities: pd.DataFrame,
+    classes: pd.DataFrame,
+    costs: pd.DataFrame,
+    class_definitions: dict,
+    feedstock_groups: dict,
+) -> pd.DataFrame:
+    """
+    Build potentials and costs of biomass feedstocks per region.
+
+    Feedstock potentials are the class potentials (after phasing in sustainable
+    potentials) split by the feedstock's share of the class commodities in each
+    region. Feedstock costs are the potential-weighted country costs of its
+    commodities; missing country costs are filled with the potential-weighted
+    European average.
+
+    Parameters
+    ----------
+    commodities : pd.DataFrame
+        Potentials by region and ENSPRESO commodity.
+    classes : pd.DataFrame
+        Final potentials by region and biomass class in MWh/a.
+    costs : pd.DataFrame
+        Costs in EUR/MWh by country and ENSPRESO commodity.
+    class_definitions : dict
+        Biomass classes mapped to their ENSPRESO commodities.
+    feedstock_groups : dict
+        Feedstocks mapped to their ENSPRESO commodities.
+
+    Returns
+    -------
+    pd.DataFrame
+        Long table with columns region, feedstock, class, potential (MWh/a)
+        and cost (EUR/MWh).
+    """
+    commodity_to_class = {
+        c: k for k, vv in class_definitions.items() for c in vv if k != "not included"
+    }
+
+    for cls in ["solid biomass", "biogas"]:
+        in_class = set(class_definitions.get(cls, []))
+        covered = {
+            c
+            for commodities_f in feedstock_groups.values()
+            for c in commodities_f
+            if commodity_to_class.get(c) == cls
+        }
+        if in_class != covered:
+            raise ValueError(
+                f"The feedstocks must cover exactly the commodities of class '{cls}'. "
+                f"Missing: {sorted(in_class - covered)}, extra: {sorted(covered - in_class)}."
+            )
+
+    countries = commodities.index.str[:2]
+    rows = []
+    for feedstock, commodities_f in feedstock_groups.items():
+        feedstock_classes = {commodity_to_class.get(c) for c in commodities_f}
+        if len(feedstock_classes) != 1 or None in feedstock_classes:
+            raise ValueError(
+                f"Feedstock '{feedstock}' must consist of commodities of exactly one "
+                f"of the classes 'solid biomass' and 'biogas', found {feedstock_classes}."
+            )
+        cls = feedstock_classes.pop()
+
+        pot = commodities.reindex(columns=commodities_f, fill_value=0.0)
+        class_pot = commodities.reindex(
+            columns=class_definitions[cls], fill_value=0.0
+        ).sum(axis=1)
+        share = (pot.sum(axis=1) / class_pot).fillna(0.0)
+
+        cost = costs.reindex(index=countries, columns=commodities_f)
+        cost.index = commodities.index
+        eu_mean = (cost * pot).sum() / pot.where(cost.notna()).sum()
+        cost = cost.fillna(eu_mean)
+        weights = pot.where(pot.sum(axis=1) > 0, 1.0)
+        feedstock_cost = (cost * weights).sum(axis=1) / weights.where(cost.notna()).sum(
+            axis=1
+        )
+
+        rows.append(
+            pd.DataFrame(
+                {
+                    "region": commodities.index,
+                    "feedstock": feedstock,
+                    "class": cls,
+                    "potential": (classes[cls] * share).values,
+                    "cost": feedstock_cost.values,
+                }
+            )
+        )
+
+    return pd.concat(rows, ignore_index=True)
+
+
 def disaggregate_nuts0(bio: pd.DataFrame, pop: pd.DataFrame) -> pd.DataFrame:
     """
     Some commodities are only given on NUTS0 level. These are disaggregated
@@ -422,28 +588,24 @@ if __name__ == "__main__":
     scenario = params["scenario"]
     enspreso_fn = snakemake.input.enspreso_biomass
 
-    if year > 2050:
-        logger.info("No biomass potentials for years after 2050, using 2050.")
-        max_year = max(AVAILABLE_BIOMASS_YEARS)
-        enspreso = enspreso_biomass_potentials(enspreso_fn, max_year, scenario)
+    logger.info(f"Using biomass potentials for {year} and scenario {scenario}.")
+    enspreso = interpolate_years(
+        lambda y: enspreso_biomass_potentials(enspreso_fn, y, scenario), year
+    )
 
-    elif year not in AVAILABLE_BIOMASS_YEARS:
-        before = int(np.floor(year / 10) * 10)
-        after = int(np.ceil(year / 10) * 10)
+    # optionally take the potentials of some classes from another scenario
+    for cls, cls_scenario in params.get("class_scenarios", {}).items():
+        if cls_scenario == scenario:
+            continue
+        commodities = enspreso.columns.intersection(params["classes"].get(cls, []))
         logger.info(
-            f"No biomass potentials for {year}, interpolating linearly between {before} and {after}."
+            f"Using biomass potentials of scenario {cls_scenario} for class '{cls}'."
         )
-
-        enspreso_before = enspreso_biomass_potentials(enspreso_fn, before, scenario)
-        enspreso_after = enspreso_biomass_potentials(enspreso_fn, after, scenario)
-
-        fraction = (year - before) / (after - before)
-
-        enspreso = enspreso_before + fraction * (enspreso_after - enspreso_before)
-
-    else:
-        logger.info(f"Using biomass potentials for {year}.")
-        enspreso = enspreso_biomass_potentials(enspreso_fn, year, scenario)
+        enspreso_cls = interpolate_years(
+            lambda y, s=cls_scenario: enspreso_biomass_potentials(enspreso_fn, y, s),
+            year,
+        )
+        enspreso[commodities] = enspreso_cls.reindex_like(enspreso)[commodities]
 
     pop = build_nuts_population_data(
         snakemake.input.nuts3_population,
@@ -461,6 +623,7 @@ if __name__ == "__main__":
     df = convert_nuts2_to_regions(df_nuts2, regions)
 
     df.to_csv(snakemake.output.biomass_potentials_all)
+    commodities = df.drop(columns="geometry", errors="ignore")
 
     grouper = {v: k for k, vv in params["classes"].items() for v in vv}
     df = df.T.groupby(grouper).sum().T
@@ -485,3 +648,27 @@ if __name__ == "__main__":
     df.index.name = "MWh/a"
 
     df.to_csv(snakemake.output.biomass_potentials)
+
+    feedstocks_config = params["feedstocks"]
+    if feedstocks_config["enable"]:
+        cost_year = feedstocks_config["cost_year"] or year
+        cost_scenario = feedstocks_config["cost_scenario"] or scenario
+        logger.info(
+            f"Building biomass feedstocks with costs for {cost_year} and scenario {cost_scenario}."
+        )
+        costs = interpolate_years(
+            lambda y: enspreso_biomass_costs(enspreso_fn, y, cost_scenario),
+            cost_year,
+        )
+        feedstocks = build_feedstocks(
+            commodities,
+            df,
+            costs,
+            params["classes"],
+            feedstocks_config["groups"],
+        )
+    else:
+        feedstocks = pd.DataFrame(
+            columns=["region", "feedstock", "class", "potential", "cost"]
+        )
+    feedstocks.to_csv(snakemake.output.biomass_feedstocks, index=False)

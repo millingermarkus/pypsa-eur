@@ -1,0 +1,2 @@
+planning_horizon,technology,parameter,value,unit,source,further description
+all,direct air capture,investment,3000000,EUR/(tCO2/h),biovalue sensitivity CC3 (DAC),pypsa-eur-sec biovalue

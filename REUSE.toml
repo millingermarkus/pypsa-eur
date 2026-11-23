@@ -47,6 +47,7 @@ path = [
     "data/unit_commitment.csv",
     "data/versions.csv",
     "data/custom_costs.csv",
+    "data/biovalue/**",
 ]
 SPDX-FileCopyrightText = "The PyPSA-Eur Authors"
 SPDX-License-Identifier = "CC-BY-4.0"

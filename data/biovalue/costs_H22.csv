@@ -1,0 +1,3 @@
+planning_horizon,technology,parameter,value,unit,source,further description
+all,electrolysis,efficiency,0.7,per unit,biovalue sensitivity H22 (pessimistic),pypsa-eur-sec biovalue
+all,electrolysis,investment,400,EUR/kW_e,biovalue sensitivity H22 (pessimistic),pypsa-eur-sec biovalue

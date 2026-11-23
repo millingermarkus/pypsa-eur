@@ -1217,6 +1217,80 @@ def add_import_limit_constraint(n: pypsa.Network, sns: pd.DatetimeIndex) -> None
     n.model.add_constraints(lhs, limit_sense, rhs, name="import_limit")
 
 
+def add_renewable_liquid_fuel_share_constraint(
+    n: pypsa.Network, sns: pd.DatetimeIndex, config: dict
+) -> None:
+    """
+    Constrain the annual liquid fuel output of renewable producers relative to
+    the annual oil demand of transport and agriculture.
+
+    The left-hand side is the output at `bus1` of all links whose carrier is in
+    `producers`; the right-hand side is `share` times the demand of all loads
+    whose carrier is in `demand_carriers`. Both are weighted by the snapshot
+    weightings.
+    """
+    weightings = n.snapshot_weightings.loc[sns, "generators"]
+
+    producers = n.links.index[n.links.carrier.isin(config["producers"])]
+    if producers.empty:
+        logger.warning(
+            "No renewable liquid fuel producers found, skipping renewable liquid fuel share constraint."
+        )
+        return
+
+    loads = n.loads.index[n.loads.carrier.isin(config["demand_carriers"])]
+    demand = (
+        n.get_switchable_as_dense("Load", "p_set", sns)[loads]
+        .mul(weightings, axis=0)
+        .sum()
+        .sum()
+    )
+
+    eff = n.links.loc[producers, "efficiency"]
+    p = n.model["Link-p"].loc[sns, producers]
+    lhs = (p * eff * weightings).sum()
+    rhs = config["share"] * demand
+
+    logger.info(
+        "Adding renewable liquid fuel constraint: output of %s %s %.2f TWh (%.0f%% of %.2f TWh demand).",
+        sorted(n.links.loc[producers, "carrier"].unique()),
+        config["sense"],
+        rhs / 1e6,
+        config["share"] * 100,
+        demand / 1e6,
+    )
+
+    n.model.add_constraints(
+        lhs, config["sense"], rhs, name="renewable_liquid_fuel_share"
+    )
+
+
+def add_solid_biomass_limit_constraint(
+    n: pypsa.Network, sns: pd.DatetimeIndex, config: dict
+) -> None:
+    """
+    Limit the annual solid biomass supply from generators and import links.
+    """
+    weightings = n.snapshot_weightings.loc[sns, "generators"]
+    nyears = n.snapshot_weightings.generators.sum() / 8760
+
+    gens = n.generators.index[n.generators.carrier.isin(config["generator_carriers"])]
+    links = n.links.index[n.links.carrier.isin(config["link_carriers"])]
+    if gens.empty and links.empty:
+        logger.warning("No solid biomass supply found, skipping solid biomass limit.")
+        return
+
+    lhs = (n.model["Generator-p"].loc[sns, gens] * weightings).sum()
+    if not links.empty:
+        eff = n.links.loc[links, "efficiency"]
+        lhs += (n.model["Link-p"].loc[sns, links] * eff * weightings).sum()
+
+    rhs = config["limit"] * 1e6 * nyears
+    logger.info("Adding solid biomass limit of %.2f TWh.", config["limit"] * nyears)
+
+    n.model.add_constraints(lhs, "<=", rhs, name="solid_biomass_limit")
+
+
 def add_co2_atmosphere_constraint(
     n: pypsa.Network, snapshots: pd.DatetimeIndex
 ) -> None:
@@ -1315,6 +1389,14 @@ def extra_functionality(
 
     if config["sector"]["imports"]["enable"]:
         add_import_limit_constraint(n, snapshots)
+
+    fuel_share = config["sector"].get("renewable_liquid_fuel_share", {})
+    if fuel_share.get("enable", False):
+        add_renewable_liquid_fuel_share_constraint(n, snapshots, fuel_share)
+
+    solid_biomass_limit = config["sector"].get("solid_biomass_limit", {})
+    if solid_biomass_limit.get("enable", False):
+        add_solid_biomass_limit_constraint(n, snapshots, solid_biomass_limit)
 
     if n.params.custom_extra_functionality:
         source_path = n.params.custom_extra_functionality

@@ -1,0 +1,3 @@
+planning_horizon,technology,parameter,value,unit,source,further description
+all,Fischer-Tropsch,efficiency,0.9,per unit,biovalue sensitivity FT0 (optimistic),pypsa-eur-sec biovalue
+all,Fischer-Tropsch,investment,675,EUR/kW_FT,biovalue sensitivity FT0 (optimistic),pypsa-eur-sec biovalue

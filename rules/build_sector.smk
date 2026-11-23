@@ -903,6 +903,7 @@ rule build_biomass_potentials:
     output:
         biomass_potentials_all=resources("biomass_potentials_all_{horizon}.csv"),
         biomass_potentials=resources("biomass_potentials_{horizon}.csv"),
+        biomass_feedstocks=resources("biomass_feedstocks_{horizon}.csv"),
     log:
         logs("build_biomass_potentials_{horizon}.log"),
     benchmark:

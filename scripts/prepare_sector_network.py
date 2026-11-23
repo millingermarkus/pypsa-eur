@@ -4003,6 +4003,121 @@ def add_biomass_transport(
     )
 
 
+def add_biomass_feedstock_generators(
+    n: pypsa.Network,
+    feedstocks: pd.DataFrame,
+    biomass_class: str,
+    buses: list[str] | pd.Index,
+) -> None:
+    """
+    Add one generator per biomass feedstock and bus.
+
+    Feedstocks are aggregated to a single European bus if `buses` has only
+    one element, with the cost weighted by potential. Generators keep the
+    carrier of their class (e.g. 'solid biomass') so that constraints and
+    statistics by carrier are unaffected, and are named after the feedstock.
+
+    Parameters
+    ----------
+    n : pypsa.Network
+        The PyPSA network container object
+    feedstocks : pd.DataFrame
+        Table with columns region, feedstock, class, potential (MWh) and
+        cost (EUR/MWh).
+    biomass_class : str
+        Biomass class, 'solid biomass' or 'biogas'.
+    buses : list[str] | pd.Index
+        Supply buses of the class, one per region or a single European bus.
+    """
+    df = feedstocks.query("`class` == @biomass_class").copy()
+    buses = pd.Index(buses)
+
+    if len(buses) == 1:
+        df["weighted_cost"] = df.cost * df.potential
+        df = df.groupby("feedstock").agg(
+            potential=("potential", "sum"),
+            weighted_cost=("weighted_cost", "sum"),
+            mean_cost=("cost", "mean"),
+        )
+        df["cost"] = (df.weighted_cost / df.potential).fillna(df.mean_cost)
+        df["bus"] = buses[0]
+        df = df.reset_index()
+    else:
+        df["bus"] = df.region + " " + biomass_class
+        missing = set(df.bus) - set(buses)
+        if missing:
+            raise ValueError(f"Biomass feedstock buses not in network: {missing}")
+
+    df = df.query("potential > 0")
+    df.index = df.bus + " " + df.feedstock
+
+    for feedstock, cost in df.groupby("feedstock").cost.mean().items():
+        logger.info(
+            f"Adding {biomass_class} feedstock '{feedstock}' with average cost {cost:.2f} EUR/MWh."
+        )
+
+    n.add(
+        "Generator",
+        df.index,
+        bus=df.bus,
+        carrier=biomass_class,
+        p_nom=df.potential,
+        marginal_cost=df.cost,
+        e_sum_min=0,
+        e_sum_max=df.potential,
+    )
+
+
+def biomass_import_supply_curve(
+    domestic_potential: float,
+    price: float,
+    total_supply_threshold: float,
+    step_size: float,
+    n_steps: int,
+    price_increment: float,
+) -> pd.DataFrame:
+    """
+    Build the tiers of a stepped solid biomass import supply curve.
+
+    The first tier fills the total biomass supply up to
+    `total_supply_threshold` at `price`. Each of the following `n_steps`
+    tiers adds `step_size` at a price higher by `price_increment` per step.
+    If the domestic potential exceeds the threshold, the excess is deducted
+    from the following tiers.
+
+    Parameters
+    ----------
+    domestic_potential : float
+        Sustainable domestic biomass potential (MWh).
+    price : float
+        Price of the first tier (EUR/MWh).
+    total_supply_threshold : float
+        Total biomass supply covered by the first tier (MWh).
+    step_size : float
+        Amount of each following tier (MWh).
+    n_steps : int
+        Number of tiers after the first.
+    price_increment : float
+        Price increase per tier (EUR/MWh).
+
+    Returns
+    -------
+    pd.DataFrame
+        Tiers with columns amount (MWh) and price (EUR/MWh), excluding empty
+        tiers.
+    """
+    headroom = total_supply_threshold - domestic_potential
+    amounts = [max(headroom, 0.0)]
+    excess = min(headroom, 0.0)
+    for _ in range(n_steps):
+        amounts.append(max(step_size + excess, 0.0))
+        excess += min(-excess, step_size)
+    prices = [price + price_increment * k for k in range(n_steps + 1)]
+    tiers = pd.DataFrame({"amount": amounts, "price": prices})
+    tiers.index = pd.Index(range(1, n_steps + 2), name="tier")
+    return tiers.query("amount > 0")
+
+
 def add_biomass(
     n: pypsa.Network,
     costs: pd.DataFrame,
@@ -4014,6 +4129,7 @@ def add_biomass(
     biomass_transport_costs_file: str | None = None,
     transport_corridors: pd.DataFrame | None = None,
     nyears: float = 1,
+    biomass_feedstocks_file: str | None = None,
 ) -> None:
     """
     Add biomass-related components to the PyPSA network.
@@ -4051,6 +4167,10 @@ def add_biomass(
         directions. Required if the biomass_transport option is True.
     nyears : float
         Number of years for which to scale the biomass potentials.
+    biomass_feedstocks_file : str, optional
+        Path to CSV file with potentials and costs per biomass feedstock. If
+        given, one generator per feedstock replaces the single biogas and
+        solid biomass generators.
 
     Returns
     -------
@@ -4124,27 +4244,35 @@ def add_biomass(
         unit="MWh_LHV",
     )
 
-    n.add(
-        "Generator",
-        spatial.gas.biogas,
-        bus=spatial.gas.biogas,
-        carrier="biogas",
-        p_nom=biogas_potentials_spatial,
-        marginal_cost=costs.at["biogas", "fuel"],
-        e_sum_min=0,
-        e_sum_max=biogas_potentials_spatial,
-    )
+    if biomass_feedstocks_file:
+        feedstocks = pd.read_csv(biomass_feedstocks_file)
+        feedstocks["potential"] *= nyears
+        add_biomass_feedstock_generators(n, feedstocks, "biogas", spatial.gas.biogas)
+        add_biomass_feedstock_generators(
+            n, feedstocks, "solid biomass", spatial.biomass.nodes
+        )
+    else:
+        n.add(
+            "Generator",
+            spatial.gas.biogas,
+            bus=spatial.gas.biogas,
+            carrier="biogas",
+            p_nom=biogas_potentials_spatial,
+            marginal_cost=costs.at["biogas", "fuel"],
+            e_sum_min=0,
+            e_sum_max=biogas_potentials_spatial,
+        )
 
-    n.add(
-        "Generator",
-        spatial.biomass.nodes,
-        bus=spatial.biomass.nodes,
-        carrier="solid biomass",
-        p_nom=solid_biomass_potentials_spatial,
-        marginal_cost=costs.at["solid biomass", "fuel"],
-        e_sum_min=0,
-        e_sum_max=solid_biomass_potentials_spatial,
-    )
+        n.add(
+            "Generator",
+            spatial.biomass.nodes,
+            bus=spatial.biomass.nodes,
+            carrier="solid biomass",
+            p_nom=solid_biomass_potentials_spatial,
+            marginal_cost=costs.at["solid biomass", "fuel"],
+            e_sum_min=0,
+            e_sum_max=solid_biomass_potentials_spatial,
+        )
 
     if options["solid_biomass_import"].get("enable", False):
         biomass_import_price = options["solid_biomass_import"]["price"]
@@ -4172,15 +4300,52 @@ def add_biomass(
             carrier="solid biomass import",
         )
 
-        n.add(
-            "Store",
-            ["solid biomass import"],
-            bus=["EU solid biomass import"],
-            carrier="solid biomass import",
-            e_nom=biomass_import_max_amount,
-            marginal_cost=biomass_import_price,
-            e_initial=biomass_import_max_amount,
-        )
+        supply_curve = options["solid_biomass_import"].get("supply_curve", {})
+        if supply_curve.get("enable", False):
+            domestic = (
+                biomass_potentials.reindex(
+                    columns=["solid biomass", "biogas", "municipal solid waste"],
+                    fill_value=0.0,
+                )
+                .sum()
+                .sum()
+            )
+            tiers = biomass_import_supply_curve(
+                domestic_potential=domestic,
+                price=biomass_import_price,
+                total_supply_threshold=supply_curve["total_supply_threshold"]
+                * 1e6
+                * nyears,
+                step_size=supply_curve["step_size"] * 1e6 * nyears,
+                n_steps=supply_curve["n_steps"],
+                price_increment=supply_curve["price_increment"],
+            )
+            logger.info(
+                "Adding biomass import supply curve with %d tiers and %.2f TWh in total "
+                "(domestic potential %.2f TWh).",
+                len(tiers),
+                tiers.amount.sum() / 1e6,
+                domestic / 1e6,
+            )
+            n.add(
+                "Store",
+                "solid biomass import " + tiers.index.astype(str),
+                bus="EU solid biomass import",
+                carrier="solid biomass import",
+                e_nom=tiers.amount.values,
+                marginal_cost=tiers.price.values,
+                e_initial=tiers.amount.values,
+            )
+        else:
+            n.add(
+                "Store",
+                ["solid biomass import"],
+                bus=["EU solid biomass import"],
+                carrier="solid biomass import",
+                e_nom=biomass_import_max_amount,
+                marginal_cost=biomass_import_price,
+                e_initial=biomass_import_max_amount,
+            )
 
         n.add(
             "Link",
@@ -6853,6 +7018,7 @@ def main(
             biomass_transport_costs_file=inputs.biomass_transport_costs,
             transport_corridors=corridors["biomass"],
             nyears=nyears,
+            biomass_feedstocks_file=getattr(inputs, "biomass_feedstocks", None) or None,
         )
 
     if cf_industry["waste_to_energy"] or cf_industry["waste_to_energy_cc"]:
