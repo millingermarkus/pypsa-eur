@@ -1,0 +1,7 @@
+planning_horizon,technology,parameter,value,unit,source,further description
+all,biomass CHP capture,capture_rate,0.95,per unit,biovalue paper Table 3 (high capture efficiency),
+all,cement capture,capture_rate,0.95,per unit,biovalue paper Table 3 (high capture efficiency),
+all,biogas CC,capture rate,0.95,per unit,biovalue paper Table 3 (high capture efficiency),
+all,BtL,capture rate,0.95,per unit,biovalue paper Table 3 (high capture efficiency),
+all,BioSNG,capture rate,0.95,per unit,biovalue paper Table 3 (high capture efficiency),
+all,biomass-to-methanol,capture rate,0.95,per unit,biovalue paper Table 3 (high capture efficiency),

@@ -116,7 +116,7 @@ sector:
   regional_co2_sequestration_potential:
     enable: false
   co2_sequestration_cost: 10  # CS0; CS2 scenarios override this
-  cc_fraction: 0.9
+  cc_fraction: 0.9  # capture efficiency, set per scenario (0.95 high / 0.8 low)
   electricity_distribution_grid: false
   gas_network: false
   H2_network: true

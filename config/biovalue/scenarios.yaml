@@ -17,10 +17,12 @@ base_co2m0p1_seq650_solid0:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -46,10 +48,12 @@ base_co2m0p1_seq650_solid50:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -75,10 +79,12 @@ base_co2m0p1_seq650_solid100:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -104,10 +110,12 @@ base_co2m0p1_seq650_solid150:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -133,10 +141,12 @@ base_co2m0p1_seq650_solid200:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -162,10 +172,12 @@ base_co2m0p1_seq650_solid250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -191,10 +203,12 @@ base_co2m0p1_seq650_solid500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -220,10 +234,12 @@ base_co2m0p1_seq650_solid750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -249,10 +265,12 @@ base_co2m0p1_seq650_solid1000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -278,10 +296,12 @@ base_co2m0p1_seq650_solid1250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -307,10 +327,12 @@ base_co2m0p1_seq650_solid1500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -336,10 +358,12 @@ base_co2m0p1_seq650_solid1750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -365,10 +389,12 @@ base_co2m0p1_seq650_solid2000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -394,10 +420,12 @@ base_co2m0p1_seq650_solid2250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -423,10 +451,12 @@ base_co2m0p1_seq650_solid2500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -452,10 +482,12 @@ base_co2m0p1_seq650_solid2750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -481,10 +513,12 @@ base_co2m0p1_seq650_solid3000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -510,10 +544,12 @@ base_co2m0p1_seq650_solid3250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -539,10 +575,12 @@ base_co2m0p1_seq650_solid3500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -568,10 +606,12 @@ base_co20p0_seq650_solid0:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -597,10 +637,12 @@ base_co20p0_seq650_solid50:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -626,10 +668,12 @@ base_co20p0_seq650_solid100:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -655,10 +699,12 @@ base_co20p0_seq650_solid150:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -684,10 +730,12 @@ base_co20p0_seq650_solid200:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -713,10 +761,12 @@ base_co20p0_seq650_solid250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -742,10 +792,12 @@ base_co20p0_seq650_solid500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -771,10 +823,12 @@ base_co20p0_seq650_solid750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -800,10 +854,12 @@ base_co20p0_seq650_solid1000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -829,10 +885,12 @@ base_co20p0_seq650_solid1250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -858,10 +916,12 @@ base_co20p0_seq650_solid1500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -887,10 +947,12 @@ base_co20p0_seq650_solid1750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -916,10 +978,12 @@ base_co20p0_seq650_solid2000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -945,10 +1009,12 @@ base_co20p0_seq650_solid2250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -974,10 +1040,12 @@ base_co20p0_seq650_solid2500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -1003,10 +1071,12 @@ base_co20p0_seq650_solid2750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -1032,10 +1102,12 @@ base_co20p0_seq650_solid3000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -1061,10 +1133,12 @@ base_co20p0_seq650_solid3250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -1090,10 +1164,12 @@ base_co20p0_seq650_solid3500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -1119,10 +1195,12 @@ base_co20p0_seq200_solid0:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -1148,10 +1226,12 @@ base_co20p0_seq200_solid50:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -1177,10 +1257,12 @@ base_co20p0_seq200_solid100:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -1206,10 +1288,12 @@ base_co20p0_seq200_solid150:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -1235,10 +1319,12 @@ base_co20p0_seq200_solid200:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -1264,10 +1350,12 @@ base_co20p0_seq200_solid250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -1293,10 +1381,12 @@ base_co20p0_seq200_solid500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -1322,10 +1412,12 @@ base_co20p0_seq200_solid750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -1351,10 +1443,12 @@ base_co20p0_seq200_solid1000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -1380,10 +1474,12 @@ base_co20p0_seq200_solid1250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -1409,10 +1505,12 @@ base_co20p0_seq200_solid1500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -1438,10 +1536,12 @@ base_co20p0_seq200_solid1750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -1467,10 +1567,12 @@ base_co20p0_seq200_solid2000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -1496,10 +1598,12 @@ base_co20p0_seq200_solid2250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -1525,10 +1629,12 @@ base_co20p0_seq200_solid2500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -1554,10 +1660,12 @@ base_co20p0_seq200_solid2750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -1583,10 +1691,12 @@ base_co20p0_seq200_solid3000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -1612,10 +1722,12 @@ base_co20p0_seq200_solid3250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -1641,10 +1753,12 @@ base_co20p0_seq200_solid3500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -1670,10 +1784,12 @@ base_co20p1_seq650_solid0:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -1699,10 +1815,12 @@ base_co20p1_seq650_solid50:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -1728,10 +1846,12 @@ base_co20p1_seq650_solid100:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -1757,10 +1877,12 @@ base_co20p1_seq650_solid150:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -1786,10 +1908,12 @@ base_co20p1_seq650_solid200:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -1815,10 +1939,12 @@ base_co20p1_seq650_solid250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -1844,10 +1970,12 @@ base_co20p1_seq650_solid500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -1873,10 +2001,12 @@ base_co20p1_seq650_solid750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -1902,10 +2032,12 @@ base_co20p1_seq650_solid1000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -1931,10 +2063,12 @@ base_co20p1_seq650_solid1250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -1960,10 +2094,12 @@ base_co20p1_seq650_solid1500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -1989,10 +2125,12 @@ base_co20p1_seq650_solid1750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -2018,10 +2156,12 @@ base_co20p1_seq650_solid2000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -2047,10 +2187,12 @@ base_co20p1_seq650_solid2250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -2076,10 +2218,12 @@ base_co20p1_seq650_solid2500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -2105,10 +2249,12 @@ base_co20p1_seq650_solid2750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -2134,10 +2280,12 @@ base_co20p1_seq650_solid3000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -2163,10 +2311,12 @@ base_co20p1_seq650_solid3250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -2192,10 +2342,12 @@ base_co20p1_seq650_solid3500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -2221,10 +2373,12 @@ PE_co2m0p1_seq650_solid0:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -2250,10 +2404,12 @@ PE_co2m0p1_seq650_solid50:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -2279,10 +2435,12 @@ PE_co2m0p1_seq650_solid100:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -2308,10 +2466,12 @@ PE_co2m0p1_seq650_solid150:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -2337,10 +2497,12 @@ PE_co2m0p1_seq650_solid200:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -2366,10 +2528,12 @@ PE_co2m0p1_seq650_solid250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -2395,10 +2559,12 @@ PE_co2m0p1_seq650_solid500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -2424,10 +2590,12 @@ PE_co2m0p1_seq650_solid750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -2453,10 +2621,12 @@ PE_co2m0p1_seq650_solid1000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -2482,10 +2652,12 @@ PE_co2m0p1_seq650_solid1250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -2511,10 +2683,12 @@ PE_co2m0p1_seq650_solid1500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -2540,10 +2714,12 @@ PE_co2m0p1_seq650_solid1750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -2569,10 +2745,12 @@ PE_co2m0p1_seq650_solid2000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -2598,10 +2776,12 @@ PE_co2m0p1_seq650_solid2250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -2627,10 +2807,12 @@ PE_co2m0p1_seq650_solid2500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -2656,10 +2838,12 @@ PE_co2m0p1_seq650_solid2750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -2685,10 +2869,12 @@ PE_co2m0p1_seq650_solid3000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -2714,10 +2900,12 @@ PE_co2m0p1_seq650_solid3250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -2743,10 +2931,12 @@ PE_co2m0p1_seq650_solid3500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -2772,10 +2962,12 @@ PE_co20p0_seq650_solid0:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -2801,10 +2993,12 @@ PE_co20p0_seq650_solid50:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -2830,10 +3024,12 @@ PE_co20p0_seq650_solid100:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -2859,10 +3055,12 @@ PE_co20p0_seq650_solid150:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -2888,10 +3086,12 @@ PE_co20p0_seq650_solid200:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -2917,10 +3117,12 @@ PE_co20p0_seq650_solid250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -2946,10 +3148,12 @@ PE_co20p0_seq650_solid500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -2975,10 +3179,12 @@ PE_co20p0_seq650_solid750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -3004,10 +3210,12 @@ PE_co20p0_seq650_solid1000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -3033,10 +3241,12 @@ PE_co20p0_seq650_solid1250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -3062,10 +3272,12 @@ PE_co20p0_seq650_solid1500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -3091,10 +3303,12 @@ PE_co20p0_seq650_solid1750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -3120,10 +3334,12 @@ PE_co20p0_seq650_solid2000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -3149,10 +3365,12 @@ PE_co20p0_seq650_solid2250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -3178,10 +3396,12 @@ PE_co20p0_seq650_solid2500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -3207,10 +3427,12 @@ PE_co20p0_seq650_solid2750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -3236,10 +3458,12 @@ PE_co20p0_seq650_solid3000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -3265,10 +3489,12 @@ PE_co20p0_seq650_solid3250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -3294,10 +3520,12 @@ PE_co20p0_seq650_solid3500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -3323,10 +3551,12 @@ PE_co20p0_seq200_solid0:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -3352,10 +3582,12 @@ PE_co20p0_seq200_solid50:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -3381,10 +3613,12 @@ PE_co20p0_seq200_solid100:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -3410,10 +3644,12 @@ PE_co20p0_seq200_solid150:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -3439,10 +3675,12 @@ PE_co20p0_seq200_solid200:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -3468,10 +3706,12 @@ PE_co20p0_seq200_solid250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -3497,10 +3737,12 @@ PE_co20p0_seq200_solid500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -3526,10 +3768,12 @@ PE_co20p0_seq200_solid750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -3555,10 +3799,12 @@ PE_co20p0_seq200_solid1000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -3584,10 +3830,12 @@ PE_co20p0_seq200_solid1250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -3613,10 +3861,12 @@ PE_co20p0_seq200_solid1500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -3642,10 +3892,12 @@ PE_co20p0_seq200_solid1750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -3671,10 +3923,12 @@ PE_co20p0_seq200_solid2000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -3700,10 +3954,12 @@ PE_co20p0_seq200_solid2250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -3729,10 +3985,12 @@ PE_co20p0_seq200_solid2500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -3758,10 +4016,12 @@ PE_co20p0_seq200_solid2750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -3787,10 +4047,12 @@ PE_co20p0_seq200_solid3000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -3816,10 +4078,12 @@ PE_co20p0_seq200_solid3250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -3845,10 +4109,12 @@ PE_co20p0_seq200_solid3500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -3874,10 +4140,12 @@ PE_co20p1_seq650_solid0:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -3903,10 +4171,12 @@ PE_co20p1_seq650_solid50:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -3932,10 +4202,12 @@ PE_co20p1_seq650_solid100:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -3961,10 +4233,12 @@ PE_co20p1_seq650_solid150:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -3990,10 +4264,12 @@ PE_co20p1_seq650_solid200:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -4019,10 +4295,12 @@ PE_co20p1_seq650_solid250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -4048,10 +4326,12 @@ PE_co20p1_seq650_solid500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -4077,10 +4357,12 @@ PE_co20p1_seq650_solid750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -4106,10 +4388,12 @@ PE_co20p1_seq650_solid1000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -4135,10 +4419,12 @@ PE_co20p1_seq650_solid1250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -4164,10 +4450,12 @@ PE_co20p1_seq650_solid1500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -4193,10 +4481,12 @@ PE_co20p1_seq650_solid1750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -4222,10 +4512,12 @@ PE_co20p1_seq650_solid2000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -4251,10 +4543,12 @@ PE_co20p1_seq650_solid2250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -4280,10 +4574,12 @@ PE_co20p1_seq650_solid2500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -4309,10 +4605,12 @@ PE_co20p1_seq650_solid2750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -4338,10 +4636,12 @@ PE_co20p1_seq650_solid3000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -4367,10 +4667,12 @@ PE_co20p1_seq650_solid3250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -4396,10 +4698,12 @@ PE_co20p1_seq650_solid3500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -4425,10 +4729,12 @@ efuel_co2m0p1_seq650_solid0:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -4454,10 +4760,12 @@ efuel_co2m0p1_seq650_solid50:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -4483,10 +4791,12 @@ efuel_co2m0p1_seq650_solid100:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -4512,10 +4822,12 @@ efuel_co2m0p1_seq650_solid150:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -4541,10 +4853,12 @@ efuel_co2m0p1_seq650_solid200:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -4570,10 +4884,12 @@ efuel_co2m0p1_seq650_solid250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -4599,10 +4915,12 @@ efuel_co2m0p1_seq650_solid500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -4628,10 +4946,12 @@ efuel_co2m0p1_seq650_solid750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -4657,10 +4977,12 @@ efuel_co2m0p1_seq650_solid1000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -4686,10 +5008,12 @@ efuel_co2m0p1_seq650_solid1250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -4715,10 +5039,12 @@ efuel_co2m0p1_seq650_solid1500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -4744,10 +5070,12 @@ efuel_co2m0p1_seq650_solid1750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -4773,10 +5101,12 @@ efuel_co2m0p1_seq650_solid2000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -4802,10 +5132,12 @@ efuel_co2m0p1_seq650_solid2250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -4831,10 +5163,12 @@ efuel_co2m0p1_seq650_solid2500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -4860,10 +5194,12 @@ efuel_co2m0p1_seq650_solid2750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -4889,10 +5225,12 @@ efuel_co2m0p1_seq650_solid3000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -4918,10 +5256,12 @@ efuel_co2m0p1_seq650_solid3250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -4947,10 +5287,12 @@ efuel_co2m0p1_seq650_solid3500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -4976,10 +5318,12 @@ efuel_co20p0_seq650_solid0:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -5005,10 +5349,12 @@ efuel_co20p0_seq650_solid50:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -5034,10 +5380,12 @@ efuel_co20p0_seq650_solid100:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -5063,10 +5411,12 @@ efuel_co20p0_seq650_solid150:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -5092,10 +5442,12 @@ efuel_co20p0_seq650_solid200:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -5121,10 +5473,12 @@ efuel_co20p0_seq650_solid250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -5150,10 +5504,12 @@ efuel_co20p0_seq650_solid500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -5179,10 +5535,12 @@ efuel_co20p0_seq650_solid750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -5208,10 +5566,12 @@ efuel_co20p0_seq650_solid1000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -5237,10 +5597,12 @@ efuel_co20p0_seq650_solid1250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -5266,10 +5628,12 @@ efuel_co20p0_seq650_solid1500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -5295,10 +5659,12 @@ efuel_co20p0_seq650_solid1750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -5324,10 +5690,12 @@ efuel_co20p0_seq650_solid2000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -5353,10 +5721,12 @@ efuel_co20p0_seq650_solid2250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -5382,10 +5752,12 @@ efuel_co20p0_seq650_solid2500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -5411,10 +5783,12 @@ efuel_co20p0_seq650_solid2750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -5440,10 +5814,12 @@ efuel_co20p0_seq650_solid3000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -5469,10 +5845,12 @@ efuel_co20p0_seq650_solid3250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -5498,10 +5876,12 @@ efuel_co20p0_seq650_solid3500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -5527,10 +5907,12 @@ efuel_co20p0_seq200_solid0:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -5556,10 +5938,12 @@ efuel_co20p0_seq200_solid50:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -5585,10 +5969,12 @@ efuel_co20p0_seq200_solid100:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -5614,10 +6000,12 @@ efuel_co20p0_seq200_solid150:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -5643,10 +6031,12 @@ efuel_co20p0_seq200_solid200:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -5672,10 +6062,12 @@ efuel_co20p0_seq200_solid250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -5701,10 +6093,12 @@ efuel_co20p0_seq200_solid500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -5730,10 +6124,12 @@ efuel_co20p0_seq200_solid750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -5759,10 +6155,12 @@ efuel_co20p0_seq200_solid1000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -5788,10 +6186,12 @@ efuel_co20p0_seq200_solid1250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -5817,10 +6217,12 @@ efuel_co20p0_seq200_solid1500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -5846,10 +6248,12 @@ efuel_co20p0_seq200_solid1750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -5875,10 +6279,12 @@ efuel_co20p0_seq200_solid2000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -5904,10 +6310,12 @@ efuel_co20p0_seq200_solid2250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -5933,10 +6341,12 @@ efuel_co20p0_seq200_solid2500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -5962,10 +6372,12 @@ efuel_co20p0_seq200_solid2750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -5991,10 +6403,12 @@ efuel_co20p0_seq200_solid3000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -6020,10 +6434,12 @@ efuel_co20p0_seq200_solid3250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -6049,10 +6465,12 @@ efuel_co20p0_seq200_solid3500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -6078,10 +6496,12 @@ efuel_co20p1_seq650_solid0:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -6107,10 +6527,12 @@ efuel_co20p1_seq650_solid50:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -6136,10 +6558,12 @@ efuel_co20p1_seq650_solid100:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -6165,10 +6589,12 @@ efuel_co20p1_seq650_solid150:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -6194,10 +6620,12 @@ efuel_co20p1_seq650_solid200:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -6223,10 +6651,12 @@ efuel_co20p1_seq650_solid250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -6252,10 +6682,12 @@ efuel_co20p1_seq650_solid500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -6281,10 +6713,12 @@ efuel_co20p1_seq650_solid750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -6310,10 +6744,12 @@ efuel_co20p1_seq650_solid1000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -6339,10 +6775,12 @@ efuel_co20p1_seq650_solid1250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -6368,10 +6806,12 @@ efuel_co20p1_seq650_solid1500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -6397,10 +6837,12 @@ efuel_co20p1_seq650_solid1750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -6426,10 +6868,12 @@ efuel_co20p1_seq650_solid2000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -6455,10 +6899,12 @@ efuel_co20p1_seq650_solid2250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -6484,10 +6930,12 @@ efuel_co20p1_seq650_solid2500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -6513,10 +6961,12 @@ efuel_co20p1_seq650_solid2750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -6542,10 +6992,12 @@ efuel_co20p1_seq650_solid3000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -6571,10 +7023,12 @@ efuel_co20p1_seq650_solid3250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -6600,10 +7054,12 @@ efuel_co20p1_seq650_solid3500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC3.csv
+    - data/biovalue/costs_CCeta_high.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 10
+    cc_fraction: 0.95
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -6629,10 +7085,12 @@ ccs_co2m0p1_seq650_solid0:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -6658,10 +7116,12 @@ ccs_co2m0p1_seq650_solid50:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -6687,10 +7147,12 @@ ccs_co2m0p1_seq650_solid100:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -6716,10 +7178,12 @@ ccs_co2m0p1_seq650_solid150:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -6745,10 +7209,12 @@ ccs_co2m0p1_seq650_solid200:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -6774,10 +7240,12 @@ ccs_co2m0p1_seq650_solid250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -6803,10 +7271,12 @@ ccs_co2m0p1_seq650_solid500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -6832,10 +7302,12 @@ ccs_co2m0p1_seq650_solid750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -6861,10 +7333,12 @@ ccs_co2m0p1_seq650_solid1000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -6890,10 +7364,12 @@ ccs_co2m0p1_seq650_solid1250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -6919,10 +7395,12 @@ ccs_co2m0p1_seq650_solid1500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -6948,10 +7426,12 @@ ccs_co2m0p1_seq650_solid1750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -6977,10 +7457,12 @@ ccs_co2m0p1_seq650_solid2000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -7006,10 +7488,12 @@ ccs_co2m0p1_seq650_solid2250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -7035,10 +7519,12 @@ ccs_co2m0p1_seq650_solid2500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -7064,10 +7550,12 @@ ccs_co2m0p1_seq650_solid2750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -7093,10 +7581,12 @@ ccs_co2m0p1_seq650_solid3000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -7122,10 +7612,12 @@ ccs_co2m0p1_seq650_solid3250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -7151,10 +7643,12 @@ ccs_co2m0p1_seq650_solid3500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -7180,10 +7674,12 @@ ccs_co20p0_seq650_solid0:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -7209,10 +7705,12 @@ ccs_co20p0_seq650_solid50:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -7238,10 +7736,12 @@ ccs_co20p0_seq650_solid100:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -7267,10 +7767,12 @@ ccs_co20p0_seq650_solid150:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -7296,10 +7798,12 @@ ccs_co20p0_seq650_solid200:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -7325,10 +7829,12 @@ ccs_co20p0_seq650_solid250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -7354,10 +7860,12 @@ ccs_co20p0_seq650_solid500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -7383,10 +7891,12 @@ ccs_co20p0_seq650_solid750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -7412,10 +7922,12 @@ ccs_co20p0_seq650_solid1000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -7441,10 +7953,12 @@ ccs_co20p0_seq650_solid1250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -7470,10 +7984,12 @@ ccs_co20p0_seq650_solid1500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -7499,10 +8015,12 @@ ccs_co20p0_seq650_solid1750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -7528,10 +8046,12 @@ ccs_co20p0_seq650_solid2000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -7557,10 +8077,12 @@ ccs_co20p0_seq650_solid2250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -7586,10 +8108,12 @@ ccs_co20p0_seq650_solid2500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -7615,10 +8139,12 @@ ccs_co20p0_seq650_solid2750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -7644,10 +8170,12 @@ ccs_co20p0_seq650_solid3000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -7673,10 +8201,12 @@ ccs_co20p0_seq650_solid3250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -7702,10 +8232,12 @@ ccs_co20p0_seq650_solid3500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -7731,10 +8263,12 @@ ccs_co20p0_seq200_solid0:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -7760,10 +8294,12 @@ ccs_co20p0_seq200_solid50:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -7789,10 +8325,12 @@ ccs_co20p0_seq200_solid100:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -7818,10 +8356,12 @@ ccs_co20p0_seq200_solid150:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -7847,10 +8387,12 @@ ccs_co20p0_seq200_solid200:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -7876,10 +8418,12 @@ ccs_co20p0_seq200_solid250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -7905,10 +8449,12 @@ ccs_co20p0_seq200_solid500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -7934,10 +8480,12 @@ ccs_co20p0_seq200_solid750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -7963,10 +8511,12 @@ ccs_co20p0_seq200_solid1000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -7992,10 +8542,12 @@ ccs_co20p0_seq200_solid1250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -8021,10 +8573,12 @@ ccs_co20p0_seq200_solid1500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -8050,10 +8604,12 @@ ccs_co20p0_seq200_solid1750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -8079,10 +8635,12 @@ ccs_co20p0_seq200_solid2000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -8108,10 +8666,12 @@ ccs_co20p0_seq200_solid2250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -8137,10 +8697,12 @@ ccs_co20p0_seq200_solid2500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -8166,10 +8728,12 @@ ccs_co20p0_seq200_solid2750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -8195,10 +8759,12 @@ ccs_co20p0_seq200_solid3000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -8224,10 +8790,12 @@ ccs_co20p0_seq200_solid3250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -8253,10 +8821,12 @@ ccs_co20p0_seq200_solid3500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -8282,10 +8852,12 @@ ccs_co20p1_seq650_solid0:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -8311,10 +8883,12 @@ ccs_co20p1_seq650_solid50:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -8340,10 +8914,12 @@ ccs_co20p1_seq650_solid100:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -8369,10 +8945,12 @@ ccs_co20p1_seq650_solid150:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -8398,10 +8976,12 @@ ccs_co20p1_seq650_solid200:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -8427,10 +9007,12 @@ ccs_co20p1_seq650_solid250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -8456,10 +9038,12 @@ ccs_co20p1_seq650_solid500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -8485,10 +9069,12 @@ ccs_co20p1_seq650_solid750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -8514,10 +9100,12 @@ ccs_co20p1_seq650_solid1000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -8543,10 +9131,12 @@ ccs_co20p1_seq650_solid1250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -8572,10 +9162,12 @@ ccs_co20p1_seq650_solid1500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -8601,10 +9193,12 @@ ccs_co20p1_seq650_solid1750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -8630,10 +9224,12 @@ ccs_co20p1_seq650_solid2000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -8659,10 +9255,12 @@ ccs_co20p1_seq650_solid2250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -8688,10 +9286,12 @@ ccs_co20p1_seq650_solid2500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -8717,10 +9317,12 @@ ccs_co20p1_seq650_solid2750:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -8746,10 +9348,12 @@ ccs_co20p1_seq650_solid3000:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -8775,10 +9379,12 @@ ccs_co20p1_seq650_solid3250:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -8804,10 +9410,12 @@ ccs_co20p1_seq650_solid3500:
     - data/biovalue/costs_FT0.csv
     - data/biovalue/costs_H20.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -8833,10 +9441,12 @@ all_co2m0p1_seq650_solid0:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -8862,10 +9472,12 @@ all_co2m0p1_seq650_solid50:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -8891,10 +9503,12 @@ all_co2m0p1_seq650_solid100:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -8920,10 +9534,12 @@ all_co2m0p1_seq650_solid150:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -8949,10 +9565,12 @@ all_co2m0p1_seq650_solid200:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -8978,10 +9596,12 @@ all_co2m0p1_seq650_solid250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -9007,10 +9627,12 @@ all_co2m0p1_seq650_solid500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -9036,10 +9658,12 @@ all_co2m0p1_seq650_solid750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -9065,10 +9689,12 @@ all_co2m0p1_seq650_solid1000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -9094,10 +9720,12 @@ all_co2m0p1_seq650_solid1250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -9123,10 +9751,12 @@ all_co2m0p1_seq650_solid1500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -9152,10 +9782,12 @@ all_co2m0p1_seq650_solid1750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -9181,10 +9813,12 @@ all_co2m0p1_seq650_solid2000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -9210,10 +9844,12 @@ all_co2m0p1_seq650_solid2250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -9239,10 +9875,12 @@ all_co2m0p1_seq650_solid2500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -9268,10 +9906,12 @@ all_co2m0p1_seq650_solid2750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -9297,10 +9937,12 @@ all_co2m0p1_seq650_solid3000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -9326,10 +9968,12 @@ all_co2m0p1_seq650_solid3250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -9355,10 +9999,12 @@ all_co2m0p1_seq650_solid3500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -9384,10 +10030,12 @@ all_co20p0_seq650_solid0:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -9413,10 +10061,12 @@ all_co20p0_seq650_solid50:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -9442,10 +10092,12 @@ all_co20p0_seq650_solid100:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -9471,10 +10123,12 @@ all_co20p0_seq650_solid150:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -9500,10 +10154,12 @@ all_co20p0_seq650_solid200:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -9529,10 +10185,12 @@ all_co20p0_seq650_solid250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -9558,10 +10216,12 @@ all_co20p0_seq650_solid500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -9587,10 +10247,12 @@ all_co20p0_seq650_solid750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -9616,10 +10278,12 @@ all_co20p0_seq650_solid1000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -9645,10 +10309,12 @@ all_co20p0_seq650_solid1250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -9674,10 +10340,12 @@ all_co20p0_seq650_solid1500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -9703,10 +10371,12 @@ all_co20p0_seq650_solid1750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -9732,10 +10402,12 @@ all_co20p0_seq650_solid2000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -9761,10 +10433,12 @@ all_co20p0_seq650_solid2250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -9790,10 +10464,12 @@ all_co20p0_seq650_solid2500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -9819,10 +10495,12 @@ all_co20p0_seq650_solid2750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -9848,10 +10526,12 @@ all_co20p0_seq650_solid3000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -9877,10 +10557,12 @@ all_co20p0_seq650_solid3250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -9906,10 +10588,12 @@ all_co20p0_seq650_solid3500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -9935,10 +10619,12 @@ all_co20p0_seq200_solid0:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -9964,10 +10650,12 @@ all_co20p0_seq200_solid50:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -9993,10 +10681,12 @@ all_co20p0_seq200_solid100:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -10022,10 +10712,12 @@ all_co20p0_seq200_solid150:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -10051,10 +10743,12 @@ all_co20p0_seq200_solid200:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -10080,10 +10774,12 @@ all_co20p0_seq200_solid250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -10109,10 +10805,12 @@ all_co20p0_seq200_solid500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -10138,10 +10836,12 @@ all_co20p0_seq200_solid750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -10167,10 +10867,12 @@ all_co20p0_seq200_solid1000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -10196,10 +10898,12 @@ all_co20p0_seq200_solid1250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -10225,10 +10929,12 @@ all_co20p0_seq200_solid1500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -10254,10 +10960,12 @@ all_co20p0_seq200_solid1750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -10283,10 +10991,12 @@ all_co20p0_seq200_solid2000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -10312,10 +11022,12 @@ all_co20p0_seq200_solid2250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -10341,10 +11053,12 @@ all_co20p0_seq200_solid2500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -10370,10 +11084,12 @@ all_co20p0_seq200_solid2750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -10399,10 +11115,12 @@ all_co20p0_seq200_solid3000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -10428,10 +11146,12 @@ all_co20p0_seq200_solid3250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -10457,10 +11177,12 @@ all_co20p0_seq200_solid3500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 200
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3500
   adjustments:
@@ -10486,10 +11208,12 @@ all_co20p1_seq650_solid0:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 0
   adjustments:
@@ -10515,10 +11239,12 @@ all_co20p1_seq650_solid50:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 50
   adjustments:
@@ -10544,10 +11270,12 @@ all_co20p1_seq650_solid100:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 100
   adjustments:
@@ -10573,10 +11301,12 @@ all_co20p1_seq650_solid150:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 150
   adjustments:
@@ -10602,10 +11332,12 @@ all_co20p1_seq650_solid200:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 200
   adjustments:
@@ -10631,10 +11363,12 @@ all_co20p1_seq650_solid250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 250
   adjustments:
@@ -10660,10 +11394,12 @@ all_co20p1_seq650_solid500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 500
   adjustments:
@@ -10689,10 +11425,12 @@ all_co20p1_seq650_solid750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 750
   adjustments:
@@ -10718,10 +11456,12 @@ all_co20p1_seq650_solid1000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1000
   adjustments:
@@ -10747,10 +11487,12 @@ all_co20p1_seq650_solid1250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1250
   adjustments:
@@ -10776,10 +11518,12 @@ all_co20p1_seq650_solid1500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1500
   adjustments:
@@ -10805,10 +11549,12 @@ all_co20p1_seq650_solid1750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 1750
   adjustments:
@@ -10834,10 +11580,12 @@ all_co20p1_seq650_solid2000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2000
   adjustments:
@@ -10863,10 +11611,12 @@ all_co20p1_seq650_solid2250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2250
   adjustments:
@@ -10892,10 +11642,12 @@ all_co20p1_seq650_solid2500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2500
   adjustments:
@@ -10921,10 +11673,12 @@ all_co20p1_seq650_solid2750:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 2750
   adjustments:
@@ -10950,10 +11704,12 @@ all_co20p1_seq650_solid3000:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3000
   adjustments:
@@ -10979,10 +11735,12 @@ all_co20p1_seq650_solid3250:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3250
   adjustments:
@@ -11008,10 +11766,12 @@ all_co20p1_seq650_solid3500:
     - data/biovalue/costs_FT2.csv
     - data/biovalue/costs_H22.csv
     - data/biovalue/costs_CC0.csv
+    - data/biovalue/costs_CCeta_low.csv
   sector:
     co2_sequestration_potential:
       2050: 650
     co2_sequestration_cost: 50
+    cc_fraction: 0.8
     solid_biomass_limit:
       limit: 3500
   adjustments:

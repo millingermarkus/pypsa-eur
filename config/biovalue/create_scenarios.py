@@ -11,15 +11,15 @@ scenarios via ``run.name``.
 
 The technology scenarios follow Tables 2 and 3 of the biovalue paper:
 
-=================================  ========  ===========  ======  =====
-Technology scenario                run set   electricity  fuels   CCS
-=================================  ========  ===========  ======  =====
-Optimistic                         base      optimistic   FT0/H20 CC3/CS0
-Restricted VRE, costly nuclear     PE        restricted   FT0/H20 CC3/CS0
-Costly fuel technologies           efuel     optimistic   FT2/H22 CC3/CS0
-Costly CCS                         ccs       optimistic   FT0/H20 CC0/CS2
-Pessimistic                        all       restricted   FT2/H22 CC0/CS2
-=================================  ========  ===========  ======  =====
+=================================  ========  ===========  =======  ===============
+Technology scenario                run set   electricity  fuels    CCS
+=================================  ========  ===========  =======  ===============
+Optimistic                         base      optimistic   FT0/H20  CC3/CS0/high
+Restricted VRE, costly nuclear     PE        restricted   FT0/H20  CC3/CS0/high
+Costly fuel technologies           efuel     optimistic   FT2/H22  CC3/CS0/high
+Costly CCS                         ccs       optimistic   FT0/H20  CC0/CS2/low
+Pessimistic                        all       restricted   FT2/H22  CC0/CS2/low
+=================================  ========  ===========  =======  ===============
 
 Mapping to the configuration:
 
@@ -32,6 +32,9 @@ Mapping to the configuration:
 - electrolysis, Fischer-Tropsch and DAC (``FT0/FT2``, ``H20/H22``,
   ``CC3/CC0``): cost files in ``data/biovalue/``
 - CO2 sequestration cost (``CS0/CS2``): ``sector.co2_sequestration_cost``
+- capture efficiency (high 0.95 / low 0.8): ``sector.cc_fraction`` (SMR CC,
+  waste CHP CC, bioH2) and the capture rates of all other carbon capture
+  routes in ``data/biovalue/costs_CCeta_high.csv`` / ``costs_CCeta_low.csv``
 - ``Co2Lx``: ``co2_budget.upper[2050]``
 - ``seqN``: ``sector.co2_sequestration_potential[2050]``
 - ``solidN``: ``sector.solid_biomass_limit.limit`` (TWh)
@@ -56,12 +59,17 @@ ELECTRICITY = {
 
 # Table 2; run set names of the server configs config/biovalue/config.biovalue_<set>.yaml
 RUN_SETS = {
-    "base": dict(elec="optimistic", ft="FT0", h2="H20", cc="CC3", cs="CS0"),
-    "PE": dict(elec="restricted", ft="FT0", h2="H20", cc="CC3", cs="CS0"),
-    "efuel": dict(elec="optimistic", ft="FT2", h2="H22", cc="CC3", cs="CS0"),
-    "ccs": dict(elec="optimistic", ft="FT0", h2="H20", cc="CC0", cs="CS2"),
-    "all": dict(elec="restricted", ft="FT2", h2="H22", cc="CC0", cs="CS2"),
+    "base": dict(elec="optimistic", ft="FT0", h2="H20", cc="CC3", cs="CS0", eta="high"),
+    "PE": dict(elec="restricted", ft="FT0", h2="H20", cc="CC3", cs="CS0", eta="high"),
+    "efuel": dict(
+        elec="optimistic", ft="FT2", h2="H22", cc="CC3", cs="CS0", eta="high"
+    ),
+    "ccs": dict(elec="optimistic", ft="FT0", h2="H20", cc="CC0", cs="CS2", eta="low"),
+    "all": dict(elec="restricted", ft="FT2", h2="H22", cc="CC0", cs="CS2", eta="low"),
 }
+
+# Table 3, capture efficiency
+CAPTURE_EFFICIENCY = {"high": 0.95, "low": 0.8}
 
 # (Co2L relative to 1990, sequestration potential in Mt/a)
 CO2_SEQ = [(-0.1, 650), (0.0, 650), (0.0, 200), (0.1, 650)]
@@ -100,7 +108,11 @@ def co2_tag(value: float) -> str:
 
 def scenario(settings: dict, co2: float, seq: int, solid: int) -> dict:
     elec = ELECTRICITY[settings["elec"]]
-    cost_files = [elec["nuclear"]] + [settings[k] for k in ("ft", "h2", "cc")]
+    cost_files = (
+        [elec["nuclear"]]
+        + [settings[k] for k in ("ft", "h2", "cc")]
+        + [f"CCeta_{settings['eta']}"]
+    )
     return {
         "electricity": {"transmission_limit": f"v{elec['lv']:.1f}"},
         "co2_budget": {"upper": {2050: co2}},
@@ -111,6 +123,7 @@ def scenario(settings: dict, co2: float, seq: int, solid: int) -> dict:
         "sector": {
             "co2_sequestration_potential": {2050: seq},
             "co2_sequestration_cost": SEQUESTRATION_COST[settings["cs"]],
+            "cc_fraction": CAPTURE_EFFICIENCY[settings["eta"]],
             "solid_biomass_limit": {"limit": solid},
         },
         "adjustments": capacity_adjustments(elec["onwind"], elec["solar"]),
