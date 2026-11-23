@@ -1221,8 +1221,9 @@ def add_renewable_liquid_fuel_share_constraint(
     n: pypsa.Network, sns: pd.DatetimeIndex, config: dict
 ) -> None:
     """
-    Constrain the annual liquid fuel output of renewable producers relative to
-    the annual oil demand of transport and agriculture.
+    Constrain the annual liquid fuel output (oil and methanol) of renewable
+    producers relative to the annual liquid fuel demand of transport and
+    agriculture.
 
     The left-hand side is the output at `bus1` of all links whose carrier is in
     `producers`; the right-hand side is `share` times the demand of all loads

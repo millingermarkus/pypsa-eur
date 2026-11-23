@@ -97,11 +97,15 @@ sector:
   agriculture_machinery_oil_share: 1
   shipping_hydrogen_liquefaction: true
   shipping_hydrogen_share:
-    2050: 0.5
-  shipping_methanol_share:
     2050: 0.0
+  shipping_methanol_share:
+    2050: 0.4
   shipping_oil_share:
-    2050: 0.5
+    2050: 0.6
+  # demand relative to today (pypsa-eur-sec: land_transport_demand,
+  # shipping_demand, aviation_demand for 2050)
+  land_transport_demand_factor: 1.2
+  shipping_demand_factor: 1.5
   aviation_demand_factor: 1.7
   solar_thermal: false
   co2_vent: true
@@ -160,8 +164,10 @@ sector:
     upstream_emissions_factor: 0.0
     supply_curve:
       enable: true
-  # "B0p8" in B0p8Im: liquid fuels from biomass, electrofuels and electrobiofuels
-  # >= 80% of transport and agriculture oil demand
+  # "B0p8" in B0p8Im: liquid fuels and methanol from biomass and hydrogen
+  # (BtL, Fischer-Tropsch, electrobiofuels, methanolisation, biomass-to-methanol)
+  # >= 80% of aviation, shipping (oil and methanol), agriculture and land
+  # transport oil demand
   renewable_liquid_fuel_share:
     enable: true
     share: 0.8

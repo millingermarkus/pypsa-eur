@@ -98,6 +98,39 @@ def test_renewable_liquid_fuel_share(n):
     assert output == pytest.approx(0.8 * demand)
 
 
+def test_renewable_liquid_fuel_share_includes_methanol(n):
+    n.add("Bus", "methanol")
+    n.add("Generator", "fossil methanol", bus="methanol", p_nom=100, marginal_cost=1)
+    n.add(
+        "Link",
+        "methanolisation",
+        bus0="H2",
+        bus1="methanol",
+        carrier="methanolisation",
+        p_nom=100,
+        efficiency=0.8,
+    )
+    n.add(
+        "Load",
+        "shipping methanol",
+        bus="methanol",
+        carrier="shipping methanol",
+        p_set=5,
+    )
+    config = FUEL_SHARE | {
+        "producers": FUEL_SHARE["producers"] + ["methanolisation"],
+        "demand_carriers": FUEL_SHARE["demand_carriers"] + ["shipping methanol"],
+    }
+
+    solve(n, add_renewable_liquid_fuel_share_constraint, config)
+
+    w = n.snapshot_weightings.generators
+    oil = (n.links_t.p0[["BtL", "FT"]] * 0.5).mul(w, axis=0).sum().sum()
+    methanol = (n.links_t.p0["methanolisation"] * 0.8).mul(w).sum()
+    demand = 15 * w.sum()
+    assert oil + methanol == pytest.approx(0.8 * demand)
+
+
 def test_solid_biomass_limit_counts_imports(n):
     n.add("Load", "biomass demand", bus="solid biomass", p_set=0)
     n.links.loc["BtL", "p_min_pu"] = 0.1  # forces 10 MW of biomass input

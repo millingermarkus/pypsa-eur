@@ -873,6 +873,8 @@ sector:
   shipping_methanol_efficiency: 0.46
   shipping_oil_efficiency: 0.4
   aviation_demand_factor: 1.0
+  land_transport_demand_factor: 1.0
+  shipping_demand_factor: 1.0
   HVC_demand_factor: 1.0
   time_dep_hp_cop: true
   heat_pump_sink_T_individual_heating: 55.0
@@ -1152,9 +1154,13 @@ sector:
     - biomass to liquid CC
     - electrobiofuels
     - "Fischer-Tropsch"
+    - methanolisation
+    - "biomass-to-methanol"
+    - "biomass-to-methanol CC"
     demand_carriers:
     - kerosene for aviation
     - shipping oil
+    - shipping methanol
     - agriculture machinery oil
     - land transport oil
   solid_biomass_limit:

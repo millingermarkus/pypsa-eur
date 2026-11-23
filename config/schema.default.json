@@ -5330,6 +5330,36 @@
           "description": "The proportion of demand for aviation compared to today's consumption.",
           "type": "number"
         },
+        "land_transport_demand_factor": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "additionalProperties": {
+                "type": "number"
+              },
+              "type": "object"
+            }
+          ],
+          "default": 1.0,
+          "description": "The proportion of land transport demand (driven distance) compared to today's, applied before splitting it by engine type. Can be given per planning horizon."
+        },
+        "shipping_demand_factor": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "additionalProperties": {
+                "type": "number"
+              },
+              "type": "object"
+            }
+          ],
+          "default": 1.0,
+          "description": "The proportion of shipping demand compared to today's, applied to all shipping fuels. Can be given per planning horizon."
+        },
         "HVC_demand_factor": {
           "default": 1.0,
           "description": "The proportion of demand for high-value chemicals compared to today's consumption.",
@@ -6325,12 +6355,12 @@
           "properties": {
             "enable": {
               "default": false,
-              "description": "Constrain the annual liquid fuel output of the `producers` relative to the annual oil demand of the `demand_carriers`.",
+              "description": "Constrain the annual liquid fuel output (oil and methanol) of the `producers` relative to the annual liquid fuel demand of the `demand_carriers`.",
               "type": "boolean"
             },
             "share": {
               "default": 0.0,
-              "description": "Share of the oil demand of `demand_carriers`.",
+              "description": "Share of the demand of `demand_carriers`.",
               "minimum": 0,
               "type": "number"
             },
@@ -9714,12 +9744,12 @@
       "properties": {
         "enable": {
           "default": false,
-          "description": "Constrain the annual liquid fuel output of the `producers` relative to the annual oil demand of the `demand_carriers`.",
+          "description": "Constrain the annual liquid fuel output (oil and methanol) of the `producers` relative to the annual liquid fuel demand of the `demand_carriers`.",
           "type": "boolean"
         },
         "share": {
           "default": 0.0,
-          "description": "Share of the oil demand of `demand_carriers`.",
+          "description": "Share of the demand of `demand_carriers`.",
           "minimum": 0,
           "type": "number"
         },
@@ -13663,6 +13693,36 @@
           "description": "The proportion of demand for aviation compared to today's consumption.",
           "type": "number"
         },
+        "land_transport_demand_factor": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "additionalProperties": {
+                "type": "number"
+              },
+              "type": "object"
+            }
+          ],
+          "default": 1.0,
+          "description": "The proportion of land transport demand (driven distance) compared to today's, applied before splitting it by engine type. Can be given per planning horizon."
+        },
+        "shipping_demand_factor": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "additionalProperties": {
+                "type": "number"
+              },
+              "type": "object"
+            }
+          ],
+          "default": 1.0,
+          "description": "The proportion of shipping demand compared to today's, applied to all shipping fuels. Can be given per planning horizon."
+        },
         "HVC_demand_factor": {
           "default": 1.0,
           "description": "The proportion of demand for high-value chemicals compared to today's consumption.",
@@ -14658,12 +14718,12 @@
           "properties": {
             "enable": {
               "default": false,
-              "description": "Constrain the annual liquid fuel output of the `producers` relative to the annual oil demand of the `demand_carriers`.",
+              "description": "Constrain the annual liquid fuel output (oil and methanol) of the `producers` relative to the annual liquid fuel demand of the `demand_carriers`.",
               "type": "boolean"
             },
             "share": {
               "default": 0.0,
-              "description": "Share of the oil demand of `demand_carriers`.",
+              "description": "Share of the demand of `demand_carriers`.",
               "minimum": 0,
               "type": "number"
             },

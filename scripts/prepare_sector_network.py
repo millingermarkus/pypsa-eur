@@ -2839,7 +2839,15 @@ def add_land_transport(
 
     check_land_transport_shares(shares)
 
-    p_set = transport[nodes]
+    demand_factor = get(
+        options.get("land_transport_demand_factor", 1.0), investment_year
+    )
+    if demand_factor != 1:
+        logger.warning(
+            f"Changing land transport demand by {demand_factor * 100 - 100:+.2f}%."
+        )
+
+    p_set = transport[nodes] * demand_factor
 
     # temperature for correction factor for heating/cooling
     temperature = xr.open_dataarray(temp_air_total_file).to_pandas()
@@ -5859,7 +5867,14 @@ def add_shipping(
         pd.read_csv(shipping_demand_file, index_col=0).squeeze(axis=1) * nyears
     )
     all_navigation = domestic_navigation + international_navigation
-    p_set = all_navigation * 1e6 / nhours
+
+    demand_factor = get(options.get("shipping_demand_factor", 1.0), investment_year)
+    if demand_factor != 1:
+        logger.warning(
+            f"Changing shipping demand by {demand_factor * 100 - 100:+.2f}%."
+        )
+
+    p_set = demand_factor * all_navigation * 1e6 / nhours
 
     if shipping_hydrogen_share:
         oil_efficiency = options.get(

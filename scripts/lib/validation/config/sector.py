@@ -406,10 +406,10 @@ class _RenewableLiquidFuelShareConfig(BaseModel):
 
     enable: bool = Field(
         False,
-        description="Constrain the annual liquid fuel output of the `producers` relative to the annual oil demand of the `demand_carriers`.",
+        description="Constrain the annual liquid fuel output (oil and methanol) of the `producers` relative to the annual liquid fuel demand of the `demand_carriers`.",
     )
     share: float = Field(
-        0.0, ge=0, description="Share of the oil demand of `demand_carriers`."
+        0.0, ge=0, description="Share of the demand of `demand_carriers`."
     )
     sense: Literal[">=", "==", "<="] = Field(
         ">=", description="Sense of the constraint."
@@ -420,6 +420,9 @@ class _RenewableLiquidFuelShareConfig(BaseModel):
             "biomass to liquid CC",
             "electrobiofuels",
             "Fischer-Tropsch",
+            "methanolisation",
+            "biomass-to-methanol",
+            "biomass-to-methanol CC",
         ],
         description="Link carriers whose output at `bus1` counts towards the share.",
     )
@@ -427,6 +430,7 @@ class _RenewableLiquidFuelShareConfig(BaseModel):
         default_factory=lambda: [
             "kerosene for aviation",
             "shipping oil",
+            "shipping methanol",
             "agriculture machinery oil",
             "land transport oil",
         ],
@@ -859,6 +863,14 @@ class SectorConfig(BaseModel):
     aviation_demand_factor: float = Field(
         1.0,
         description="The proportion of demand for aviation compared to today's consumption.",
+    )
+    land_transport_demand_factor: float | dict[int, float] = Field(
+        1.0,
+        description="The proportion of land transport demand (driven distance) compared to today's, applied before splitting it by engine type. Can be given per planning horizon.",
+    )
+    shipping_demand_factor: float | dict[int, float] = Field(
+        1.0,
+        description="The proportion of shipping demand compared to today's, applied to all shipping fuels. Can be given per planning horizon.",
     )
     HVC_demand_factor: float = Field(
         1.0,
