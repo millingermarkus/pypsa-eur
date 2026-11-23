@@ -6872,6 +6872,91 @@ def add_import_options(
         )
 
 
+RENEWABLE_FUEL_SUFFIX = " renewable"
+
+# static link attributes copied to the renewable fuel delivery links
+FUEL_LINK_ATTRS = (
+    r"^(bus\d+|efficiency\d*|carrier|p_nom|p_nom_extendable|p_nom_min|p_nom_max"
+    r"|p_min_pu|p_max_pu|marginal_cost|capital_cost|lifetime|build_year)$"
+)
+
+
+def add_renewable_fuel_tracking(
+    n: pypsa.Network, producers: list[str], fuel_carriers: list[str]
+) -> None:
+    """
+    Separate renewable liquid fuels from the pooled oil and methanol buses so
+    that their use as fuel can be constrained.
+
+    The output of links with a carrier in `producers` is moved from its bus
+    (e.g. 'EU oil') to a new bus with suffix ' renewable' ('EU oil renewable').
+    From there it reaches either the fuel demand directly, through a copy of
+    each fuel supply link (carrier in `fuel_carriers`, e.g. 'kerosene for
+    aviation') that starts at the renewable bus, or the pooled bus through a
+    blending link, from where it can serve any use including chemicals.
+    Only the direct deliveries count towards the renewable liquid fuel share
+    in `solve_network.add_renewable_liquid_fuel_share_constraint`.
+
+    Parameters
+    ----------
+    n : pypsa.Network
+        The PyPSA network container object
+    producers : list[str]
+        Carriers of links producing renewable oil or methanol at `bus1`.
+    fuel_carriers : list[str]
+        Carriers of the links (and loads) supplying fuel demand.
+    """
+    producer_i = n.links.index[n.links.carrier.isin(producers)]
+    if producer_i.empty:
+        logger.warning("No renewable liquid fuel producers found to track.")
+        return
+
+    pools = pd.Index(n.links.loc[producer_i, "bus1"].unique())
+    renewable = pools + RENEWABLE_FUEL_SUFFIX
+
+    n.add(
+        "Bus",
+        renewable,
+        location=n.buses.loc[pools, "location"].values,
+        carrier=n.buses.loc[pools, "carrier"].values,
+        unit=n.buses.loc[pools, "unit"].values,
+    )
+    n.links.loc[producer_i, "bus1"] += RENEWABLE_FUEL_SUFFIX
+
+    # renewable fuel blended into the pool can serve any use, but does not
+    # count towards the renewable fuel share
+    n.add(
+        "Link",
+        renewable,
+        suffix=" blending",
+        bus0=renewable,
+        bus1=pools,
+        carrier=n.buses.loc[pools, "carrier"].values,
+        efficiency=1.0,
+        p_nom_extendable=True,
+    )
+
+    # direct delivery of renewable fuel to fuel demand
+    fuel = n.links[n.links.carrier.isin(fuel_carriers) & n.links.bus0.isin(pools)]
+    if fuel.empty:
+        logger.warning("No fuel supply links found for renewable fuel tracking.")
+        return
+    fuel = fuel.filter(regex=FUEL_LINK_ATTRS)
+    fuel = fuel.assign(bus0=fuel.bus0 + RENEWABLE_FUEL_SUFFIX)
+    n.add(
+        "Link",
+        fuel.index + RENEWABLE_FUEL_SUFFIX,
+        **{attr: fuel[attr].values for attr in fuel.columns},
+    )
+
+    logger.info(
+        "Tracking renewable fuels from %s through %s to %s.",
+        sorted(n.links.loc[producer_i, "carrier"].unique()),
+        list(renewable),
+        sorted(fuel.carrier.unique()),
+    )
+
+
 def main(
     n: pypsa.Network,
     inputs,
@@ -7196,5 +7281,12 @@ def main(
     )
     if options["cluster_heat_buses"] and not first_year_myopic:
         cluster_heat_buses(n)
+
+    if options["renewable_liquid_fuel_share"]["enable"]:
+        add_renewable_fuel_tracking(
+            n,
+            producers=options["renewable_liquid_fuel_share"]["producers"],
+            fuel_carriers=options["renewable_liquid_fuel_share"]["demand_carriers"],
+        )
 
     logger.info("Completed sector components")

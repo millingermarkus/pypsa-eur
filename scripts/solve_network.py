@@ -1221,21 +1221,29 @@ def add_renewable_liquid_fuel_share_constraint(
     n: pypsa.Network, sns: pd.DatetimeIndex, config: dict
 ) -> None:
     """
-    Constrain the annual liquid fuel output (oil and methanol) of renewable
-    producers relative to the annual liquid fuel demand of transport and
-    agriculture.
+    Constrain the renewable liquid fuels (oil and methanol) used as fuel
+    relative to the annual fuel demand of transport and agriculture.
 
-    The left-hand side is the output at `bus1` of all links whose carrier is in
-    `producers`; the right-hand side is `share` times the demand of all loads
-    whose carrier is in `demand_carriers`. Both are weighted by the snapshot
-    weightings.
+    Requires the renewable fuel tracking of
+    `prepare_sector_network.add_renewable_fuel_tracking`. The left-hand side is
+    the renewable fuel delivered directly to fuel demand, i.e. the output of
+    the fuel supply links (carrier in `demand_carriers`) that start at a
+    renewable fuel bus. Renewable fuel blended into the pooled oil and methanol
+    buses, which also supply naphtha, HVC and industry methanol, does not count.
+    The right-hand side is `share` times the demand of all loads whose carrier
+    is in `demand_carriers`. Both are weighted by the snapshot weightings.
     """
     weightings = n.snapshot_weightings.loc[sns, "generators"]
 
-    producers = n.links.index[n.links.carrier.isin(config["producers"])]
-    if producers.empty:
+    renewable_buses = n.buses.index[n.buses.index.str.endswith(" renewable")]
+    deliveries = n.links.index[
+        n.links.carrier.isin(config["demand_carriers"])
+        & n.links.bus0.isin(renewable_buses)
+    ]
+    if deliveries.empty:
         logger.warning(
-            "No renewable liquid fuel producers found, skipping renewable liquid fuel share constraint."
+            "No renewable fuel deliveries found, skipping renewable liquid fuel share "
+            "constraint. Renewable fuel tracking is added in prepare_sector_network."
         )
         return
 
@@ -1247,14 +1255,14 @@ def add_renewable_liquid_fuel_share_constraint(
         .sum()
     )
 
-    eff = n.links.loc[producers, "efficiency"]
-    p = n.model["Link-p"].loc[sns, producers]
+    eff = n.links.loc[deliveries, "efficiency"]
+    p = n.model["Link-p"].loc[sns, deliveries]
     lhs = (p * eff * weightings).sum()
     rhs = config["share"] * demand
 
     logger.info(
-        "Adding renewable liquid fuel constraint: output of %s %s %.2f TWh (%.0f%% of %.2f TWh demand).",
-        sorted(n.links.loc[producers, "carrier"].unique()),
+        "Adding renewable liquid fuel constraint: renewable %s %s %.2f TWh (%.0f%% of %.2f TWh demand).",
+        sorted(n.links.loc[deliveries, "carrier"].unique()),
         config["sense"],
         rhs / 1e6,
         config["share"] * 100,

@@ -406,7 +406,7 @@ class _RenewableLiquidFuelShareConfig(BaseModel):
 
     enable: bool = Field(
         False,
-        description="Constrain the annual liquid fuel output (oil and methanol) of the `producers` relative to the annual liquid fuel demand of the `demand_carriers`.",
+        description="Constrain the renewable liquid fuels (oil and methanol from the `producers`) used as fuel relative to the annual fuel demand of the `demand_carriers`. The output of the producers is routed to separate renewable buses, from where it reaches the fuel demand directly (counted) or the pooled oil and methanol buses that also supply naphtha, HVC and industry methanol (not counted).",
     )
     share: float = Field(
         0.0, ge=0, description="Share of the demand of `demand_carriers`."
@@ -424,7 +424,7 @@ class _RenewableLiquidFuelShareConfig(BaseModel):
             "biomass-to-methanol",
             "biomass-to-methanol CC",
         ],
-        description="Link carriers whose output at `bus1` counts towards the share.",
+        description="Carriers of links producing renewable oil or methanol at `bus1`.",
     )
     demand_carriers: list[str] = Field(
         default_factory=lambda: [
@@ -434,7 +434,7 @@ class _RenewableLiquidFuelShareConfig(BaseModel):
             "agriculture machinery oil",
             "land transport oil",
         ],
-        description="Load carriers whose demand defines the reference.",
+        description="Carriers of the fuel demand loads and of the links supplying them, e.g. 'kerosene for aviation'. Renewable fuel delivered through these links counts towards the share.",
     )
 
 
