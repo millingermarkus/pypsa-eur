@@ -401,6 +401,34 @@ class _SolidBiomassImportConfig(BaseModel):
     )
 
 
+class _BiomassPowerConfig(BaseModel):
+    """Configuration for `sector.biomass_power` settings."""
+
+    enable: bool = Field(
+        False, description="Add electricity-only solid biomass power plants."
+    )
+    cc: bool = Field(
+        False,
+        description="Add electricity-only solid biomass power plants with carbon capture, capturing the share `capture_rate` of 'biomass CHP capture' at its cost.",
+    )
+    technology: str = Field(
+        "biomass EOP",
+        description="Cost data entry for capital cost, VOM, electrical efficiency and lifetime of the plant without carbon capture.",
+    )
+    technology_cc: str = Field(
+        "biomass EOP",
+        description="Cost data entry of the plant with carbon capture, to which the costs of 'biomass CHP capture' are added. If it equals `technology`, the electricity demand of the capture is deducted from the efficiency; otherwise the entry is assumed to include it.",
+    )
+    capital_cost_factor: float = Field(
+        1.0, gt=0, description="Factor on the capital cost of the cost data entries."
+    )
+    efficiency_factor: float = Field(
+        1.0,
+        gt=0,
+        description="Factor on the electrical efficiency of the cost data entries.",
+    )
+
+
 class _RenewableLiquidFuelShareConfig(BaseModel):
     """Configuration for `sector.renewable_liquid_fuel_share` settings."""
 
@@ -962,6 +990,14 @@ class SectorConfig(BaseModel):
         description="Add option for gas CCGTs with post-combustion carbon capture.",
     )
     dac: bool = Field(True, description="Add option for Direct Air Capture (DAC).")
+    dac_heat_source: Literal["low-temperature", "industry steam"] = Field(
+        "low-temperature",
+        description="Heat supply of DAC. 'low-temperature' draws the heat demand net of the recovered compression heat from district heating and decentral services heat. 'industry steam' draws the full heat demand from the industrial steam bus (`industry_heat` band 'heat100-200', requires `industry_heat: enable`) at every node and delivers the share `use_dac_waste_heat` of the compression heat to district heating.",
+    )
+    biomass_power: _BiomassPowerConfig = Field(
+        default_factory=lambda: _BiomassPowerConfig(),
+        description="Electricity-only solid biomass power plants, with optional carbon capture.",
+    )
     rock_weathering: _RockWeatheringConfig = Field(
         default_factory=_RockWeatheringConfig,
         description="Enhanced rock weathering on cropland as carbon dioxide removal option.",
@@ -1137,6 +1173,10 @@ class SectorConfig(BaseModel):
     use_electrolysis_waste_heat: float = Field(
         0.25,
         description="Add option for using waste heat of electrolysis in district heating networks.",
+    )
+    use_dac_waste_heat: float = Field(
+        0.25,
+        description="Share of the DAC compression heat used in district heating networks. Only used with `dac_heat_source: industry steam`.",
     )
 
     electricity_transmission_grid: bool = Field(

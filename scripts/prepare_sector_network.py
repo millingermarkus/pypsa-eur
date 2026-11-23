@@ -1159,15 +1159,73 @@ def add_methanol_reforming_cc(
     )
 
 
-def add_dac(n: pypsa.Network, costs: pd.DataFrame, spatial: SimpleNamespace) -> None:
-    heat_carriers = ["urban central heat", "services urban decentral heat"]
-    heat_buses = n.buses.index[n.buses.carrier.isin(heat_carriers)]
-    locations = n.buses.location[heat_buses]
+def add_dac_industry_steam(
+    n: pypsa.Network,
+    costs: pd.DataFrame,
+    spatial: SimpleNamespace,
+    options: dict,
+    electricity_input: float,
+) -> None:
+    """
+    Add DAC at every node with industrial steam ('heat100-200 industry'),
+    drawing its full heat demand from the steam bus and delivering the share
+    `use_dac_waste_heat` of the compression heat to district heating where
+    available.
+    """
+    steam_buses = n.buses.index[n.buses.carrier == "heat100-200 industry"]
+    if steam_buses.empty:
+        raise ValueError(
+            "sector.dac_heat_source 'industry steam' requires the industrial steam "
+            "bus of sector.industry_heat (band 'heat100-200')."
+        )
+    locations = pd.Index(n.buses.location[steam_buses].values)
 
+    heat_input = costs.at["direct air capture", "heat-input"]  # MWh_th / tCO2
+    waste_heat = costs.at[
+        "direct air capture", "compression-heat-output"
+    ] * options.get("use_dac_waste_heat", 0.0)
+    urban_central = locations + " urban central heat"
+    has_dh = urban_central.isin(n.buses.index)
+
+    n.add(
+        "Link",
+        locations + " DAC",
+        bus0=locations.values,
+        bus1=steam_buses,
+        bus2="co2 atmosphere",
+        bus3=spatial.co2.df.loc[locations, "nodes"].values,
+        bus4=urban_central.where(has_dh, "").values,
+        carrier="DAC",
+        capital_cost=costs.at["direct air capture", "capital_cost"] / electricity_input,
+        efficiency=-heat_input / electricity_input,
+        efficiency2=-1 / electricity_input,
+        efficiency3=1 / electricity_input,
+        efficiency4=(waste_heat / electricity_input) * has_dh,
+        p_nom_extendable=True,
+        lifetime=costs.at["direct air capture", "lifetime"],
+    )
+
+
+def add_dac(
+    n: pypsa.Network,
+    costs: pd.DataFrame,
+    spatial: SimpleNamespace,
+    options: dict | None = None,
+) -> None:
+    options = options or {}
     electricity_input = (
         costs.at["direct air capture", "electricity-input"]
         + costs.at["direct air capture", "compression-electricity-input"]
     )  # MWh_el / tCO2
+
+    if options.get("dac_heat_source", "low-temperature") == "industry steam":
+        add_dac_industry_steam(n, costs, spatial, options, electricity_input)
+        return
+
+    heat_carriers = ["urban central heat", "services urban decentral heat"]
+    heat_buses = n.buses.index[n.buses.carrier.isin(heat_carriers)]
+    locations = n.buses.location[heat_buses]
+
     heat_input = (
         costs.at["direct air capture", "heat-input"]
         - costs.at["direct air capture", "compression-heat-output"]
@@ -4011,6 +4069,84 @@ def add_biomass_transport(
     )
 
 
+def add_biomass_power(
+    n: pypsa.Network,
+    costs: pd.DataFrame,
+    spatial: SimpleNamespace,
+    nodes: pd.Index,
+    config: dict,
+) -> None:
+    """
+    Add electricity-only solid biomass power plants at every node, optionally
+    with carbon capture.
+
+    Parameters
+    ----------
+    n : pypsa.Network
+        The PyPSA network container object
+    costs : pd.DataFrame
+        Technology cost assumptions
+    spatial : SimpleNamespace
+        Spatial resolution of the carriers
+    nodes : pd.Index
+        Electricity nodes
+    config : dict
+        The `sector.biomass_power` settings.
+    """
+    biomass_buses = spatial.biomass.df.loc[nodes, "nodes"].values
+    capital_factor = config["capital_cost_factor"]
+    efficiency_factor = config["efficiency_factor"]
+
+    key = config["technology"]
+    efficiency = efficiency_factor * costs.at[key, "efficiency"]
+    n.add(
+        "Link",
+        nodes + " solid biomass to electricity",
+        bus0=biomass_buses,
+        bus1=nodes,
+        carrier="solid biomass to electricity",
+        p_nom_extendable=True,
+        capital_cost=capital_factor * costs.at[key, "capital_cost"] * efficiency,
+        marginal_cost=costs.at[key, "VOM"] * efficiency,  # NB: VOM is per MWel
+        efficiency=efficiency,
+        lifetime=costs.at[key, "lifetime"],
+    )
+
+    if not config["cc"]:
+        return
+
+    key_cc = config["technology_cc"]
+    capture = "biomass CHP capture"
+    co2 = costs.at["solid biomass", "CO2 intensity"]
+    captured = co2 * costs.at[capture, "capture_rate"]
+    efficiency_cc = efficiency_factor * costs.at[key_cc, "efficiency"]
+    if key_cc == key:
+        efficiency_cc -= co2 * (
+            costs.at[capture, "electricity-input"]
+            + costs.at[capture, "compression-electricity-input"]
+        )
+    n.add(
+        "Link",
+        nodes + " solid biomass to electricity CC",
+        bus0=biomass_buses,
+        bus1=nodes,
+        bus2="co2 atmosphere",
+        bus3=spatial.co2.df.loc[nodes, "nodes"].values,
+        carrier="solid biomass to electricity CC",
+        p_nom_extendable=True,
+        capital_cost=capital_factor
+        * costs.at[key_cc, "capital_cost"]
+        * efficiency_factor
+        * costs.at[key_cc, "efficiency"]
+        + costs.at[capture, "capital_cost"] * co2,
+        marginal_cost=costs.at[key_cc, "VOM"] * efficiency_cc,
+        efficiency=efficiency_cc,
+        efficiency2=-captured,
+        efficiency3=captured,
+        lifetime=costs.at[key_cc, "lifetime"],
+    )
+
+
 def add_biomass_feedstock_generators(
     n: pypsa.Network,
     feedstocks: pd.DataFrame,
@@ -4623,6 +4759,9 @@ def add_biomass(
                 * costs.at["biomass CHP capture", "capture_rate"],
                 lifetime=costs.at[key + " CC", "lifetime"],
             )
+
+    if options.get("biomass_power", {}).get("enable", False):
+        add_biomass_power(n, costs, spatial, pop_layout.index, options["biomass_power"])
 
     if options["biomass_boiler"]:
         # TODO: Add surcharge for pellets
@@ -7195,7 +7334,7 @@ def main(
         )
 
     if options["dac"]:
-        add_dac(n, costs, spatial)
+        add_dac(n, costs, spatial, options)
 
     if options["rock_weathering"]["enable"]:
         add_rock_weathering(

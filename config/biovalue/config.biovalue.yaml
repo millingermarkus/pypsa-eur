@@ -148,6 +148,22 @@ sector:
   municipal_solid_waste: true
   methanol:
     methanol_to_kerosene: true
+    biomass_to_methanol: true
+    biomass_to_methanol_cc: true
+  # electricity-only solid biomass power plants as in pypsa-eur-sec: 1.3 x the
+  # electrical efficiency and 0.7 x the capital cost per MW biomass input of
+  # the central solid biomass CHP (capital_cost_factor 0.7 / 1.3 per MW_el)
+  biomass_power:
+    enable: true
+    cc: true
+    technology: central solid biomass CHP
+    technology_cc: central solid biomass CHP CC
+    capital_cost_factor: 0.5385
+    efficiency_factor: 1.3
+  # DAC heat from industrial steam (>120C), half of the compression heat to
+  # district heating, as in pypsa-eur-sec
+  dac_heat_source: industry steam
+  use_dac_waste_heat: 0.5
   # industrial process heat; industrial_steam_heat_pumps: false
   industry_heat:
     enable: true

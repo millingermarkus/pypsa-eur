@@ -918,6 +918,14 @@ sector:
   coal_cc: false
   ccgt_cc: false
   dac: true
+  dac_heat_source: "low-temperature"
+  biomass_power:
+    enable: false
+    cc: false
+    technology: biomass EOP
+    technology_cc: biomass EOP
+    capital_cost_factor: 1.0
+    efficiency_factor: 1.0
   rock_weathering:
     enable: false
     corine:
@@ -1033,6 +1041,7 @@ sector:
   use_methanation_waste_heat: 0.25
   use_fuel_cell_waste_heat: 1
   use_electrolysis_waste_heat: 0.25
+  use_dac_waste_heat: 0.25
   electricity_transmission_grid: true
   electricity_distribution_grid: true
   electricity_grid_connection: true
