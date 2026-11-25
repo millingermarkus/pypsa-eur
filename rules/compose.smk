@@ -113,6 +113,11 @@ def get_compose_inputs(w):
             room_temperature_factor=resources(
                 "heat_demand_room_temperature_factor.csv"
             ),
+            cooling_totals=(
+                resources("cooling_totals.csv")
+                if sector["space_cooling"]["enable"]
+                else []
+            ),
             industrial_production=resources("industrial_production_{horizon}.csv"),
             district_heat_share=resources("district_heat_share_{horizon}.csv"),
             heating_efficiencies=resources("heating_efficiencies.csv"),

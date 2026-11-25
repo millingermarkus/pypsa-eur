@@ -5301,6 +5301,42 @@
           "minimum": -5,
           "type": "number"
         },
+        "space_cooling": {
+          "description": "Configuration for `sector.space_cooling` settings.",
+          "properties": {
+            "enable": {
+              "default": false,
+              "description": "Make space cooling (air conditioning) of residential and service buildings an explicit electricity load. Today's space cooling electricity from JRC-IDEES is taken out of the historical electricity load and added back as a separate load with a cooling degree hour profile.",
+              "type": "boolean"
+            },
+            "threshold": {
+              "default": 18.0,
+              "description": "Population-weighted hourly air temperature (\u00b0C) above which buildings are cooled; cooling demand is proportional to the degrees above it (cooling degree hours). The default with `base_share_services` gives about 1000-1600 full load hours in southern and 400-600 in central Europe (2013 weather).",
+              "type": "number"
+            },
+            "base_share_services": {
+              "default": 0.3,
+              "description": "Share of the services space cooling that is constant over the year (server rooms, internal gains) and not affected by `setpoint_change`. Residential cooling follows the cooling degree hours only.",
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "setpoint_change": {
+              "default": 0.0,
+              "description": "Change of the room temperature of cooled buildings (K), e.g. +1 for one degree warmer rooms. Shifts the threshold and rescales the annual cooling demand per node by the ratio of cooling degree hours with and without the change.",
+              "maximum": 5,
+              "minimum": -5,
+              "type": "number"
+            },
+            "growth": {
+              "additionalProperties": {
+                "type": "number"
+              },
+              "description": "Space cooling demand relative to today (JRC-IDEES) per planning horizon, e.g. for more air conditioners or a warmer climate.",
+              "type": "object"
+            }
+          }
+        },
         "retrofitting": {
           "description": "Configuration for `sector.retrofitting` settings.",
           "properties": {
@@ -10395,6 +10431,42 @@
         }
       }
     },
+    "_SpaceCoolingConfig": {
+      "description": "Configuration for `sector.space_cooling` settings.",
+      "properties": {
+        "enable": {
+          "default": false,
+          "description": "Make space cooling (air conditioning) of residential and service buildings an explicit electricity load. Today's space cooling electricity from JRC-IDEES is taken out of the historical electricity load and added back as a separate load with a cooling degree hour profile.",
+          "type": "boolean"
+        },
+        "threshold": {
+          "default": 18.0,
+          "description": "Population-weighted hourly air temperature (\u00b0C) above which buildings are cooled; cooling demand is proportional to the degrees above it (cooling degree hours). The default with `base_share_services` gives about 1000-1600 full load hours in southern and 400-600 in central Europe (2013 weather).",
+          "type": "number"
+        },
+        "base_share_services": {
+          "default": 0.3,
+          "description": "Share of the services space cooling that is constant over the year (server rooms, internal gains) and not affected by `setpoint_change`. Residential cooling follows the cooling degree hours only.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "setpoint_change": {
+          "default": 0.0,
+          "description": "Change of the room temperature of cooled buildings (K), e.g. +1 for one degree warmer rooms. Shifts the threshold and rescales the annual cooling demand per node by the ratio of cooling degree hours with and without the change.",
+          "maximum": 5,
+          "minimum": -5,
+          "type": "number"
+        },
+        "growth": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "description": "Space cooling demand relative to today (JRC-IDEES) per planning horizon, e.g. for more air conditioners or a warmer climate.",
+          "type": "object"
+        }
+      }
+    },
     "_TechnologyMappingConfig": {
       "description": "Configuration for `electricity.estimate_renewable_capacities.technology_mapping` settings.",
       "properties": {
@@ -13528,6 +13600,42 @@
           "maximum": 5,
           "minimum": -5,
           "type": "number"
+        },
+        "space_cooling": {
+          "description": "Configuration for `sector.space_cooling` settings.",
+          "properties": {
+            "enable": {
+              "default": false,
+              "description": "Make space cooling (air conditioning) of residential and service buildings an explicit electricity load. Today's space cooling electricity from JRC-IDEES is taken out of the historical electricity load and added back as a separate load with a cooling degree hour profile.",
+              "type": "boolean"
+            },
+            "threshold": {
+              "default": 18.0,
+              "description": "Population-weighted hourly air temperature (\u00b0C) above which buildings are cooled; cooling demand is proportional to the degrees above it (cooling degree hours). The default with `base_share_services` gives about 1000-1600 full load hours in southern and 400-600 in central Europe (2013 weather).",
+              "type": "number"
+            },
+            "base_share_services": {
+              "default": 0.3,
+              "description": "Share of the services space cooling that is constant over the year (server rooms, internal gains) and not affected by `setpoint_change`. Residential cooling follows the cooling degree hours only.",
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "setpoint_change": {
+              "default": 0.0,
+              "description": "Change of the room temperature of cooled buildings (K), e.g. +1 for one degree warmer rooms. Shifts the threshold and rescales the annual cooling demand per node by the ratio of cooling degree hours with and without the change.",
+              "maximum": 5,
+              "minimum": -5,
+              "type": "number"
+            },
+            "growth": {
+              "additionalProperties": {
+                "type": "number"
+              },
+              "description": "Space cooling demand relative to today (JRC-IDEES) per planning horizon, e.g. for more air conditioners or a warmer climate.",
+              "type": "object"
+            }
+          }
         },
         "retrofitting": {
           "description": "Configuration for `sector.retrofitting` settings.",

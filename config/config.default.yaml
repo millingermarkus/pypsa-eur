@@ -880,6 +880,16 @@ sector:
     2045: 0.21
     2050: 0.29
   room_temperature_change: 0.0
+  space_cooling:
+    enable: false
+    threshold: 18.0
+    base_share_services: 0.3
+    setpoint_change: 0.0
+    growth:
+      2020: 1.0
+      2030: 1.0
+      2040: 1.0
+      2050: 1.0
   retrofitting:
     retro_endogen: false
     cost_factor: 1.0

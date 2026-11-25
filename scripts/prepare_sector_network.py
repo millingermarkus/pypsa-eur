@@ -4965,6 +4965,128 @@ def add_industry_dsm(
     )
 
 
+def add_space_cooling(
+    n: pypsa.Network,
+    nodes: pd.Index,
+    cooling_totals_file: str,
+    temp_air_total_file: str,
+    pop_layout: pd.DataFrame,
+    options: dict,
+    investment_year: int,
+    nyears: float = 1.0,
+) -> None:
+    """
+    Make space cooling (air conditioning) an explicit electricity load.
+
+    Today's space cooling electricity (JRC-IDEES, residential and services) is
+    part of the historical electricity load. It is allocated to nodes by
+    population times cooling degree hours (hours with population-weighted air
+    temperature above `threshold`), given a profile and subtracted from the
+    electricity load. Residential cooling follows the cooling degree hours;
+    services cooling has a constant share `base_share_services` (server rooms,
+    internal gains) and follows the cooling degree hours otherwise. A separate
+    load is then added that is scaled by `growth` of the investment year and,
+    for the temperature-driven part, by the change in cooling degree hours for
+    a changed room temperature (`setpoint_change`, e.g. +1 for one degree
+    warmer rooms in summer). Countries without JRC-IDEES data get the average
+    cooling per person and cooling degree hour of the countries with data.
+
+    Parameters
+    ----------
+    n : pypsa.Network
+        The PyPSA network container object
+    nodes : pd.Index
+        Nodes of the network
+    cooling_totals_file : str
+        Path to CSV file with space cooling electricity per country (TWh/a)
+    temp_air_total_file : str
+        Path to NetCDF file with population-weighted hourly air temperature (°C)
+    pop_layout : pd.DataFrame
+        Population per node with column `total`
+    options : dict
+        Options of `sector.space_cooling`
+    investment_year : int
+        Planning horizon, for `growth`
+    nyears : float
+        Number of modelled years
+    """
+    temperature = (
+        xr.open_dataarray(temp_air_total_file).to_pandas().reindex(n.snapshots)[nodes]
+    )
+    threshold = options["threshold"]
+    cdh = (temperature - threshold).clip(lower=0)
+    cdh_new = (temperature - threshold - options["setpoint_change"]).clip(lower=0)
+
+    totals = pd.read_csv(cooling_totals_file, index_col=0)
+    totals = totals[["residential", "services"]] * 1e6 * nyears  # MWh
+
+    country = pd.Series(nodes.str[:2], index=nodes)
+    weight = pop_layout.loc[nodes, "total"] * cdh.sum()
+    weight_ct = weight.groupby(country).sum()
+    known = totals.index.intersection(weight_ct.index[weight_ct > 0])
+    estimated = ~country.isin(totals.index)
+    dropped = totals.index.intersection(weight_ct.index).difference(known)
+    if len(dropped):
+        logger.warning(
+            f"No cooling degree hours above {threshold} °C in {list(dropped)}; "
+            "their space cooling is left in the electricity load."
+        )
+
+    def normed(df: pd.DataFrame) -> pd.DataFrame:
+        return df.div(df.sum().replace(0, np.nan), axis=1).fillna(0.0)
+
+    growth = get(options["growth"], investment_year)
+    factor = (cdh_new.sum() / cdh.sum().replace(0, np.nan)).fillna(1.0)
+    flat = pd.DataFrame(1.0 / len(n.snapshots), index=n.snapshots, columns=nodes)
+    base = {"residential": 0.0, "services": options["base_share_services"]}
+
+    annual = {}
+    today = 0.0
+    future = 0.0
+    for sector, b in base.items():
+        intensity = totals.loc[known, sector].sum() / weight_ct[known].sum()
+        a = (weight / country.map(weight_ct)) * country.map(totals[sector])
+        a[estimated] = intensity * weight[estimated]
+        a = a.fillna(0.0)
+        annual[sector] = a
+        today = today + (b * flat + (1 - b) * normed(cdh)).mul(a, axis=1)
+        future = future + (
+            b * flat.mul(a, axis=1) + (1 - b) * normed(cdh_new).mul(a * factor, axis=1)
+        ).mul(growth)
+    annual = pd.DataFrame(annual).sum(axis=1)
+
+    logger.info(
+        f"Space cooling: {annual.sum() / 1e6:.1f} TWh today "
+        f"({annual[estimated].sum() / 1e6:.1f} TWh estimated for {sorted(set(country[estimated]))}); "
+        f"{future.sum().sum() / 1e6:.1f} TWh in {investment_year} "
+        f"(growth {growth}, setpoint change {options['setpoint_change']:+} K, "
+        f"cooling degree hours x{factor[annual > 0].mean():.2f} on average); "
+        f"peak {future.sum(axis=1).max() / 1e3:.1f} GW"
+    )
+
+    # take today's cooling out of the historical electricity load
+    elec = n.loads.index[(n.loads.carrier == "electricity") & n.loads.bus.isin(nodes)]
+    elec_nodes = n.loads.loc[elec, "bus"]
+    subtract = today[elec_nodes.values].set_axis(elec, axis=1)
+    p_set = n.loads_t.p_set[elec] - subtract
+    if (p_set < 0).any().any():
+        logger.warning(
+            "Space cooling exceeds the electricity load in some hours; clipped at zero "
+            f"({-p_set.clip(upper=0).sum().sum() / 1e6:.3f} TWh)."
+        )
+    n.loads_t.p_set[elec] = p_set.clip(lower=0)
+
+    n.add("Carrier", "space cooling electricity")
+    n.add(
+        "Load",
+        nodes,
+        suffix=" space cooling electricity",
+        bus=nodes,
+        carrier="space cooling electricity",
+        p_set=future,
+    )
+
+
 def plastic_waste_co2_per_naphtha(
     industrial_demand: pd.DataFrame,
     costs: pd.DataFrame,
@@ -7037,6 +7159,18 @@ def main(
             spatial=spatial,
             options=options,
             investment_year=current_horizon,
+        )
+
+    if options["space_cooling"]["enable"]:
+        add_space_cooling(
+            n=n,
+            nodes=pop_layout.index,
+            cooling_totals_file=inputs.cooling_totals,
+            temp_air_total_file=inputs.temp_air_total,
+            pop_layout=pop_layout,
+            options=options["space_cooling"],
+            investment_year=current_horizon,
+            nyears=nyears,
         )
 
     if options["biomass"]:

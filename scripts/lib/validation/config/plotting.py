@@ -843,6 +843,7 @@ _TECH_COLORS: dict[str, str] = {
     "heat200-500 industry thermal storage": "#c97a3a",
     "heat200-500 industry thermal storage charger": "#b0652b",
     "heat200-500 industry thermal storage discharger": "#dc9a63",
+    "space cooling electricity": "#4fc3f7",
     "industry DSM": "#6f6ab8",
     "industry DSM advance": "#5a55a3",
     "industry DSM delay": "#8c87cf",

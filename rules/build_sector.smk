@@ -136,6 +136,24 @@ rule build_transmission_topology:
         scripts("build_transmission_topology.py")
 
 
+rule build_cooling_totals:
+    """Builds annual space cooling electricity demand per country from JRC-IDEES."""
+    input:
+        idees=rules.retrieve_jrc_idees.output["directory"],
+    output:
+        cooling_totals=resources("cooling_totals.csv"),
+    log:
+        logs("build_cooling_totals.log"),
+    benchmark:
+        benchmarks("build_cooling_totals")
+    resources:
+        mem_mb=2000,
+    params:
+        countries=config_provider("countries"),
+    script:
+        scripts("build_cooling_totals.py")
+
+
 rule build_daily_heat_demand:
     """Builds daily heat demand time series per region from cutout temperatures and population."""
     input:

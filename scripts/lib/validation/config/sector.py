@@ -544,6 +544,35 @@ class _IndustryHeatStorageConfig(BaseModel):
     )
 
 
+class _SpaceCoolingConfig(BaseModel):
+    """Configuration for `sector.space_cooling` settings."""
+
+    enable: bool = Field(
+        False,
+        description="Make space cooling (air conditioning) of residential and service buildings an explicit electricity load. Today's space cooling electricity from JRC-IDEES is taken out of the historical electricity load and added back as a separate load with a cooling degree hour profile.",
+    )
+    threshold: float = Field(
+        18.0,
+        description="Population-weighted hourly air temperature (°C) above which buildings are cooled; cooling demand is proportional to the degrees above it (cooling degree hours). The default with `base_share_services` gives about 1000-1600 full load hours in southern and 400-600 in central Europe (2013 weather).",
+    )
+    base_share_services: float = Field(
+        0.3,
+        ge=0,
+        le=1,
+        description="Share of the services space cooling that is constant over the year (server rooms, internal gains) and not affected by `setpoint_change`. Residential cooling follows the cooling degree hours only.",
+    )
+    setpoint_change: float = Field(
+        0.0,
+        ge=-5,
+        le=5,
+        description="Change of the room temperature of cooled buildings (K), e.g. +1 for one degree warmer rooms. Shifts the threshold and rescales the annual cooling demand per node by the ratio of cooling degree hours with and without the change.",
+    )
+    growth: dict[int, float] = Field(
+        default_factory=lambda: {2020: 1.0, 2030: 1.0, 2040: 1.0, 2050: 1.0},
+        description="Space cooling demand relative to today (JRC-IDEES) per planning horizon, e.g. for more air conditioners or a warmer climate.",
+    )
+
+
 class _IndustryDSMConfig(BaseModel):
     """Configuration for `sector.industry_dsm` settings."""
 
@@ -889,6 +918,10 @@ class SectorConfig(BaseModel):
         ge=-5,
         le=5,
         description="Change of the indoor room temperature of heated buildings (K), e.g. -1 for one degree lower. Shifts the heating degree day threshold (15 °C, the balance point of the building stock) by the same amount and rescales the annual space heat demand per region by the ratio of heating degree days with and without the change. Hot water demand is not affected.",
+    )
+    space_cooling: _SpaceCoolingConfig = Field(
+        default_factory=_SpaceCoolingConfig,
+        description="Space cooling (air conditioning) as an explicit electricity load.",
     )
 
     retrofitting: _RetrofittingConfig = Field(
