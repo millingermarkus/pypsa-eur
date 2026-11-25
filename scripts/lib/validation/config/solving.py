@@ -222,6 +222,29 @@ class _OperationsConfig(BaseModel):
     )
 
 
+class _FrozenConfig(BaseModel):
+    """Configuration for `solving.frozen` settings (rule `solve_frozen_network`)."""
+
+    design_network: str | None = Field(
+        None,
+        description="Path to a solved network (e.g. `results/<prefix>/<run>/networks/solved_{horizon}.nc`; `{horizon}` is filled in) whose optimal capacities are fixed in the network of the current run, which is then only dispatched. Capacities that are extendable in the current run but absent in the design network are set to zero.",
+    )
+    voll: float = Field(
+        3000.0,
+        ge=0,
+        description="Value of lost load (EUR/MWh) of the load shedding added to all buses with loads (except CO2 buses).",
+    )
+    spill_cost: float = Field(
+        10.0,
+        ge=0,
+        description="Cost (EUR/MWh) of spilling surplus energy at buses with loads, e.g. from minimum part loads of fixed capacities.",
+    )
+    co2_price_from_design: bool = Field(
+        True,
+        description="Allow CO2 emissions above the CO2 limit at the CO2 price (shadow price of the CO2 limit) of the design network, instead of a hard limit.",
+    )
+
+
 class _AggPNomLimitsConfig(BaseModel):
     """Configuration for `solving.agg_p_nom_limits` settings."""
 
@@ -304,6 +327,10 @@ class SolvingConfig(BaseModel):
     operations: _OperationsConfig = Field(
         default_factory=_OperationsConfig,
         description="Operational dispatch options for rule `solve_operations_network`.",
+    )
+    frozen: _FrozenConfig = Field(
+        default_factory=_FrozenConfig,
+        description="Dispatch of the current run with the capacities of another (design) run, rule `solve_frozen_network`.",
     )
     agg_p_nom_limits: _AggPNomLimitsConfig = Field(
         default_factory=_AggPNomLimitsConfig,

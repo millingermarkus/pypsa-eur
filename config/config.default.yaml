@@ -1384,6 +1384,11 @@ solving:
     rolling_horizon: false
     horizon: 365
     overlap: 0
+  frozen:
+    design_network:
+    voll: 3000.0
+    spill_cost: 10.0
+    co2_price_from_design: true
   agg_p_nom_limits:
     agg_offwind: false
     agg_solar: false

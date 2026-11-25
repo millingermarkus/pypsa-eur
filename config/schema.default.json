@@ -6723,6 +6723,40 @@
             }
           }
         },
+        "frozen": {
+          "description": "Configuration for `solving.frozen` settings (rule `solve_frozen_network`).",
+          "properties": {
+            "design_network": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "description": "Path to a solved network (e.g. `results/<prefix>/<run>/networks/solved_{horizon}.nc`; `{horizon}` is filled in) whose optimal capacities are fixed in the network of the current run, which is then only dispatched. Capacities that are extendable in the current run but absent in the design network are set to zero."
+            },
+            "voll": {
+              "default": 3000.0,
+              "description": "Value of lost load (EUR/MWh) of the load shedding added to all buses with loads (except CO2 buses).",
+              "minimum": 0,
+              "type": "number"
+            },
+            "spill_cost": {
+              "default": 10.0,
+              "description": "Cost (EUR/MWh) of spilling surplus energy at buses with loads, e.g. from minimum part loads of fixed capacities.",
+              "minimum": 0,
+              "type": "number"
+            },
+            "co2_price_from_design": {
+              "default": true,
+              "description": "Allow CO2 emissions above the CO2 limit at the CO2 price (shadow price of the CO2 limit) of the design network, instead of a hard limit.",
+              "type": "boolean"
+            }
+          }
+        },
         "agg_p_nom_limits": {
           "description": "Configuration for `solving.agg_p_nom_limits` settings.",
           "properties": {
@@ -8583,6 +8617,40 @@
           "default": 0,
           "description": "Default standing losses.",
           "type": "number"
+        }
+      }
+    },
+    "_FrozenConfig": {
+      "description": "Configuration for `solving.frozen` settings (rule `solve_frozen_network`).",
+      "properties": {
+        "design_network": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Path to a solved network (e.g. `results/<prefix>/<run>/networks/solved_{horizon}.nc`; `{horizon}` is filled in) whose optimal capacities are fixed in the network of the current run, which is then only dispatched. Capacities that are extendable in the current run but absent in the design network are set to zero."
+        },
+        "voll": {
+          "default": 3000.0,
+          "description": "Value of lost load (EUR/MWh) of the load shedding added to all buses with loads (except CO2 buses).",
+          "minimum": 0,
+          "type": "number"
+        },
+        "spill_cost": {
+          "default": 10.0,
+          "description": "Cost (EUR/MWh) of spilling surplus energy at buses with loads, e.g. from minimum part loads of fixed capacities.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "co2_price_from_design": {
+          "default": true,
+          "description": "Allow CO2 emissions above the CO2 limit at the CO2 price (shadow price of the CO2 limit) of the design network, instead of a hard limit.",
+          "type": "boolean"
         }
       }
     },
@@ -15739,6 +15807,40 @@
               "default": 0,
               "description": "Number of overlapping snapshots between consecutive slices in rolling horizon operational dispatch.",
               "type": "integer"
+            }
+          }
+        },
+        "frozen": {
+          "description": "Configuration for `solving.frozen` settings (rule `solve_frozen_network`).",
+          "properties": {
+            "design_network": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "description": "Path to a solved network (e.g. `results/<prefix>/<run>/networks/solved_{horizon}.nc`; `{horizon}` is filled in) whose optimal capacities are fixed in the network of the current run, which is then only dispatched. Capacities that are extendable in the current run but absent in the design network are set to zero."
+            },
+            "voll": {
+              "default": 3000.0,
+              "description": "Value of lost load (EUR/MWh) of the load shedding added to all buses with loads (except CO2 buses).",
+              "minimum": 0,
+              "type": "number"
+            },
+            "spill_cost": {
+              "default": 10.0,
+              "description": "Cost (EUR/MWh) of spilling surplus energy at buses with loads, e.g. from minimum part loads of fixed capacities.",
+              "minimum": 0,
+              "type": "number"
+            },
+            "co2_price_from_design": {
+              "default": true,
+              "description": "Allow CO2 emissions above the CO2 limit at the CO2 price (shadow price of the CO2 limit) of the design network, instead of a hard limit.",
+              "type": "boolean"
             }
           }
         },
