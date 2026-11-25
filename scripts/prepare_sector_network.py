@@ -4869,11 +4869,12 @@ def add_industry_dsm(
     """
     Let a share of the industry electricity load shift in time.
 
-    Modelled as a virtual storage per node: charging means consuming earlier
-    than the reference profile, discharging means consuming less later. Both
-    are limited to `share` of the load in each snapshot, the shifted energy to
-    `max_hours` of the average shiftable load, and each MWh shifted costs
-    `marginal_cost`.
+    Modelled as a virtual storage per node (as in Gils 2016): charging means
+    consuming earlier than the reference profile, discharging means consuming
+    less later. Load increase is limited to `share_advance` and load decrease
+    to `share_delay` of the load in each snapshot, the shifted energy to
+    `max_hours` of the average reducible load, and each MWh shifted costs
+    `marginal_cost` (charged once, on the delayed consumption).
 
     Parameters
     ----------
@@ -4896,9 +4897,10 @@ def add_industry_dsm(
         )
     p_set = p_set.reindex(n.snapshots)[nodes]
     peak = p_set.max().replace(0, np.nan)
-    p_nom = (dsm["share"] * peak).fillna(0.0)
     p_max_pu = p_set.div(peak, axis=1).fillna(0.0)
-    e_nom = dsm["share"] * p_set.mean() * dsm["max_hours"]
+    p_nom_advance = (dsm["share_advance"] * peak).fillna(0.0)
+    p_nom_delay = (dsm["share_delay"] * peak).fillna(0.0)
+    e_nom = dsm["share_delay"] * p_set.mean() * dsm["max_hours"]
 
     bus = nodes + " industry DSM"
     n.add("Carrier", ["industry DSM", "industry DSM advance", "industry DSM delay"])
@@ -4919,7 +4921,7 @@ def add_industry_dsm(
         bus0=nodes,
         bus1=bus,
         carrier="industry DSM advance",
-        p_nom=p_nom.values,
+        p_nom=p_nom_advance.values,
         p_max_pu=p_max_pu,
     )
     # consume less than the reference profile, paid per MWh shifted
@@ -4930,7 +4932,7 @@ def add_industry_dsm(
         bus0=bus,
         bus1=nodes,
         carrier="industry DSM delay",
-        p_nom=p_nom.values,
+        p_nom=p_nom_delay.values,
         p_max_pu=p_max_pu,
         marginal_cost=dsm["marginal_cost"],
     )

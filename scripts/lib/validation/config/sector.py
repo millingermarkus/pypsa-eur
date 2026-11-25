@@ -551,21 +551,27 @@ class _IndustryDSMConfig(BaseModel):
         False,
         description="Let a share of the industry electricity load shift in time (virtual storage).",
     )
-    share: float = Field(
-        0.1,
+    share_delay: float = Field(
+        0.05,
         ge=0,
         le=1,
-        description="Share of the industry electricity load that can be advanced or delayed in each snapshot.",
+        description="Share of the industry electricity load that can be reduced (delayed) in each snapshot. Default after Gils (2016): about 1.9 GW average load reduction of shiftable industrial processes (pulp, paper, cement, air separation) in Germany.",
+    )
+    share_advance: float = Field(
+        0.025,
+        ge=0,
+        le=1,
+        description="Share of the industry electricity load that can be increased (advanced) in each snapshot. Smaller than the reduction because the processes already run at high utilisation (Gils 2016: about 0.6 GW in Germany).",
     )
     max_hours: float = Field(
-        4.0,
+        3.0,
         ge=0,
-        description="Shifted energy limit in hours of the average shiftable load.",
+        description="Shifted energy limit in hours of the average reducible load (interference time 2-4 h in Gils 2016 and Heitkoetter et al. 2021).",
     )
     marginal_cost: float = Field(
-        20.0,
+        150.0,
         ge=0,
-        description="Cost per MWh of delayed consumption (EUR/MWh), a proxy for lost production and spare capacity.",
+        description="Cost per MWh shifted (EUR/MWh), compensating lost production; 100-250 EUR/MWh for industrial processes in Gils (2016) and Heitkoetter et al. (2021).",
     )
 
 

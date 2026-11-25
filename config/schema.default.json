@@ -6158,22 +6158,29 @@
               "description": "Let a share of the industry electricity load shift in time (virtual storage).",
               "type": "boolean"
             },
-            "share": {
-              "default": 0.1,
-              "description": "Share of the industry electricity load that can be advanced or delayed in each snapshot.",
+            "share_delay": {
+              "default": 0.05,
+              "description": "Share of the industry electricity load that can be reduced (delayed) in each snapshot. Default after Gils (2016): about 1.9 GW average load reduction of shiftable industrial processes (pulp, paper, cement, air separation) in Germany.",
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "share_advance": {
+              "default": 0.025,
+              "description": "Share of the industry electricity load that can be increased (advanced) in each snapshot. Smaller than the reduction because the processes already run at high utilisation (Gils 2016: about 0.6 GW in Germany).",
               "maximum": 1,
               "minimum": 0,
               "type": "number"
             },
             "max_hours": {
-              "default": 4.0,
-              "description": "Shifted energy limit in hours of the average shiftable load.",
+              "default": 3.0,
+              "description": "Shifted energy limit in hours of the average reducible load (interference time 2-4 h in Gils 2016 and Heitkoetter et al. 2021).",
               "minimum": 0,
               "type": "number"
             },
             "marginal_cost": {
-              "default": 20.0,
-              "description": "Cost per MWh of delayed consumption (EUR/MWh), a proxy for lost production and spare capacity.",
+              "default": 150.0,
+              "description": "Cost per MWh shifted (EUR/MWh), compensating lost production; 100-250 EUR/MWh for industrial processes in Gils (2016) and Heitkoetter et al. (2021).",
               "minimum": 0,
               "type": "number"
             }
@@ -8742,22 +8749,29 @@
           "description": "Let a share of the industry electricity load shift in time (virtual storage).",
           "type": "boolean"
         },
-        "share": {
-          "default": 0.1,
-          "description": "Share of the industry electricity load that can be advanced or delayed in each snapshot.",
+        "share_delay": {
+          "default": 0.05,
+          "description": "Share of the industry electricity load that can be reduced (delayed) in each snapshot. Default after Gils (2016): about 1.9 GW average load reduction of shiftable industrial processes (pulp, paper, cement, air separation) in Germany.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "share_advance": {
+          "default": 0.025,
+          "description": "Share of the industry electricity load that can be increased (advanced) in each snapshot. Smaller than the reduction because the processes already run at high utilisation (Gils 2016: about 0.6 GW in Germany).",
           "maximum": 1,
           "minimum": 0,
           "type": "number"
         },
         "max_hours": {
-          "default": 4.0,
-          "description": "Shifted energy limit in hours of the average shiftable load.",
+          "default": 3.0,
+          "description": "Shifted energy limit in hours of the average reducible load (interference time 2-4 h in Gils 2016 and Heitkoetter et al. 2021).",
           "minimum": 0,
           "type": "number"
         },
         "marginal_cost": {
-          "default": 20.0,
-          "description": "Cost per MWh of delayed consumption (EUR/MWh), a proxy for lost production and spare capacity.",
+          "default": 150.0,
+          "description": "Cost per MWh shifted (EUR/MWh), compensating lost production; 100-250 EUR/MWh for industrial processes in Gils (2016) and Heitkoetter et al. (2021).",
           "minimum": 0,
           "type": "number"
         }
@@ -14365,22 +14379,29 @@
               "description": "Let a share of the industry electricity load shift in time (virtual storage).",
               "type": "boolean"
             },
-            "share": {
-              "default": 0.1,
-              "description": "Share of the industry electricity load that can be advanced or delayed in each snapshot.",
+            "share_delay": {
+              "default": 0.05,
+              "description": "Share of the industry electricity load that can be reduced (delayed) in each snapshot. Default after Gils (2016): about 1.9 GW average load reduction of shiftable industrial processes (pulp, paper, cement, air separation) in Germany.",
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "share_advance": {
+              "default": 0.025,
+              "description": "Share of the industry electricity load that can be increased (advanced) in each snapshot. Smaller than the reduction because the processes already run at high utilisation (Gils 2016: about 0.6 GW in Germany).",
               "maximum": 1,
               "minimum": 0,
               "type": "number"
             },
             "max_hours": {
-              "default": 4.0,
-              "description": "Shifted energy limit in hours of the average shiftable load.",
+              "default": 3.0,
+              "description": "Shifted energy limit in hours of the average reducible load (interference time 2-4 h in Gils 2016 and Heitkoetter et al. 2021).",
               "minimum": 0,
               "type": "number"
             },
             "marginal_cost": {
-              "default": 20.0,
-              "description": "Cost per MWh of delayed consumption (EUR/MWh), a proxy for lost production and spare capacity.",
+              "default": 150.0,
+              "description": "Cost per MWh shifted (EUR/MWh), compensating lost production; 100-250 EUR/MWh for industrial processes in Gils (2016) and Heitkoetter et al. (2021).",
               "minimum": 0,
               "type": "number"
             }

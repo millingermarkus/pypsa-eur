@@ -1111,9 +1111,10 @@ sector:
       standing_losses: 0.0004
   industry_dsm:
     enable: false
-    share: 0.1
-    max_hours: 4.0
-    marginal_cost: 20.0
+    share_delay: 0.05
+    share_advance: 0.025
+    max_hours: 3.0
+    marginal_cost: 150.0
   biomass_to_liquid: true
   biomass_to_liquid_cc: false
   electrobiofuels: true
