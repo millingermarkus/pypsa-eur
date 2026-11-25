@@ -743,7 +743,9 @@ def input_custom_busmap(w):
 
     if mode == "custom_busmap":
         base_network = config_provider("electricity", "base_network")(w)
-        custom_busmap = f"data/busmaps/simplified_{n_clusters_label}_{base_network}.csv"
+        custom_busmap = config_provider(
+            "clustering", "custom_busmap_file", default=None
+        )(w) or f"data/busmaps/simplified_{n_clusters_label}_{base_network}.csv"
 
     if mode == "custom_busshapes":
         base_network = config_provider("electricity", "base_network")(w)

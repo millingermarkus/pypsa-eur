@@ -149,6 +149,10 @@ class ClusteringConfig(BaseModel):
             description="'busmap': Default. 'custom_busmap': Enable the use of custom busmaps in rule `cluster_network`. If activated the rule looks for provided busmaps at ``data/busmaps/simplified_{n_clusters}_{base_network}.csv`` which should have the same format as ``resources/busmap_cluster_network.csv``, i.e. the index should contain the buses of ``networks/simplified.nc``. {base_network} is the name of the selected base_network in electricity, e.g. ``gridkit``, ``osm-prebuilt``, or ``osm-raw``. {n_clusters} is ``clustering.cluster_network.n_clusters``. 'administrative': Clusters and indexes the network based on the administrative regions of the countries based on ``nuts3_shapes.geojson`` (level: 1, 2, 3, bz). 'custom_busshapes': Enable the use of custom shapes in rule `cluster_network`. If activated the rule looks for provided busshapes at ``data/busshapes/simplified_{n_clusters}_{base_network}.geojson``.",
         )
     )
+    custom_busmap_file: str | None = Field(
+        None,
+        description="File of the custom busmap for `mode: custom_busmap`, instead of ``data/busmaps/simplified_{n_clusters}_{base_network}.csv``. Useful to give runs the same regions as another run, e.g. a copy of its ``resources/busmap_cluster_network.csv``.",
+    )
     administrative: _AdministrativeConfig = Field(
         default_factory=_AdministrativeConfig,
         description="Administrative clustering settings.",

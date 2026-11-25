@@ -470,6 +470,18 @@
           ],
           "type": "string"
         },
+        "custom_busmap_file": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "File of the custom busmap for `mode: custom_busmap`, instead of ``data/busmaps/simplified_{n_clusters}_{base_network}.csv``. Useful to give runs the same regions as another run, e.g. a copy of its ``resources/busmap_cluster_network.csv``."
+        },
         "administrative": {
           "description": "Configuration for `clustering.administrative` settings.",
           "properties": {
@@ -15188,6 +15200,18 @@
             "custom_busshapes"
           ],
           "type": "string"
+        },
+        "custom_busmap_file": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "File of the custom busmap for `mode: custom_busmap`, instead of ``data/busmaps/simplified_{n_clusters}_{base_network}.csv``. Useful to give runs the same regions as another run, e.g. a copy of its ``resources/busmap_cluster_network.csv``."
         },
         "administrative": {
           "description": "Configuration for `clustering.administrative` settings.",
