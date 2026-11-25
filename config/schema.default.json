@@ -6089,6 +6089,93 @@
                 ]
               },
               "type": "object"
+            },
+            "thermal_storage": {
+              "description": "Configuration for `sector.industry_heat.thermal_storage` settings.",
+              "properties": {
+                "enable": {
+                  "default": false,
+                  "description": "Add electrically charged solid-media thermal storage to the industry process heat bands, so that industry can shift the electricity use of its process heat.",
+                  "type": "boolean"
+                },
+                "bands": {
+                  "description": "Temperature bands that get thermal storage. Sand reaches the temperatures of both default bands.",
+                  "items": {
+                    "enum": [
+                      "heat100-200",
+                      "heat200-500",
+                      "heat500+"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "store": {
+                  "default": "Sand-store",
+                  "description": "Technology in the cost data used for the storage medium (EUR/MWh_th).",
+                  "type": "string"
+                },
+                "charger": {
+                  "default": "Sand-charger",
+                  "description": "Technology in the cost data used for the resistive charger (EUR/MW_el).",
+                  "type": "string"
+                },
+                "discharger_investment": {
+                  "default": 75.0,
+                  "description": "Investment of the heat exchanger or steam generator that delivers the stored heat to the process (EUR/kW_th). Assumption; the discharger in the cost data is a steam turbine for power.",
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "discharger_FOM": {
+                  "default": 1.0,
+                  "description": "Fixed operation and maintenance cost of the discharger (%/year of investment).",
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "discharger_efficiency": {
+                  "default": 0.95,
+                  "description": "Efficiency of the heat delivery from the store to the process.",
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "standing_losses": {
+                  "default": 0.0004,
+                  "description": "Heat loss of the store per hour (share of the stored energy), about 1 % per day.",
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "industry_dsm": {
+          "description": "Configuration for `sector.industry_dsm` settings.",
+          "properties": {
+            "enable": {
+              "default": false,
+              "description": "Let a share of the industry electricity load shift in time (virtual storage).",
+              "type": "boolean"
+            },
+            "share": {
+              "default": 0.1,
+              "description": "Share of the industry electricity load that can be advanced or delayed in each snapshot.",
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "max_hours": {
+              "default": 4.0,
+              "description": "Shifted energy limit in hours of the average shiftable load.",
+              "minimum": 0,
+              "type": "number"
+            },
+            "marginal_cost": {
+              "default": 20.0,
+              "description": "Cost per MWh of delayed consumption (EUR/MWh), a proxy for lost production and spare capacity.",
+              "minimum": 0,
+              "type": "number"
             }
           }
         },
@@ -8647,6 +8734,35 @@
         }
       }
     },
+    "_IndustryDSMConfig": {
+      "description": "Configuration for `sector.industry_dsm` settings.",
+      "properties": {
+        "enable": {
+          "default": false,
+          "description": "Let a share of the industry electricity load shift in time (virtual storage).",
+          "type": "boolean"
+        },
+        "share": {
+          "default": 0.1,
+          "description": "Share of the industry electricity load that can be advanced or delayed in each snapshot.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "max_hours": {
+          "default": 4.0,
+          "description": "Shifted energy limit in hours of the average shiftable load.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "marginal_cost": {
+          "default": 20.0,
+          "description": "Cost per MWh of delayed consumption (EUR/MWh), a proxy for lost production and spare capacity.",
+          "minimum": 0,
+          "type": "number"
+        }
+      }
+    },
     "_IndustryHeatConfig": {
       "description": "Configuration for `sector.industry_heat` settings.",
       "properties": {
@@ -8692,6 +8808,122 @@
             ]
           },
           "type": "object"
+        },
+        "thermal_storage": {
+          "description": "Configuration for `sector.industry_heat.thermal_storage` settings.",
+          "properties": {
+            "enable": {
+              "default": false,
+              "description": "Add electrically charged solid-media thermal storage to the industry process heat bands, so that industry can shift the electricity use of its process heat.",
+              "type": "boolean"
+            },
+            "bands": {
+              "description": "Temperature bands that get thermal storage. Sand reaches the temperatures of both default bands.",
+              "items": {
+                "enum": [
+                  "heat100-200",
+                  "heat200-500",
+                  "heat500+"
+                ],
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "store": {
+              "default": "Sand-store",
+              "description": "Technology in the cost data used for the storage medium (EUR/MWh_th).",
+              "type": "string"
+            },
+            "charger": {
+              "default": "Sand-charger",
+              "description": "Technology in the cost data used for the resistive charger (EUR/MW_el).",
+              "type": "string"
+            },
+            "discharger_investment": {
+              "default": 75.0,
+              "description": "Investment of the heat exchanger or steam generator that delivers the stored heat to the process (EUR/kW_th). Assumption; the discharger in the cost data is a steam turbine for power.",
+              "minimum": 0,
+              "type": "number"
+            },
+            "discharger_FOM": {
+              "default": 1.0,
+              "description": "Fixed operation and maintenance cost of the discharger (%/year of investment).",
+              "minimum": 0,
+              "type": "number"
+            },
+            "discharger_efficiency": {
+              "default": 0.95,
+              "description": "Efficiency of the heat delivery from the store to the process.",
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "standing_losses": {
+              "default": 0.0004,
+              "description": "Heat loss of the store per hour (share of the stored energy), about 1 % per day.",
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "_IndustryHeatStorageConfig": {
+      "description": "Configuration for `sector.industry_heat.thermal_storage` settings.",
+      "properties": {
+        "enable": {
+          "default": false,
+          "description": "Add electrically charged solid-media thermal storage to the industry process heat bands, so that industry can shift the electricity use of its process heat.",
+          "type": "boolean"
+        },
+        "bands": {
+          "description": "Temperature bands that get thermal storage. Sand reaches the temperatures of both default bands.",
+          "items": {
+            "enum": [
+              "heat100-200",
+              "heat200-500",
+              "heat500+"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "store": {
+          "default": "Sand-store",
+          "description": "Technology in the cost data used for the storage medium (EUR/MWh_th).",
+          "type": "string"
+        },
+        "charger": {
+          "default": "Sand-charger",
+          "description": "Technology in the cost data used for the resistive charger (EUR/MW_el).",
+          "type": "string"
+        },
+        "discharger_investment": {
+          "default": 75.0,
+          "description": "Investment of the heat exchanger or steam generator that delivers the stored heat to the process (EUR/kW_th). Assumption; the discharger in the cost data is a steam turbine for power.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "discharger_FOM": {
+          "default": 1.0,
+          "description": "Fixed operation and maintenance cost of the discharger (%/year of investment).",
+          "minimum": 0,
+          "type": "number"
+        },
+        "discharger_efficiency": {
+          "default": 0.95,
+          "description": "Efficiency of the heat delivery from the store to the process.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "standing_losses": {
+          "default": 0.0004,
+          "description": "Heat loss of the store per hour (share of the stored energy), about 1 % per day.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
         }
       }
     },
@@ -14064,6 +14296,93 @@
                 ]
               },
               "type": "object"
+            },
+            "thermal_storage": {
+              "description": "Configuration for `sector.industry_heat.thermal_storage` settings.",
+              "properties": {
+                "enable": {
+                  "default": false,
+                  "description": "Add electrically charged solid-media thermal storage to the industry process heat bands, so that industry can shift the electricity use of its process heat.",
+                  "type": "boolean"
+                },
+                "bands": {
+                  "description": "Temperature bands that get thermal storage. Sand reaches the temperatures of both default bands.",
+                  "items": {
+                    "enum": [
+                      "heat100-200",
+                      "heat200-500",
+                      "heat500+"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "store": {
+                  "default": "Sand-store",
+                  "description": "Technology in the cost data used for the storage medium (EUR/MWh_th).",
+                  "type": "string"
+                },
+                "charger": {
+                  "default": "Sand-charger",
+                  "description": "Technology in the cost data used for the resistive charger (EUR/MW_el).",
+                  "type": "string"
+                },
+                "discharger_investment": {
+                  "default": 75.0,
+                  "description": "Investment of the heat exchanger or steam generator that delivers the stored heat to the process (EUR/kW_th). Assumption; the discharger in the cost data is a steam turbine for power.",
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "discharger_FOM": {
+                  "default": 1.0,
+                  "description": "Fixed operation and maintenance cost of the discharger (%/year of investment).",
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "discharger_efficiency": {
+                  "default": 0.95,
+                  "description": "Efficiency of the heat delivery from the store to the process.",
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "standing_losses": {
+                  "default": 0.0004,
+                  "description": "Heat loss of the store per hour (share of the stored energy), about 1 % per day.",
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "industry_dsm": {
+          "description": "Configuration for `sector.industry_dsm` settings.",
+          "properties": {
+            "enable": {
+              "default": false,
+              "description": "Let a share of the industry electricity load shift in time (virtual storage).",
+              "type": "boolean"
+            },
+            "share": {
+              "default": 0.1,
+              "description": "Share of the industry electricity load that can be advanced or delayed in each snapshot.",
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "max_hours": {
+              "default": 4.0,
+              "description": "Shifted energy limit in hours of the average shiftable load.",
+              "minimum": 0,
+              "type": "number"
+            },
+            "marginal_cost": {
+              "default": 20.0,
+              "description": "Cost per MWh of delayed consumption (EUR/MWh), a proxy for lost production and spare capacity.",
+              "minimum": 0,
+              "type": "number"
             }
           }
         },

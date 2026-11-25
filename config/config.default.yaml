@@ -1098,6 +1098,22 @@ sector:
       heat500+:
       - gas
       - hydrogen
+    thermal_storage:
+      enable: false
+      bands:
+      - "heat100-200"
+      - "heat200-500"
+      store: "Sand-store"
+      charger: "Sand-charger"
+      discharger_investment: 75.0
+      discharger_FOM: 1.0
+      discharger_efficiency: 0.95
+      standing_losses: 0.0004
+  industry_dsm:
+    enable: false
+    share: 0.1
+    max_hours: 4.0
+    marginal_cost: 20.0
   biomass_to_liquid: true
   biomass_to_liquid_cc: false
   electrobiofuels: true

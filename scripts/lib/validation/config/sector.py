@@ -501,6 +501,74 @@ class _AfforestationConfig(_LandEligibilityConfig):
     )
 
 
+class _IndustryHeatStorageConfig(BaseModel):
+    """Configuration for `sector.industry_heat.thermal_storage` settings."""
+
+    enable: bool = Field(
+        False,
+        description="Add electrically charged solid-media thermal storage to the industry process heat bands, so that industry can shift the electricity use of its process heat.",
+    )
+    bands: list[Literal["heat100-200", "heat200-500", "heat500+"]] = Field(
+        default_factory=lambda: ["heat100-200", "heat200-500"],
+        description="Temperature bands that get thermal storage. Sand reaches the temperatures of both default bands.",
+    )
+    store: str = Field(
+        "Sand-store",
+        description="Technology in the cost data used for the storage medium (EUR/MWh_th).",
+    )
+    charger: str = Field(
+        "Sand-charger",
+        description="Technology in the cost data used for the resistive charger (EUR/MW_el).",
+    )
+    discharger_investment: float = Field(
+        75.0,
+        ge=0,
+        description="Investment of the heat exchanger or steam generator that delivers the stored heat to the process (EUR/kW_th). Assumption; the discharger in the cost data is a steam turbine for power.",
+    )
+    discharger_FOM: float = Field(
+        1.0,
+        ge=0,
+        description="Fixed operation and maintenance cost of the discharger (%/year of investment).",
+    )
+    discharger_efficiency: float = Field(
+        0.95,
+        ge=0,
+        le=1,
+        description="Efficiency of the heat delivery from the store to the process.",
+    )
+    standing_losses: float = Field(
+        0.0004,
+        ge=0,
+        le=1,
+        description="Heat loss of the store per hour (share of the stored energy), about 1 % per day.",
+    )
+
+
+class _IndustryDSMConfig(BaseModel):
+    """Configuration for `sector.industry_dsm` settings."""
+
+    enable: bool = Field(
+        False,
+        description="Let a share of the industry electricity load shift in time (virtual storage).",
+    )
+    share: float = Field(
+        0.1,
+        ge=0,
+        le=1,
+        description="Share of the industry electricity load that can be advanced or delayed in each snapshot.",
+    )
+    max_hours: float = Field(
+        4.0,
+        ge=0,
+        description="Shifted energy limit in hours of the average shiftable load.",
+    )
+    marginal_cost: float = Field(
+        20.0,
+        ge=0,
+        description="Cost per MWh of delayed consumption (EUR/MWh), a proxy for lost production and spare capacity.",
+    )
+
+
 class _IndustryHeatConfig(BaseModel):
     """Configuration for `sector.industry_heat` settings."""
 
@@ -530,6 +598,10 @@ class _IndustryHeatConfig(BaseModel):
             "heat500+": ["gas", "hydrogen"],
         },
         description="Supply technologies per temperature band in °C. Solid biomass and gas are also added with carbon capture if `industry: solid_biomass_for_industry_cc` and `industry: gas_for_industry_cc` are enabled. Heat pumps and electric boilers only supply `heat100-200`. Heat pumps have a constant coefficient of performance that assumes excess heat as source.",
+    )
+    thermal_storage: _IndustryHeatStorageConfig = Field(
+        default_factory=_IndustryHeatStorageConfig,
+        description="Electrically charged thermal storage for industry process heat.",
     )
 
 
@@ -1109,6 +1181,11 @@ class SectorConfig(BaseModel):
     industry_heat: _IndustryHeatConfig = Field(
         default_factory=_IndustryHeatConfig,
         description="Endogenous supply of industry process heat.",
+    )
+
+    industry_dsm: _IndustryDSMConfig = Field(
+        default_factory=_IndustryDSMConfig,
+        description="Demand-side management of the industry electricity load.",
     )
 
     biomass_to_liquid: bool = Field(

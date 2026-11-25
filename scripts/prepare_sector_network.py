@@ -4770,6 +4770,171 @@ def add_industry_heat(
             )
             n.add("Link", nodes, suffix=f" {name} CC", carrier=f"{name} CC", **link)
 
+    if cf["thermal_storage"]["enable"]:
+        add_industry_heat_storage(n, nodes, costs, cf["thermal_storage"])
+
+
+def add_industry_heat_storage(
+    n: pypsa.Network,
+    nodes: pd.Index,
+    costs: pd.DataFrame,
+    ts: dict,
+) -> None:
+    """
+    Add electrically charged thermal storage to industry process heat bands.
+
+    A solid-media store (e.g. sand) is charged by a resistive heater from the
+    electricity bus and discharges heat to the temperature band through a heat
+    exchanger. This lets industry shift the electricity use of its process
+    heat in time.
+
+    Parameters
+    ----------
+    n : pypsa.Network
+        The PyPSA network container object
+    nodes : pd.Index
+        Nodes of the network
+    costs : pd.DataFrame
+        Technology cost assumptions (annualised, scaled to the modelled years)
+    ts : dict
+        Options of `sector.industry_heat.thermal_storage`
+    """
+    logger.info("Add thermal storage for industry process heat")
+
+    nyears = n.snapshot_weightings.generators.sum() / 8760
+    store, charger = ts["store"], ts["charger"]
+    lifetime = costs.at[store, "lifetime"]
+    annuity = calculate_annuity(lifetime, costs.at[store, "discount rate"])
+    # heat exchanger / steam generator, EUR/kW_th -> EUR/MW_th
+    discharger_cost = (
+        ts["discharger_investment"]
+        * 1e3
+        * (annuity + ts["discharger_FOM"] / 100)
+        * nyears
+    )
+
+    for band in ts["bands"]:
+        carrier = f"{band} industry"
+        if nodes[0] + " " + carrier not in n.buses.index:
+            logger.warning(f"No bus for '{carrier}', skipping its thermal storage.")
+            continue
+        storage = f"{carrier} thermal storage"
+        bus = nodes + " " + storage
+
+        n.add("Carrier", [storage, f"{storage} charger", f"{storage} discharger"])
+        n.add("Bus", bus, location=nodes, carrier=storage, unit="MWh_th")
+        n.add(
+            "Store",
+            bus,
+            bus=bus,
+            carrier=storage,
+            e_nom_extendable=True,
+            e_cyclic=True,
+            standing_loss=ts["standing_losses"],
+            capital_cost=costs.at[store, "capital_cost"],
+            lifetime=lifetime,
+        )
+        n.add(
+            "Link",
+            nodes,
+            suffix=f" {storage} charger",
+            bus0=nodes,
+            bus1=bus,
+            carrier=f"{storage} charger",
+            efficiency=costs.at[charger, "efficiency"],
+            capital_cost=costs.at[charger, "capital_cost"],
+            lifetime=costs.at[charger, "lifetime"],
+            p_nom_extendable=True,
+        )
+        n.add(
+            "Link",
+            nodes,
+            suffix=f" {storage} discharger",
+            bus0=bus,
+            bus1=nodes + " " + carrier,
+            carrier=f"{storage} discharger",
+            efficiency=ts["discharger_efficiency"],
+            capital_cost=discharger_cost,
+            lifetime=lifetime,
+            p_nom_extendable=True,
+        )
+
+
+def add_industry_dsm(
+    n: pypsa.Network,
+    nodes: pd.Index,
+    p_set: pd.DataFrame | pd.Series,
+    dsm: dict,
+) -> None:
+    """
+    Let a share of the industry electricity load shift in time.
+
+    Modelled as a virtual storage per node: charging means consuming earlier
+    than the reference profile, discharging means consuming less later. Both
+    are limited to `share` of the load in each snapshot, the shifted energy to
+    `max_hours` of the average shiftable load, and each MWh shifted costs
+    `marginal_cost`.
+
+    Parameters
+    ----------
+    n : pypsa.Network
+        The PyPSA network container object
+    nodes : pd.Index
+        Nodes of the network
+    p_set : pd.DataFrame or pd.Series
+        Industry electricity load (MW), time series per node or constant
+    dsm : dict
+        Options of `sector.industry_dsm`
+    """
+    logger.info("Add demand-side management of industry electricity load")
+
+    if isinstance(p_set, pd.Series):
+        p_set = pd.DataFrame(
+            np.tile(p_set[nodes].values, (len(n.snapshots), 1)),
+            index=n.snapshots,
+            columns=nodes,
+        )
+    p_set = p_set.reindex(n.snapshots)[nodes]
+    peak = p_set.max().replace(0, np.nan)
+    p_nom = (dsm["share"] * peak).fillna(0.0)
+    p_max_pu = p_set.div(peak, axis=1).fillna(0.0)
+    e_nom = dsm["share"] * p_set.mean() * dsm["max_hours"]
+
+    bus = nodes + " industry DSM"
+    n.add("Carrier", ["industry DSM", "industry DSM advance", "industry DSM delay"])
+    n.add("Bus", bus, location=nodes, carrier="industry DSM", unit="MWh_el")
+    n.add(
+        "Store",
+        bus,
+        bus=bus,
+        carrier="industry DSM",
+        e_nom=e_nom.values,
+        e_cyclic=True,
+    )
+    # consume earlier than the reference profile
+    n.add(
+        "Link",
+        nodes,
+        suffix=" industry DSM advance",
+        bus0=nodes,
+        bus1=bus,
+        carrier="industry DSM advance",
+        p_nom=p_nom.values,
+        p_max_pu=p_max_pu,
+    )
+    # consume less than the reference profile, paid per MWh shifted
+    n.add(
+        "Link",
+        nodes,
+        suffix=" industry DSM delay",
+        bus0=bus,
+        bus1=nodes,
+        carrier="industry DSM delay",
+        p_nom=p_nom.values,
+        p_max_pu=p_max_pu,
+        marginal_cost=dsm["marginal_cost"],
+    )
+
 
 def plastic_waste_co2_per_naphtha(
     industrial_demand: pd.DataFrame,
@@ -5440,6 +5605,9 @@ def add_industry(
         carrier="industry electricity",
         p_set=p_set,
     )
+
+    if options["industry_dsm"]["enable"]:
+        add_industry_dsm(n, nodes, p_set, options["industry_dsm"])
 
     n.add(
         "Bus",
