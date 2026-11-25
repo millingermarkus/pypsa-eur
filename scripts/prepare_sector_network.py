@@ -2880,7 +2880,11 @@ def add_land_transport(
 
 
 def build_heat_demand(
-    n, hourly_heat_demand_file, pop_weighted_energy_totals, heating_efficiencies
+    n,
+    hourly_heat_demand_file,
+    pop_weighted_energy_totals,
+    heating_efficiencies,
+    room_temperature_factor_file=None,
 ):
     """
     Build heat demand time series and adjust electricity load to account for electric heating.
@@ -2896,6 +2900,11 @@ def build_heat_demand(
         electricity consumption for different sectors and uses
     heating_efficiencies : dict
         Dictionary mapping sector and use combinations to their heating efficiencies
+    room_temperature_factor_file : str, optional
+        Path to CSV file with the per-node ratio of heating degree days after
+        and before `sector: room_temperature_change`. Scales the annual space
+        heat demand (not hot water); the electricity removed from the
+        historical load for today's electric heating is unchanged.
 
     Returns
     -------
@@ -2934,6 +2943,19 @@ def build_heat_demand(
             heat_demand_shape[name] / heat_demand_shape[name].sum()
         ).multiply(pop_weighted_energy_totals[f"electricity {sector} {use}"]) * 1e6
 
+    if room_temperature_factor_file:
+        factor = pd.read_csv(room_temperature_factor_file, index_col=0).iloc[:, 0]
+        if not np.allclose(factor, 1.0):
+            logger.info(
+                "Scaling space heat demand for the room temperature change "
+                f"(node factors {factor.min():.3f} to {factor.max():.3f})"
+            )
+            for sector in sectors:
+                name = f"{sector} space"
+                heat_demand[name] = heat_demand[name].mul(
+                    factor.reindex(heat_demand[name].columns).fillna(1.0), axis=1
+                )
+
     heat_demand = pd.concat(heat_demand, axis=1)
     electric_heat_supply = pd.concat(electric_heat_supply, axis=1)
 
@@ -2953,6 +2975,7 @@ def add_heat(
     cop_profiles_file: str,
     direct_heat_source_utilisation_profile_file: str,
     hourly_heat_demand_total_file: str,
+    room_temperature_factor_file: str,
     ptes_e_max_pu_file: str,
     ptes_direct_utilisation_profile: str,
     ates_e_nom_max: str,
@@ -2989,6 +3012,9 @@ def add_heat(
         Path to NetCDF file containing direct heat source utilisation profiles
     hourly_heat_demand_total_file : str
         Path to CSV file containing hourly heat demand data
+    room_temperature_factor_file : str
+        Path to CSV file with the per-node space heat demand factor for
+        `sector: room_temperature_change`
     ptes_e_max_pu_file : str
         Path to CSV file containing pit thermal energy storage max energy per unit profiles.
     ptes_direct_utilisation_profile : str
@@ -3060,6 +3086,7 @@ def add_heat(
         hourly_heat_demand_total_file,
         pop_weighted_energy_totals,
         heating_efficiencies,
+        room_temperature_factor_file,
     )
 
     cop = xr.open_dataarray(cop_profiles_file)
@@ -6981,6 +7008,7 @@ def main(
             cop_profiles_file=inputs.cop_profiles,
             direct_heat_source_utilisation_profile_file=inputs.direct_heat_source_utilisation_profiles,
             hourly_heat_demand_total_file=inputs.hourly_heat_demand_total,
+            room_temperature_factor_file=inputs.room_temperature_factor,
             ptes_e_max_pu_file=inputs.ptes_e_max_pu_profiles,
             ates_e_nom_max=inputs.ates_potentials,
             ates_capex_as_fraction_of_geothermal_heat_source=options[

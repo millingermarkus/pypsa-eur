@@ -110,6 +110,9 @@ def get_compose_inputs(w):
                 else []
             ),
             hourly_heat_demand_total=resources("hourly_heat_demand_total.nc"),
+            room_temperature_factor=resources(
+                "heat_demand_room_temperature_factor.csv"
+            ),
             industrial_production=resources("industrial_production_{horizon}.csv"),
             district_heat_share=resources("district_heat_share_{horizon}.csv"),
             heating_efficiencies=resources("heating_efficiencies.csv"),

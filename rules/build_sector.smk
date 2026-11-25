@@ -146,6 +146,7 @@ rule build_daily_heat_demand:
         ),
     output:
         heat_demand=resources("daily_heat_demand_total.nc"),
+        room_temperature_factor=resources("heat_demand_room_temperature_factor.csv"),
     log:
         logs("build_daily_heat_demand_total.log"),
     benchmark:
@@ -156,6 +157,7 @@ rule build_daily_heat_demand:
     params:
         snapshots=config_provider("snapshots"),
         drop_leap_day=config_provider("enable", "drop_leap_day"),
+        room_temperature_change=config_provider("sector", "room_temperature_change"),
     script:
         scripts("build_daily_heat_demand.py")
 

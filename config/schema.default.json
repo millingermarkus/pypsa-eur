@@ -5294,6 +5294,13 @@
           "markdownDescription": "A positive factor can mean renovation or demolition of a building. If the factor is negative, it can mean an increase in floor area, increased thermal comfort, population growth. The default factors are determined by the [Eurocalc Homes and buildings decarbonization scenario ](http://tool.european-calculator.eu/app/buildings/building-types-area/?levers=1ddd4444421213bdbbbddd44444ffffff11f411111221111211l212221).",
           "type": "object"
         },
+        "room_temperature_change": {
+          "default": 0.0,
+          "description": "Change of the indoor room temperature of heated buildings (K), e.g. -1 for one degree lower. Shifts the heating degree day threshold (15 \u00b0C, the balance point of the building stock) by the same amount and rescales the annual space heat demand per region by the ratio of heating degree days with and without the change. Hot water demand is not affected.",
+          "maximum": 5,
+          "minimum": -5,
+          "type": "number"
+        },
         "retrofitting": {
           "description": "Configuration for `sector.retrofitting` settings.",
           "properties": {
@@ -13514,6 +13521,13 @@
           "description": "A positive factor can mean renovation or demolition of a building. If the factor is negative, it can mean an increase in floor area, increased thermal comfort, population growth. The default factors are determined by the `Eurocalc Homes and buildings decarbonization scenario <http://tool.european-calculator.eu/app/buildings/building-types-area/?levers=1ddd4444421213bdbbbddd44444ffffff11f411111221111211l212221>`_.",
           "markdownDescription": "A positive factor can mean renovation or demolition of a building. If the factor is negative, it can mean an increase in floor area, increased thermal comfort, population growth. The default factors are determined by the [Eurocalc Homes and buildings decarbonization scenario ](http://tool.european-calculator.eu/app/buildings/building-types-area/?levers=1ddd4444421213bdbbbddd44444ffffff11f411111221111211l212221).",
           "type": "object"
+        },
+        "room_temperature_change": {
+          "default": 0.0,
+          "description": "Change of the indoor room temperature of heated buildings (K), e.g. -1 for one degree lower. Shifts the heating degree day threshold (15 \u00b0C, the balance point of the building stock) by the same amount and rescales the annual space heat demand per region by the ratio of heating degree days with and without the change. Hot water demand is not affected.",
+          "maximum": 5,
+          "minimum": -5,
+          "type": "number"
         },
         "retrofitting": {
           "description": "Configuration for `sector.retrofitting` settings.",

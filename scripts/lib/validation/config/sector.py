@@ -884,6 +884,12 @@ class SectorConfig(BaseModel):
         },
         description="A positive factor can mean renovation or demolition of a building. If the factor is negative, it can mean an increase in floor area, increased thermal comfort, population growth. The default factors are determined by the `Eurocalc Homes and buildings decarbonization scenario <http://tool.european-calculator.eu/app/buildings/building-types-area/?levers=1ddd4444421213bdbbbddd44444ffffff11f411111221111211l212221>`_.",
     )
+    room_temperature_change: float = Field(
+        0.0,
+        ge=-5,
+        le=5,
+        description="Change of the indoor room temperature of heated buildings (K), e.g. -1 for one degree lower. Shifts the heating degree day threshold (15 °C, the balance point of the building stock) by the same amount and rescales the annual space heat demand per region by the ratio of heating degree days with and without the change. Hot water demand is not affected.",
+    )
 
     retrofitting: _RetrofittingConfig = Field(
         default_factory=_RetrofittingConfig, description="Retrofitting configuration."
