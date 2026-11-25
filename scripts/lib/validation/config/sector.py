@@ -569,7 +569,16 @@ class _SpaceCoolingConfig(BaseModel):
     )
     growth: dict[int, float] = Field(
         default_factory=lambda: {2020: 1.0, 2030: 1.0, 2040: 1.0, 2050: 1.0},
-        description="Space cooling demand relative to today (JRC-IDEES) per planning horizon, e.g. for more air conditioners or a warmer climate.",
+        description="Space cooling demand relative to today (JRC-IDEES) per planning horizon, summed over all regions, e.g. for more air conditioners or a warmer climate.",
+    )
+    growth_distribution: Literal["uniform", "convergence"] = Field(
+        "convergence",
+        description="Regional distribution of the growth. `uniform`: every region grows by `growth`. `convergence`: the additional cooling first closes the gap of each country's cooling per person and cooling degree hour to `convergence_target`, the rest is distributed by population times cooling degree hours.",
+    )
+    convergence_target: float = Field(
+        1.5,
+        ge=0,
+        description="Target cooling intensity (cooling per person and cooling degree hour) for `growth_distribution: convergence`, as a multiple of today's average of the countries with JRC-IDEES data. 1.5 is about the level of Spain and Greece today.",
     )
 
 

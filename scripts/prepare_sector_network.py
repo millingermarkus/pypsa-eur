@@ -4965,6 +4965,67 @@ def add_industry_dsm(
     )
 
 
+def cooling_growth_per_node(
+    annual: pd.Series,
+    need: pd.Series,
+    country: pd.Series,
+    known: pd.Index,
+    growth: float,
+    options: dict,
+) -> pd.Series:
+    """
+    Growth factor of space cooling per node for an overall growth `growth`.
+
+    With `growth_distribution: uniform` all nodes grow by `growth`. With
+    `convergence`, the total increment ``(growth - 1) * sum(annual)`` is first
+    allocated to close the gap between each country's cooling intensity
+    (cooling per person and cooling degree hour) and a target of
+    `convergence_target` times the average intensity of the countries with
+    data, in proportion to the gap times the cooling need of the node
+    (population times cooling degree hours). An increment beyond all gaps is
+    allocated in proportion to the cooling need. Decreases (growth < 1) are
+    always uniform.
+
+    Parameters
+    ----------
+    annual : pd.Series
+        Today's annual space cooling per node (MWh)
+    need : pd.Series
+        Cooling need per node: population times cooling degree hours
+    country : pd.Series
+        Country code per node
+    known : pd.Index
+        Countries with data, defining the average intensity
+    growth : float
+        Overall growth factor of space cooling
+    options : dict
+        Options of `sector.space_cooling`
+
+    Returns
+    -------
+    pd.Series
+        Growth factor per node
+    """
+    uniform = pd.Series(growth, index=annual.index)
+    if options["growth_distribution"] == "uniform" or growth <= 1:
+        return uniform
+
+    need_ct = need.groupby(country).sum()
+    intensity_ct = annual.groupby(country).sum() / need_ct.replace(0, np.nan)
+    target = (
+        options["convergence_target"]
+        * annual[country.isin(known)].sum()
+        / need[country.isin(known)].sum()
+    )
+    gap = (target - country.map(intensity_ct)).clip(lower=0).fillna(0.0) * need
+    increment = (growth - 1) * annual.sum()
+    if gap.sum() >= increment:
+        added = gap * increment / gap.sum()
+    else:
+        added = gap + need * (increment - gap.sum()) / need.sum()
+    return ((annual + added) / annual.replace(0, np.nan)).fillna(growth)
+
+
 def add_space_cooling(
     n: pypsa.Network,
     nodes: pd.Index,
@@ -5041,27 +5102,37 @@ def add_space_cooling(
     base = {"residential": 0.0, "services": options["base_share_services"]}
 
     annual = {}
-    today = 0.0
-    future = 0.0
-    for sector, b in base.items():
+    for sector in base:
         intensity = totals.loc[known, sector].sum() / weight_ct[known].sum()
         a = (weight / country.map(weight_ct)) * country.map(totals[sector])
         a[estimated] = intensity * weight[estimated]
-        a = a.fillna(0.0)
-        annual[sector] = a
+        annual[sector] = a.fillna(0.0)
+    annual_total = pd.DataFrame(annual).sum(axis=1)
+
+    node_growth = cooling_growth_per_node(
+        annual_total, weight, country, known, growth, options
+    )
+
+    today = 0.0
+    future = 0.0
+    for sector, b in base.items():
+        a = annual[sector]
         today = today + (b * flat + (1 - b) * normed(cdh)).mul(a, axis=1)
         future = future + (
             b * flat.mul(a, axis=1) + (1 - b) * normed(cdh_new).mul(a * factor, axis=1)
-        ).mul(growth)
-    annual = pd.DataFrame(annual).sum(axis=1)
+        ).mul(node_growth, axis=1)
+    annual = annual_total
 
+    future_ct = future.sum().groupby(country).sum()
+    growth_ct = (future_ct / annual.groupby(country).sum()).sort_values()
     logger.info(
         f"Space cooling: {annual.sum() / 1e6:.1f} TWh today "
         f"({annual[estimated].sum() / 1e6:.1f} TWh estimated for {sorted(set(country[estimated]))}); "
         f"{future.sum().sum() / 1e6:.1f} TWh in {investment_year} "
-        f"(growth {growth}, setpoint change {options['setpoint_change']:+} K, "
-        f"cooling degree hours x{factor[annual > 0].mean():.2f} on average); "
-        f"peak {future.sum(axis=1).max() / 1e3:.1f} GW"
+        f"(growth {growth}, {options['growth_distribution']}, setpoint change "
+        f"{options['setpoint_change']:+} K, cooling degree hours x{factor[annual > 0].mean():.2f} "
+        f"on average); peak {future.sum(axis=1).max() / 1e3:.1f} GW; country factors "
+        f"{growth_ct.round(1).iloc[[0, len(growth_ct) // 2, -1]].to_dict()} (min, median, max)"
     )
 
     # take today's cooling out of the historical electricity load

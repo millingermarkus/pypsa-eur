@@ -5332,8 +5332,23 @@
               "additionalProperties": {
                 "type": "number"
               },
-              "description": "Space cooling demand relative to today (JRC-IDEES) per planning horizon, e.g. for more air conditioners or a warmer climate.",
+              "description": "Space cooling demand relative to today (JRC-IDEES) per planning horizon, summed over all regions, e.g. for more air conditioners or a warmer climate.",
               "type": "object"
+            },
+            "growth_distribution": {
+              "default": "convergence",
+              "description": "Regional distribution of the growth. `uniform`: every region grows by `growth`. `convergence`: the additional cooling first closes the gap of each country's cooling per person and cooling degree hour to `convergence_target`, the rest is distributed by population times cooling degree hours.",
+              "enum": [
+                "uniform",
+                "convergence"
+              ],
+              "type": "string"
+            },
+            "convergence_target": {
+              "default": 1.5,
+              "description": "Target cooling intensity (cooling per person and cooling degree hour) for `growth_distribution: convergence`, as a multiple of today's average of the countries with JRC-IDEES data. 1.5 is about the level of Spain and Greece today.",
+              "minimum": 0,
+              "type": "number"
             }
           }
         },
@@ -10462,8 +10477,23 @@
           "additionalProperties": {
             "type": "number"
           },
-          "description": "Space cooling demand relative to today (JRC-IDEES) per planning horizon, e.g. for more air conditioners or a warmer climate.",
+          "description": "Space cooling demand relative to today (JRC-IDEES) per planning horizon, summed over all regions, e.g. for more air conditioners or a warmer climate.",
           "type": "object"
+        },
+        "growth_distribution": {
+          "default": "convergence",
+          "description": "Regional distribution of the growth. `uniform`: every region grows by `growth`. `convergence`: the additional cooling first closes the gap of each country's cooling per person and cooling degree hour to `convergence_target`, the rest is distributed by population times cooling degree hours.",
+          "enum": [
+            "uniform",
+            "convergence"
+          ],
+          "type": "string"
+        },
+        "convergence_target": {
+          "default": 1.5,
+          "description": "Target cooling intensity (cooling per person and cooling degree hour) for `growth_distribution: convergence`, as a multiple of today's average of the countries with JRC-IDEES data. 1.5 is about the level of Spain and Greece today.",
+          "minimum": 0,
+          "type": "number"
         }
       }
     },
@@ -13632,8 +13662,23 @@
               "additionalProperties": {
                 "type": "number"
               },
-              "description": "Space cooling demand relative to today (JRC-IDEES) per planning horizon, e.g. for more air conditioners or a warmer climate.",
+              "description": "Space cooling demand relative to today (JRC-IDEES) per planning horizon, summed over all regions, e.g. for more air conditioners or a warmer climate.",
               "type": "object"
+            },
+            "growth_distribution": {
+              "default": "convergence",
+              "description": "Regional distribution of the growth. `uniform`: every region grows by `growth`. `convergence`: the additional cooling first closes the gap of each country's cooling per person and cooling degree hour to `convergence_target`, the rest is distributed by population times cooling degree hours.",
+              "enum": [
+                "uniform",
+                "convergence"
+              ],
+              "type": "string"
+            },
+            "convergence_target": {
+              "default": 1.5,
+              "description": "Target cooling intensity (cooling per person and cooling degree hour) for `growth_distribution: convergence`, as a multiple of today's average of the countries with JRC-IDEES data. 1.5 is about the level of Spain and Greece today.",
+              "minimum": 0,
+              "type": "number"
             }
           }
         },
