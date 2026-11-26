@@ -456,19 +456,23 @@ def add_carrier_buses(
             / mwh_per_m3
         )
     else:
-        capital_cost = 0.1
+        # coal, lignite, uranium: constant fuel price, so a store has no value;
+        # a near-free store is only filled with solver noise (barrier without
+        # crossover), so none is added
+        capital_cost = None
 
     n.add("Bus", nodes, location=location, carrier=carrier, unit=unit)
 
-    n.add(
-        "Store",
-        nodes + " Store",
-        bus=nodes,
-        e_nom_extendable=True,
-        e_cyclic=True,
-        carrier=carrier,
-        capital_cost=capital_cost,
-    )
+    if capital_cost is not None:
+        n.add(
+            "Store",
+            nodes + " Store",
+            bus=nodes,
+            e_nom_extendable=True,
+            e_cyclic=True,
+            carrier=carrier,
+            capital_cost=capital_cost,
+        )
 
     fossils = ["coal", "gas", "oil", "lignite"]
     if (options["fossil_fuels"] and carrier in fossils) or carrier == "uranium":
