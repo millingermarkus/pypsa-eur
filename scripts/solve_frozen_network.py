@@ -110,6 +110,23 @@ def add_shedding_and_spill(n: pypsa.Network, voll: float, spill_cost: float) -> 
     return buses
 
 
+def restore_bool_columns(n: pypsa.Network) -> None:
+    """
+    Fill boolean columns that became object dtype by adding components.
+
+    Custom columns such as links 'reversed' are NaN for the components added
+    here, which turns them into object dtype and breaks DataFrame.query (e.g.
+    in add_pipe_retrofit_constraint).
+    """
+    for c in n.components:
+        static = c.static
+        for col in static.columns[static.dtypes == object]:
+            values = static[col].dropna()
+            if len(values) and values.map(lambda v: isinstance(v, (bool, np.bool_))).all():
+                static[col] = static[col].fillna(False).astype(bool)
+                logger.info(f"Restored boolean column {c.name}.{col}")
+
+
 def design_co2_price(design: pypsa.Network) -> float:
     """CO2 price (EUR/t) of the design run: shadow price of its upper CO2 limit."""
     glc = design.global_constraints
@@ -166,6 +183,7 @@ if __name__ == "__main__":
             logger.warning("No CO2 price in the design network; CO2 limit stays a hard limit.")
         else:
             add_co2_slack(n, max(price, 0.0))
+    restore_bool_columns(n)
 
     prepare_network(
         n,
